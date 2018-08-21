@@ -5,6 +5,7 @@ import lv.ctco.javaschool.auth.entity.domain.User;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
@@ -15,6 +16,7 @@ public class Event {
 
     private String name;
 
+    @ManyToOne
     private User author;
 
     private Date date;
