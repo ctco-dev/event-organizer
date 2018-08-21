@@ -6,8 +6,16 @@
 </head>
 <body>
 <button type="button" onclick="logout()">Log out</button>
+<div>
+    <button type="button" onclick="addEvent()">Add Event</button>
+</div>
 
 <script>
+    function addEvent() {
+        location.href = "/app/add-event.jsp"
+    }
+
+
     function logout() {
         fetch("<c:url value='/api/auth/logout'/>", {"method": "POST"})
             .then(function (response) {
