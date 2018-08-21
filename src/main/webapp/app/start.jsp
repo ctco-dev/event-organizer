@@ -8,11 +8,16 @@
 <button type="button" onclick="logout()">Log out</button>
 <div>
     <button type="button" onclick="addEvent()">Add Event</button>
+    <button type="button" onclick="myEvents()">My Events</button>
 </div>
 
 <script>
     function addEvent() {
         location.href = "/app/add-event.jsp"
+    }
+
+    function myEvents() {
+        location.href = "/app/my-events.jsp"
     }
 
 
