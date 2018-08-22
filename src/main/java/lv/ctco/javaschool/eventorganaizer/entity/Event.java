@@ -19,13 +19,13 @@ public class Event {
     @ManyToOne
     private User author;
 
-    private Date date;
+    private String date;
 
     private String description;
 
     private EventStatus status;
 
-    public Event(String name, User author, String description, Date date) {
+    public Event(String name, User author, String description, String date) {
         this.name = name;
         this.author = author;
         this.description = description;
@@ -40,6 +40,9 @@ public class Event {
 
     public void setStatus(EventStatus status) {
         this.status = status;
+    }
+
+    public Event() {
     }
 
     public Long getId() {
@@ -62,8 +65,12 @@ public class Event {
         this.author = author;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getDescription() {
