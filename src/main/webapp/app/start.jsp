@@ -21,7 +21,6 @@
     function addEvent() {
         location.href = "/app/add-event.jsp"
     }
-
     function myEvents() {
         location.href = "/app/my-events.jsp"
     }
@@ -38,8 +37,6 @@
             }
         })
     }
-
-
     function logout() {
         fetch("<c:url value='/api/auth/logout'/>", {"method": "POST"})
             .then(function (response) {

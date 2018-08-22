@@ -31,7 +31,6 @@ public class EventOrganizationApi {
     @Inject
     private UserStore userStore;
 
-
     @Inject
     private EventStore eventStore;
 
@@ -72,13 +71,14 @@ public class EventOrganizationApi {
 
     @GET
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/getMyEvents")
-    public List<EventDto> getAllAuthorEvents() {
+    @Path("/getevents")
+    public EventListDto getAllAuthorEvents() {
         User user = userStore.getCurrentUser();
         List<Event> event = eventStore.getAuthorEvents(user);
-        return event.stream()
-                .map(this::convertToEventDto)
-                .collect(Collectors.toList());
+
+       return new EventListDto(event.stream()
+               .map(this::convertToEventDto)
+               .collect(Collectors.toList()));
     }
 
     public EventDto convertToEventDto(Event event) {
@@ -88,4 +88,8 @@ public class EventOrganizationApi {
         dto.getEventDate(event.getDate());
         return dto;
     }
+
+
+
+
 }
