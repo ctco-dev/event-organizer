@@ -8,4 +8,8 @@ public class TopicListDto {
     public TopicListDto(List<TopicDto> topicList) {
         this.topicList = topicList;
     }
+
+    public List<TopicDto> getTopicList() {
+        return topicList;
+    }
 }

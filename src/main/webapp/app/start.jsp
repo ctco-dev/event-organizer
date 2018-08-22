@@ -13,7 +13,7 @@
     <button type="button" onclick="myEvents()">My Events</button>
 </div>
 
-<ul id="topicList" class="w3-hide">
+<ul id="topic-list" class="w3-hide">
     <li w3-repeat="topicList">{{topicName}} - {{topicAuthor}}</li>
 </ul>
 
@@ -33,8 +33,8 @@
         }).then(function (topics) {
             console.log(JSON.stringify(topics));
             if (topics.topicList.length > 0) {
-                document.getElementById("topicList").classList.remove("w3-hide");
-                w3DisplayData("topicList", topics);
+                document.getElementById("topic-list").classList.remove("w3-hide");
+                w3DisplayData("topic-list", topics);
             }
         })
     }

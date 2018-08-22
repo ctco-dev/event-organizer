@@ -1,12 +1,14 @@
 package lv.ctco.javaschool.eventorganaizer.boundary;
 
+import lv.ctco.javaschool.auth.control.UserStore;
+import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.entity.Event;
+import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
 import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
 import lv.ctco.javaschool.eventorganaizer.entity.TopicListDto;
 
 import javax.annotation.security.RolesAllowed;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.JsonObject;
@@ -56,14 +58,15 @@ public class EventOrganizationApi {
         for(Map.Entry<String,JsonValue> pair : jsonObject.entrySet()){
             String adr = pair.getKey();
             String value = ((JsonString) pair.getValue()).getString();
-            if (adr == "name"){
+            if (adr.equals("name")) {
                 event.setName(value);
-            }else if (adr == "description"){
+            } else if (adr.equals("description")) {
                 event.setDescription(value);
-            }else if (adr == "datepicker"){
+            } else if (adr.equals("datepicker")) {
                 event.setDate(value);
             }
         }
+        event.setStatus(EventStatus.OPEN);
         event.setAuthor(user);
         em.persist(event);
     }
