@@ -23,11 +23,23 @@ public class Event {
 
     private String description;
 
+    private EventStatus status;
+
     public Event(String name, User author, String description, Date date) {
         this.name = name;
         this.author = author;
         this.description = description;
         this.date = date;
+        this.status = EventStatus.OPEN;
+
+    }
+
+    public EventStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EventStatus status) {
+        this.status = status;
     }
 
     public Long getId() {
