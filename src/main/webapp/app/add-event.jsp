@@ -3,6 +3,8 @@
 <html>
 <head>
     <title>Add Event</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
 <style>
@@ -13,17 +15,13 @@
     }
 </style>
 <header>Add New Event</header>
-<form action="textarea1.php" method="post">
+<form method="post">
     <p><b>Name of Event</b></p>
-    <p><textarea name="text"></textarea></p>
+    <p><textarea name="text" id="name"></textarea></p>
     <p><b>Description</b></p>
-    <p><textarea name="text"></textarea></p>
+    <p><textarea name="text" id="description"></textarea></p>
     <p><b>Date</b>></p>
-    <p><textarea name="text"></textarea></p>
-    <p><b>Time</b></p>
-    <p><textarea name="text"></textarea></p>
-    <p><b>Agenda</b></p>
-    <p><textarea name="text"></textarea></p>
+    <p><input type="text" id="datepicker"></p>
 </form>
 <p>
     <button type="submit" onclick="saveDataToDB()">Save</button>
@@ -36,9 +34,36 @@
     function goToTheMainPage() {
         location.href = "<c:url value='/app/start.jsp'/>";
     }
+    var data = {};
+
+    function getDataFromField() {
+        var name = document.getElementById("name");
+        data["name"] = name.value;
+        var datepciker = document.getElementById("datepicker");
+        data["datepicker"] = datepciker.value;
+        var description=document.getElementById("description");
+        data["description"] = description.value;
+    }
+
 
     function saveDataToDB() {
+        getDataFromField();
+        fetch("<c:url value='/api/event/save'/>", {
+            "method": "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify(data)
+        }).then(function (response) {
+            console.log(JSON.stringify(data));
+            console.log("DONE");
+            location.href = "<c:url value='/app/start.jsp'/>";
+        });
+
 
     }
+    $(function () {
+        $( "#datepicker" ).datepicker();
+    } );
 </script>
 </html>
