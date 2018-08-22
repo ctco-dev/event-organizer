@@ -1,6 +1,7 @@
 package lv.ctco.javaschool.eventorganaizer.control;
 
 import lv.ctco.javaschool.auth.control.UserStore;
+import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.entity.Event;
 import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
 
@@ -29,4 +30,12 @@ public class EventStore {
         return list;
     }
 
+    public List<Event> getAuthorEvents(User user){
+        return em.createQuery("select e from Event e where e.author=:user",Event.class)
+                .setParameter("user",user)
+                .getResultList();
+
+
+
+    }
 }

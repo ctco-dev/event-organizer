@@ -3,10 +3,7 @@ package lv.ctco.javaschool.eventorganaizer.boundary;
 import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
-import lv.ctco.javaschool.eventorganaizer.entity.Event;
-import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
-import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
-import lv.ctco.javaschool.eventorganaizer.entity.TopicListDto;
+import lv.ctco.javaschool.eventorganaizer.entity.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -22,6 +19,8 @@ import javax.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Path("/event")
 @Stateless
@@ -55,7 +54,7 @@ public class EventOrganizationApi {
         // EventDto eventDto = new EventDto();
         User user = userStore.getCurrentUser();
         Event event = new Event();
-        for(Map.Entry<String,JsonValue> pair : jsonObject.entrySet()){
+        for (Map.Entry<String, JsonValue> pair : jsonObject.entrySet()) {
             String adr = pair.getKey();
             String value = ((JsonString) pair.getValue()).getString();
             if (adr.equals("name")) {
@@ -71,5 +70,22 @@ public class EventOrganizationApi {
         em.persist(event);
     }
 
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/getMyEvents")
+    public List<EventDto> getAllAuthorEvents() {
+        User user = userStore.getCurrentUser();
+        List<Event> event = eventStore.getAuthorEvents(user);
+        return event.stream()
+                .map(this::convertToEventDto)
+                .collect(Collectors.toList());
+    }
 
+    public EventDto convertToEventDto(Event event) {
+        EventDto dto = new EventDto();
+        dto.setEventName(event.getName());
+        dto.setEventDescription(event.getDescription());
+        dto.getEventDate(event.getDate());
+        return dto;
+    }
 }

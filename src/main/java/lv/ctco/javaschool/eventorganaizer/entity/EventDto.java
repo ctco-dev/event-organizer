@@ -24,7 +24,7 @@ public class EventDto {
         this.eventDescription = eventDescription;
     }
 
-    public String getEventDate() {
+    public String getEventDate(String date) {
         return eventDate;
     }
 
