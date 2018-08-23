@@ -16,14 +16,15 @@
     </style>
 </head>
 <body onload="checkTopics()">
-<button type="button" onclick="logout()">Log out</button>
 <div>
+    <button type="button" onclick="logout()">Log out</button>
     <button type="button" onclick="addEvent()">Add Event</button>
     <button type="button" onclick="myEvents()">My Events</button>
 </div>
 
 <ul id="topic-list" class="w3-hide">
-    <li w3-repeat="topicList"><a href="<c:url value='/app/event.jsp'/>">{{topicName}}</a> - {{topicAuthor}}</li>
+    <li w3-repeat="topicList"><a href="<c:url value='/app/'/>{{path}}?id={{id}}">{{topicName}}</a> - {{topicAuthor}}
+    </li>
 </ul>
 
 <script>

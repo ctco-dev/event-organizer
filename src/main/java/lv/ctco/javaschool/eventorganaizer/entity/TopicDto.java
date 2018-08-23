@@ -5,28 +5,58 @@ public class TopicDto {
     private String topicName;
     private String topicAuthor;
     private String date;
-    private boolean isFeedbackPool;
+    private String path;
+    private Long id;
 
-    public TopicDto(String topicName, String topicAuthor, String date, boolean isFeedbackPool) {
+    public TopicDto(String topicName, String topicAuthor, String date, boolean isFeedbackPool, Long id) {
         this.topicName = topicName;
         this.topicAuthor = topicAuthor;
         this.date = date;
-        this.isFeedbackPool = isFeedbackPool;
+        if (isFeedbackPool) {
+            this.path = "pool.jsp";
+        } else {
+            this.path = "event.jsp";
+        }
+        this.id = id;
     }
 
     public String getTopicName() {
         return topicName;
     }
 
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
+    }
+
     public String getTopicAuthor() {
         return topicAuthor;
+    }
+
+    public void setTopicAuthor(String topicAuthor) {
+        this.topicAuthor = topicAuthor;
     }
 
     public String getDate() {
         return date;
     }
 
-    public boolean isFeedbackPool() {
-        return isFeedbackPool;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

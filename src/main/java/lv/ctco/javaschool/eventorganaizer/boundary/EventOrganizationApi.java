@@ -3,10 +3,7 @@ package lv.ctco.javaschool.eventorganaizer.boundary;
 import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
-import lv.ctco.javaschool.eventorganaizer.entity.Event;
-import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
-import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
-import lv.ctco.javaschool.eventorganaizer.entity.TopicListDto;
+import lv.ctco.javaschool.eventorganaizer.entity.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -19,9 +16,11 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Path("/event")
 @Stateless
@@ -43,7 +42,7 @@ public class EventOrganizationApi {
         List<TopicDto> listTopics = new ArrayList<>();
         listOfEvents.forEach(e -> {
             TopicDto topicDto = new TopicDto(e.getName(), e.getAuthor().getUsername(),
-                    e.getDate(), false);
+                    e.getDate(), false, e.getId());
             listTopics.add(topicDto);
         });
         return new TopicListDto(listTopics);
@@ -53,7 +52,6 @@ public class EventOrganizationApi {
     @Path("/save")
     @RolesAllowed({"USER", "ADMIN"})
     public void saveEvent(JsonObject jsonObject) {
-        // EventDto eventDto = new EventDto();
         User user = userStore.getCurrentUser();
         Event event = new Event();
         for(Map.Entry<String,JsonValue> pair : jsonObject.entrySet()){
@@ -66,7 +64,20 @@ public class EventOrganizationApi {
         em.persist(event);
     }
 
-    Event setFieldsToEvent(Event event, String adr, String value) throws IllegalArgumentException {
+    @GET
+    @RolesAllowed({"USER", "ADMIN"})
+    @Path("/{id}")
+    public EventDto getEventById(@PathParam("id") Long id) {
+        Optional<Event> event = eventStore.getEventById(id);
+        if (event.isPresent()) {
+            Event e = event.get();
+            return new EventDto(e);
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    Event setFieldsToEvent(Event event, String adr, String value) {
         if (adr.equals("name")) {
             event.setName(value);
         } else if (adr.equals("description")) {

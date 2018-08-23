@@ -8,6 +8,15 @@ public class EventDto {
     private String eventDescription;
     private String eventDate;
 
+    public EventDto() {
+    }
+
+    public EventDto(Event e) {
+        this.eventDate = e.getDate();
+        this.eventName = e.getName();
+        this.eventDescription = e.getDescription();
+    }
+
     public String getEventName() {
         return eventName;
     }
