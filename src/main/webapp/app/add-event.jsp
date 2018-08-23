@@ -55,8 +55,6 @@
                 'Content-Type': 'application/json'
             }, body: JSON.stringify(data)
         }).then(function (response) {
-            console.log(JSON.stringify(data));
-            console.log("DONE");
             location.href = "<c:url value='/app/start.jsp'/>";
         });
 

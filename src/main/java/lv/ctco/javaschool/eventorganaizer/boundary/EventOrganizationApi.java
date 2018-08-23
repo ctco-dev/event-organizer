@@ -53,7 +53,6 @@ public class EventOrganizationApi {
     @Path("/save")
     @RolesAllowed({"USER", "ADMIN"})
     public void saveEvent(JsonObject jsonObject) {
-        // EventDto eventDto = new EventDto();
         User user = userStore.getCurrentUser();
         Event event = new Event();
         for(Map.Entry<String,JsonValue> pair : jsonObject.entrySet()){
@@ -67,14 +66,18 @@ public class EventOrganizationApi {
     }
 
     Event setFieldsToEvent(Event event, String adr, String value) throws IllegalArgumentException {
-        if (adr.equals("name")) {
-            event.setName(value);
-        } else if (adr.equals("description")) {
-            event.setDescription(value);
-        } else if (adr.equals("datepicker")) {
-            event.setDate(value);
-        } else {
-            throw new IllegalArgumentException();
+        switch (adr){
+            case ("name"):
+                event.setName(value);
+                break;
+            case ("description"):
+                event.setDescription(value);
+                break;
+            case ("datepicker"):
+                event.setDate(value);
+                break;
+            default:
+                throw new IllegalArgumentException();
         }
         return event;
     }
