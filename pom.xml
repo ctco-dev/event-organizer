@@ -35,6 +35,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>3.1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.wildfly</groupId>
             <artifactId>wildfly-cli</artifactId>
             <version>8.2.1.Final</version>
@@ -44,6 +50,12 @@
                     <artifactId>jconsole</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -79,8 +91,9 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.0.2.Final</version>
+                <version>1.2.2.Final</version>
                 <configuration>
+                    <version>13.0.0.Final</version>
                     <hostname>localhost</hostname>
                     <port>9990</port>
                     <username>jboss-local-admin</username>
