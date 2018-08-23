@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,7 +20,7 @@ public class EventStore {
     private UserStore userStore;
 
     public List<Event> getAllEvents() {
-        List<Event> list = new ArrayList<>();
+        List<Event> list;
         list = em.createQuery("select e from Event e" +
                 " where e.status = :status", Event.class)
                 .setParameter("status", EventStatus.OPEN)

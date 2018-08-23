@@ -5,6 +5,15 @@
     <title>Event Organizer</title>
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        ul {
+            list-style: none;
+        }
+
+        a {
+            underline-mode: none;
+        }
+    </style>
 </head>
 <body onload="checkTopics()">
 <button type="button" onclick="logout()">Log out</button>
@@ -14,7 +23,7 @@
 </div>
 
 <ul id="topic-list" class="w3-hide">
-    <li w3-repeat="topicList">{{topicName}} - {{topicAuthor}}</li>
+    <li w3-repeat="topicList"><a href="<c:url value='/app/event.jsp'/>">{{topicName}}</a> - {{topicAuthor}}</li>
 </ul>
 
 <script>
@@ -27,7 +36,11 @@
     }
     function checkTopics() {
         fetch("<c:url value='/api/event'/>", {
-            "method": "GET"
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
         }).then(function (response) {
             return response.json();
         }).then(function (topics) {
