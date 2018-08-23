@@ -26,6 +26,7 @@
 </p>
 <ul class="w3-ul" id="myevent-list">
     <li w3-repeat="eventList" type="text" id="eventElement">
+        <a href="<c:url value='/app/event.jsp'/>?id={{eventId}}" />
         {{eventName}}
         <p>
             <button onclick="goToEditPage()" id="editButton">Edit</button>
@@ -36,10 +37,12 @@
 
 <script>
     function goToEditPage() {
-        location.href = "/app/add-event.jsp"
+
+        location.href = "/app/add-event.jsp"+eventId;
     }
 
     function goToCreatePoolPage() {
+
 
     }
 

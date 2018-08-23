@@ -85,7 +85,8 @@ public class EventOrganizationApi {
         EventDto dto = new EventDto();
         dto.setEventName(event.getName());
         dto.setEventDescription(event.getDescription());
-        dto.getEventDate(event.getDate());
+        dto.setEventDate(event.getDate());
+        dto.setEventID(event.getId());
         return dto;
     }
 

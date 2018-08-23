@@ -5,10 +5,16 @@ import lv.ctco.javaschool.auth.control.exceptions.InvalidUsernameException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.opentest4j.AssertionFailedError;
-
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserStoreTest {
+    @Test
+    void getCurrentUser() {
+
+
+    }
 
 
     @Test
