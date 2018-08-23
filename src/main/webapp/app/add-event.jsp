@@ -15,13 +15,13 @@
     }
 </style>
 <header>Add New Event</header>
-<form method="post">
+<form name="eventform" method="post">
     <p><b>Name of Event</b></p>
-    <p><textarea name="text" id="name"></textarea></p>
+    <p><textarea name="name" id="name"></textarea></p>
     <p><b>Description</b></p>
-    <p><textarea name="text" id="description"></textarea></p>
+    <p><textarea name="desc" id="description"></textarea></p>
     <p><b>Date</b>></p>
-    <p><input type="text" id="datepicker"></p>
+    <p><input name="date" id="datepicker"></p>
 </form>
 <p>
     <button type="submit" onclick="saveDataToDB()">Save</button>
@@ -41,7 +41,7 @@
         data["name"] = name.value;
         var datepciker = document.getElementById("datepicker");
         data["datepicker"] = datepciker.value;
-        var description=document.getElementById("description");
+        var description = document.getElementById("description");
         data["description"] = description.value;
     }
 
@@ -64,9 +64,10 @@
     }
 
 
-
-    function getEventDataFromDB(){
-        fetch("<c:url value='/api/event/getevents'/>", {
+    function getEventDataFromDB() {
+        var id = getQueryVariable("id");
+        console.log(result);
+        fetch("<c:url value='/api/event/getoneevent'/>" + id, {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -74,19 +75,26 @@
             }
         }).then(function (response) {
             return response.json();
-        }).then(function (events) {
-            console.log(events);
-        var event = decodeURIComponent(location.search.substr(1)).split('&');
-        event.splice(0, 1);
-        var result = event[0];
-        console.log(result);
-        //document.getElementById("result").innerHTML = result;
+        }).then(function (event) {
+            console.log(event);
+
+        })
     }
 
-
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return (false);
+    }
 
     $(function () {
-        $( "#datepicker" ).datepicker();
-    } );
+        $("#datepicker").datepicker();
+    });
 </script>
 </html>

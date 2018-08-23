@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +92,13 @@ public class EventOrganizationApi {
     }
 
 
-
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/getoneevent/{id}")
+    public EventDto getEvent(@PathParam("id") Long id){
+        Event event=eventStore.getEventById(id);
+        EventDto dto=convertToEventDto(event);
+        return dto;
+    }
 
 }

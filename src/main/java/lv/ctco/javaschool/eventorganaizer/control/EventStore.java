@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +38,9 @@ public class EventStore {
 
     }
 
-    public Event getEventById(){
-        return  em.createQuery("select e from Event where e.id=:id",Event.class)
-                .setParameter("id",);
+    public Event getEventById(Long id){
+        return (Event) em.createQuery("select e from Event where e.id=:id",Event.class)
+                .setParameter("id",id);
     }
 
 }

@@ -63,8 +63,6 @@
 
     function goToEditPage(x) {
         location.href = "<c:url value='/app/add-event.jsp?id='/>" + x;
-
-
     }
 
 </script>
