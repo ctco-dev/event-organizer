@@ -9,11 +9,11 @@
 </head>
 <style>
     li {
-        width: 500px;
+        width: auto;
     }
 
     #editButton {
-        margin-left: 300px;
+        margin-left: 600px;
     }
 
     #createPoolButton {
@@ -26,20 +26,17 @@
 </p>
 <ul class="w3-ul" id="myevent-list">
     <li w3-repeat="eventList" type="text" id="eventElement">
-        <a href="<c:url value='/app/event.jsp'/>?id={{eventId}}" />
-        {{eventName}}
+
+        {{eventID}}-{{eventName}}
         <p>
-            <button onclick="goToEditPage()" id="editButton">Edit</button>
+            <button onclick="goToEditPage('{{eventID}}')" id="{{eventID}}">Edit</button>
             <button onclick="goToCreatePoolPage()" id="createPoolButton">Create Pool</button>
         </p>
     </li>
 </ul>
 
 <script>
-    function goToEditPage() {
 
-        location.href = "/app/add-event.jsp"+eventId;
-    }
 
     function goToCreatePoolPage() {
 
@@ -63,6 +60,13 @@
             }
         })
     }
+
+    function goToEditPage(x) {
+        location.href = "<c:url value='/app/add-event.jsp?id='/>" + x;
+
+
+    }
+
 </script>
 
 </body>

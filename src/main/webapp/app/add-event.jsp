@@ -62,6 +62,29 @@
 
 
     }
+
+
+
+    function getEventDataFromDB(){
+        fetch("<c:url value='/api/event/getevents'/>", {
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        }).then(function (events) {
+            console.log(events);
+        var event = decodeURIComponent(location.search.substr(1)).split('&');
+        event.splice(0, 1);
+        var result = event[0];
+        console.log(result);
+        //document.getElementById("result").innerHTML = result;
+    }
+
+
+
     $(function () {
         $( "#datepicker" ).datepicker();
     } );

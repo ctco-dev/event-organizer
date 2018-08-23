@@ -35,7 +35,11 @@ public class EventStore {
                 .setParameter("user",user)
                 .getResultList();
 
-
-
     }
+
+    public Event getEventById(){
+        return  em.createQuery("select e from Event where e.id=:id",Event.class)
+                .setParameter("id",);
+    }
+
 }
