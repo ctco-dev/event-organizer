@@ -51,7 +51,7 @@ public class EventOrganizationApi {
     @POST
     @Path("/save")
     public void saveEvent(JsonObject jsonObject) {
-        // EventDto eventDto = new EventDto();
+
         User user = userStore.getCurrentUser();
         Event event = new Event();
         for (Map.Entry<String, JsonValue> pair : jsonObject.entrySet()) {
@@ -63,11 +63,18 @@ public class EventOrganizationApi {
                 event.setDescription(value);
             } else if (adr.equals("datepicker")) {
                 event.setDate(value);
+            }else if(adr.equals("id")) {
+                event.setId(Long.valueOf(value));
             }
         }
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(user);
-        em.persist(event);
+        if(event.getId()==null) {
+            em.persist(event);
+        }
+        else {
+            em.merge(event);
+        }
     }
 
     @GET
@@ -77,9 +84,9 @@ public class EventOrganizationApi {
         User user = userStore.getCurrentUser();
         List<Event> event = eventStore.getAuthorEvents(user);
 
-       return new EventListDto(event.stream()
-               .map(this::convertToEventDto)
-               .collect(Collectors.toList()));
+        return new EventListDto(event.stream()
+                .map(this::convertToEventDto)
+                .collect(Collectors.toList()));
     }
 
     public EventDto convertToEventDto(Event event) {
@@ -95,10 +102,15 @@ public class EventOrganizationApi {
     @GET
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/getoneevent/{id}")
-    public EventDto getEvent(@PathParam("id") Long id){
-        Event event=eventStore.getEventById(id);
-        EventDto dto=convertToEventDto(event);
-        return dto;
+    public EventDto getEvent(@PathParam("id") Long id) {
+        Optional<Event> event1 = eventStore.getEventById(id);
+
+        if (event1.isPresent()) {
+            Event e = event1.get();
+            EventDto dto = convertToEventDto(e);
+            return dto;
+        } else
+            return null;
     }
 
 }

@@ -6,7 +6,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
-<body>
+<body onload="getEventDataFromDB()">
 <style>
     textarea {
 
@@ -34,6 +34,7 @@
     function goToTheMainPage() {
         location.href = "<c:url value='/app/start.jsp'/>";
     }
+
     var data = {};
 
     function getDataFromField() {
@@ -43,6 +44,10 @@
         data["datepicker"] = datepciker.value;
         var description = document.getElementById("description");
         data["description"] = description.value;
+        var id = getQueryVariable("id");
+        if (id) {
+            data["id"] = id;
+        }
     }
 
 
@@ -66,8 +71,8 @@
 
     function getEventDataFromDB() {
         var id = getQueryVariable("id");
-        console.log(result);
-        fetch("<c:url value='/api/event/getoneevent'/>" + id, {
+        console.log(id);
+        fetch("<c:url value='/api/event/getoneevent'/>/" + id, {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -77,7 +82,9 @@
             return response.json();
         }).then(function (event) {
             console.log(event);
-
+            document.getElementById("name").value = event.eventName;
+            document.getElementById("description").value = event.eventDescription;
+            document.getElementById("datepicker").value = event.eventDate;
         })
     }
 

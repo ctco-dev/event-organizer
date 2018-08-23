@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Stateless
@@ -31,16 +32,18 @@ public class EventStore {
         return list;
     }
 
-    public List<Event> getAuthorEvents(User user){
-        return em.createQuery("select e from Event e where e.author=:user",Event.class)
-                .setParameter("user",user)
+    public List<Event> getAuthorEvents(User user) {
+        return em.createQuery("select e from Event e where e.author=:user", Event.class)
+                .setParameter("user", user)
                 .getResultList();
 
     }
 
-    public Event getEventById(Long id){
-        return (Event) em.createQuery("select e from Event where e.id=:id",Event.class)
-                .setParameter("id",id);
+    public Optional<Event> getEventById(Long id) {
+        return em.createQuery("select e from Event e where e.id=:eventId", Event.class)
+                .setParameter("eventId", id)
+                .getResultStream()
+                .findFirst();
     }
 
 }

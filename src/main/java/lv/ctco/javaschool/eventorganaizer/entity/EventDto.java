@@ -33,7 +33,7 @@ public class EventDto {
         this.eventDescription = eventDescription;
     }
 
-    public String getEventDate(String date) {
+    public String getEventDate() {
         return eventDate;
     }
 
