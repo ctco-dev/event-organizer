@@ -7,15 +7,25 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
         ul {
-            list-style: none;
+            border: solid;
+        }
+        li{
+            border: thin;
+            width: auto;
         }
 
         a {
             underline-mode: none;
         }
+        #header{
+            border: dotted;
+            text:bold;
+            text-align: center;
+        }
     </style>
 </head>
 <body onload="checkTopics()">
+<header id="header"><h1>Our Events</h1></header>
 <div>
     <button type="button" onclick="logout()">Log out</button>
     <button type="button" onclick="addEvent()">Add Event</button>
@@ -23,7 +33,9 @@
 </div>
 
 <ul id="topic-list" class="w3-hide">
-    <li w3-repeat="topicList"><a href="<c:url value='/app/'/>{{path}}?id={{id}}">{{topicName}}</a> - {{topicAuthor}}
+    <li w3-repeat="topicList">
+        <div style="float: left"><a href="<c:url value='/app/'/>{{path}}?id={{id}}">{{topicName}}</a> </div>
+        <div style="float: right" >{{topicAuthor}}</div>
     </li>
 </ul>
 

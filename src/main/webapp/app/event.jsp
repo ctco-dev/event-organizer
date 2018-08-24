@@ -6,16 +6,31 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title id="title">{{eventName}}</title>
 </head>
+<style>
+    #displayInfo {
+        float: inherit;
+        padding: inherit;
+    }
+
+    #eventName-field {
+        align-content: center;
+    }
+    #header{
+        border: dotted;
+        text:bold;
+        text-align: center;
+    }
+</style>
 <body onload="loadEvent()">
 <div id="menu">
     <button type="button" onclick="main()">Back To Main</button>
     <button type="button" onclick="myEvents()">My Events</button>
     <button type="button" onclick="addEvent()">Add Event</button>
 </div>
-
-<div id="event-field" class="w3-hide">
-    <h1>{{eventName}} - {{eventDate}}</h1>
-    <p>{{eventDescription}}</p>
+<div id="event-field" class="w3-hide" align="center">
+    <h1>{{eventName}}</h1>
+    <h4 style="background: #c4e5ff">{{eventDate}}</h4>
+    <p style="border: thick">{{eventDescription}}</p>
 </div>
 
 

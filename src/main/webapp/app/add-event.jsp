@@ -3,6 +3,9 @@
 <html>
 <head>
     <title>Add/Edit Event</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
@@ -10,24 +13,38 @@
 <style>
     textarea {
 
-        height: 20px;
-        width: 200px;
+        height: 50px;
+        width: 400px;
     }
+    #buttons{
+        position: absolute;
+        bottom: 0;
+        width:100%;
+        height:60px;
+
+    }
+    #add,#edit{
+        border: dotted;
+        text:bold;
+        text-align: center;
+    }
+
 </style>
-<header>Add New Event</header>
-<form name="eventform" method="post">
+<header id="add" class="w3-hide"><h1>Add New Event</h1></header>
+<header id="edit" class="w3-hide">Edit Event</header>
+<form name="eventform" method="post" style="padding: 15px">
     <p><b>Name of Event</b></p>
     <p><textarea name="name" id="name"></textarea></p>
     <p><b>Description</b></p>
     <p><textarea name="desc" id="description"></textarea></p>
-    <p><b>Date</b>></p>
+    <p><b>Date</b></p>
     <p><input name="date" id="datepicker"></p>
 </form>
-<p>
+<div id="buttons" >
     <button type="submit" onclick="saveDataToDB()">Save</button>
     <button onclick="goToTheMainPage()">Cancel</button>
 
-</p>
+</div>
 </body>
 
 <script>
@@ -37,6 +54,7 @@
     function goToTheMainPage() {
         location.href = "<c:url value='/app/start.jsp'/>";
     }
+
 
     function getDataFromField() {
         var name = document.getElementById("name");
@@ -53,6 +71,12 @@
     function checkFunction() {
         if (id) {
             getEventDataFromDB();
+            document.getElementById("add").classList.add("w3-hide");
+            document.getElementById("edit").classList.remove("w3-hide");
+        }
+        else{
+            document.getElementById("edit").classList.add("w3-hide");
+            document.getElementById("add").classList.remove("w3-hide");
         }
     }
 
@@ -97,7 +121,7 @@
         var vars = query.split("&");
         for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
-            if (pair[0] === variable) {
+            if (pair[0] == variable) {
                 return pair[1];
             }
         }
