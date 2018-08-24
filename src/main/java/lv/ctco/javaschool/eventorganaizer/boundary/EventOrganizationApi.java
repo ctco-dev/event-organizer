@@ -3,7 +3,10 @@ package lv.ctco.javaschool.eventorganaizer.boundary;
 import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
-import lv.ctco.javaschool.eventorganaizer.entity.*;
+import lv.ctco.javaschool.eventorganaizer.entity.Event;
+import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
+import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
+import lv.ctco.javaschool.eventorganaizer.entity.TopicListDto;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -16,11 +19,11 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Path("/event")
 @Stateless
@@ -30,7 +33,6 @@ public class EventOrganizationApi {
 
     @Inject
     private UserStore userStore;
-
 
     @Inject
     private EventStore eventStore;
@@ -53,14 +55,19 @@ public class EventOrganizationApi {
     public void saveEvent(JsonObject jsonObject) {
         User user = userStore.getCurrentUser();
         Event event = new Event();
-        for(Map.Entry<String,JsonValue> pair : jsonObject.entrySet()){
+        for (Map.Entry<String, JsonValue> pair : jsonObject.entrySet()) {
             String adr = pair.getKey();
             String value = ((JsonString) pair.getValue()).getString();
             event = setFieldsToEvent(event, adr, value);
         }
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(user);
-        em.persist(event);
+        if(event.getId()==null) {
+            em.persist(event);
+        }
+        else {
+            em.merge(event);
+        }
     }
 
     @GET
@@ -93,5 +100,40 @@ public class EventOrganizationApi {
         return event;
     }
 
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/getevents")
+    public EventListDto getAllAuthorEvents() {
+        User user = userStore.getCurrentUser();
+        List<Event> event = eventStore.getAuthorEvents(user);
+
+        return new EventListDto(event.stream()
+                .map(this::convertToEventDto)
+                .collect(Collectors.toList()));
+    }
+
+    public EventDto convertToEventDto(Event event) {
+        EventDto dto = new EventDto();
+        dto.setEventName(event.getName());
+        dto.setEventDescription(event.getDescription());
+        dto.setEventDate(event.getDate());
+        dto.setEventID(event.getId());
+        return dto;
+    }
+
+
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/getoneevent/{id}")
+    public EventDto getEvent(@PathParam("id") Long id) {
+        Optional<Event> event1 = eventStore.getEventById(id);
+
+        if (event1.isPresent()) {
+            Event e = event1.get();
+            EventDto dto = convertToEventDto(e);
+            return dto;
+        } else
+            return null;
+    }
 
 }
