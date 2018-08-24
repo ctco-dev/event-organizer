@@ -6,13 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="http://www.w3schools.com/lib/w3data.js"></script>
+<style>
+
+</style>
 <body>
 
 <header class="w3-container w3-teal">
     <h1>Login or Register</h1>
 </header>
 
-<div class="w3-container w3-half w3-margin-top">
+<div class="w3-container w3-half w3-margin-top" align="center">
 
     <form class="w3-container w3-card-4">
         <div id="error-panel" class="w3-panel w3-red w3-hide">
