@@ -33,8 +33,10 @@ class EventOrganizationApiTest {
     EventOrganizationApi eventOrganizationApi;
 
     User u1 = new User();
+    User u2=new User();
     List<Event> events = new ArrayList<>();
     Event event = new Event();
+    Event event1=new Event();
     TopicDto topicDto;
     List<TopicDto> td = new ArrayList<>();
 
@@ -47,7 +49,10 @@ class EventOrganizationApiTest {
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(u1);
         topicDto = new TopicDto(event);
+
     }
+
+
 
     @Test
     void TestingIfGetAllOpenEventsReturnsCorrectDto() {
@@ -90,6 +95,28 @@ class EventOrganizationApiTest {
         assertThrows(IllegalArgumentException.class, () -> eventOrganizationApi.getEventById(null));
     }
 
+    @Test
+    void TestingOfThatAllAuthorsEventReturnsCorretly(){
+        events.add(event);
+        when(userStore.getCurrentUser())
+                .thenReturn(u1);
+        when(eventStore.getAuthorEvents(u1))
+                .thenReturn(events);
+        assertEquals("qwe",eventOrganizationApi.getAllAuthorEvents().getEventList().get(0).getEventName());
+        assertEquals(1,eventOrganizationApi.getAllAuthorEvents().getEventList().get(0).getEventID());
+        assertEquals(EventDto.class ,eventOrganizationApi.getAllAuthorEvents().getEventList().get(0).getClass());
+
+    }
+
+    @Test
+    void TestingOfReurningEmptyListOfAllAuthorsEvents(){
+
+        when(userStore.getCurrentUser())
+                .thenReturn(u1);
+        when(eventStore.getAuthorEvents(u1))
+                .thenReturn(events);
+        assertEquals(EventListDto.class,eventOrganizationApi.getAllAuthorEvents().getClass());
+    }
 
     //NON MOCKITO TESTS
 
