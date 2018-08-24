@@ -20,6 +20,14 @@ public class TopicDto {
         this.id = id;
     }
 
+    public TopicDto(Event event) {
+        this.topicName = event.getName();
+        this.topicAuthor = event.getAuthor().getUsername();
+        this.date = event.getDate();
+        this.path = "event.jsp";
+        this.id = event.getId();
+    }
+
     public String getTopicName() {
         return topicName;
     }

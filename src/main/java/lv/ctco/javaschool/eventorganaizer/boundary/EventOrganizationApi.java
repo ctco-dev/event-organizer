@@ -41,8 +41,7 @@ public class EventOrganizationApi {
         List<Event> listOfEvents = eventStore.getAllEvents();
         List<TopicDto> listTopics = new ArrayList<>();
         listOfEvents.forEach(e -> {
-            TopicDto topicDto = new TopicDto(e.getName(), e.getAuthor().getUsername(),
-                    e.getDate(), false, e.getId());
+            TopicDto topicDto = new TopicDto(e);
             listTopics.add(topicDto);
         });
         return new TopicListDto(listTopics);
@@ -77,15 +76,19 @@ public class EventOrganizationApi {
         }
     }
 
-    Event setFieldsToEvent(Event event, String adr, String value) {
-        if (adr.equals("name")) {
-            event.setName(value);
-        } else if (adr.equals("description")) {
-            event.setDescription(value);
-        } else if (adr.equals("datepicker")) {
-            event.setDate(value);
-        } else {
-            throw new IllegalArgumentException();
+    Event setFieldsToEvent(Event event, String adr, String value) throws IllegalArgumentException {
+        switch (adr) {
+            case ("name"):
+                event.setName(value);
+                break;
+            case ("description"):
+                event.setDescription(value);
+                break;
+            case ("datepicker"):
+                event.setDate(value);
+                break;
+            default:
+                throw new IllegalArgumentException();
         }
         return event;
     }

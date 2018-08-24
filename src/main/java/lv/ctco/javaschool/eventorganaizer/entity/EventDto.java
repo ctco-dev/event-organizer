@@ -1,8 +1,5 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
-/**
- * Created by alisa.prudtskih01 on 8/22/2018.
- */
 public class EventDto {
     private String eventName;
     private String eventDescription;
