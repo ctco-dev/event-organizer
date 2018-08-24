@@ -92,6 +92,9 @@ public class EventOrganizationApi {
             case ("datepicker"):
                 event.setDate(value);
                 break;
+            case ("id"):
+                event.setId(Long.valueOf(value));
+                break;
             default:
                 throw new IllegalArgumentException();
         }

@@ -2,11 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Add Event</title>
+    <title>Add/Edit Event</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
-<body onload="getEventDataFromDB()">
+<body onload="checkFunction()">
 <style>
     textarea {
 
@@ -31,11 +31,12 @@
 </body>
 
 <script>
+    var data = {};
+    var id = getQueryVariable("id");
+
     function goToTheMainPage() {
         location.href = "<c:url value='/app/start.jsp'/>";
     }
-
-    var data = {};
 
     function getDataFromField() {
         var name = document.getElementById("name");
@@ -44,9 +45,14 @@
         data["datepicker"] = datepciker.value;
         var description = document.getElementById("description");
         data["description"] = description.value;
-        var id = getQueryVariable("id");
         if (id) {
             data["id"] = id;
+        }
+    }
+
+    function checkFunction() {
+        if (id !== null) {
+            getEventDataFromDB();
         }
     }
 
@@ -91,7 +97,7 @@
         var vars = query.split("&");
         for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
-            if (pair[0] == variable) {
+            if (pair[0] === variable) {
                 return pair[1];
             }
         }
