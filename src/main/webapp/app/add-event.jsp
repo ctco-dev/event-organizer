@@ -51,7 +51,7 @@
     }
 
     function checkFunction() {
-        if (id !== null) {
+        if (id) {
             getEventDataFromDB();
         }
     }
