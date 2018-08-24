@@ -25,7 +25,7 @@
     <button onclick="goToTheMainPage()">Go to the main page</button>
 </p>
 <ul class="w3-ul" id="myevent-list">
-    <li w3-repeat="eventList" type="text" id="eventElement">
+    <li w3-repeat="eventList" type="text" id="eventElement" class="w3-hide">
 
         {{eventID}}-{{eventName}}
         <p>
@@ -59,6 +59,9 @@
                 w3DisplayData("myevent-list", events);
             }
         })
+    }
+    function goToTheMainPage() {
+        location.href = "/app/start.jsp"
     }
 
     function goToEditPage(x) {
