@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Path("/event")
 @Stateless
@@ -107,33 +106,13 @@ public class EventOrganizationApi {
     public EventListDto getAllAuthorEvents() {
         User user = userStore.getCurrentUser();
         List<Event> event = eventStore.getAuthorEvents(user);
-
-        return new EventListDto(event.stream()
-                .map(this::convertToEventDto)
-                .collect(Collectors.toList()));
+        List<EventDto> listE = new ArrayList<>();
+        for (Event e : event) {
+            EventDto eventDto = new EventDto(e);
+            listE.add(eventDto);
+        }
+        return new EventListDto(listE);
     }
 
-    public EventDto convertToEventDto(Event event) {
-        EventDto dto = new EventDto();
-        dto.setEventName(event.getName());
-        dto.setEventDescription(event.getDescription());
-        dto.setEventDate(event.getDate());
-        dto.setEventID(event.getId());
-        return dto;
-    }
-
-
-    @GET
-    @RolesAllowed({"ADMIN", "USER"})
-    @Path("/getoneevent/{id}")
-    public EventDto getEvent(@PathParam("id") Long id) {
-        Optional<Event> event1 = eventStore.getEventById(id);
-        if (event1.isPresent()) {
-            Event e = event1.get();
-            EventDto dto = convertToEventDto(e);
-            return dto;
-        } else
-            return null;
-    }
 
 }

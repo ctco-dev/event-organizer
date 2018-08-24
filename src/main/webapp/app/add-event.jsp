@@ -76,7 +76,7 @@
     function getEventDataFromDB() {
         var id = getQueryVariable("id");
         console.log(id);
-        fetch("<c:url value='/api/event/getoneevent'/>/" + id, {
+        fetch("<c:url value='/api/event/'/>" + id, {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',

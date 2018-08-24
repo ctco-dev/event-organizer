@@ -13,6 +13,7 @@ public class EventDto {
         this.eventDate = e.getDate();
         this.eventName = e.getName();
         this.eventDescription = e.getDescription();
+        this.eventID = e.getId();
     }
 
     public long getEventID() {
