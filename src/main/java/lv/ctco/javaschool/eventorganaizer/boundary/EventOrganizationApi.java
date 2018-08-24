@@ -71,7 +71,7 @@ public class EventOrganizationApi {
     @GET
     @RolesAllowed({"USER", "ADMIN"})
     @Path("/{id}")
-    public EventDto getEventById(@PathParam("id") Long id) {
+    public EventDto getEventById(@PathParam("id") Long id) throws IllegalArgumentException {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
@@ -128,7 +128,6 @@ public class EventOrganizationApi {
     @Path("/getoneevent/{id}")
     public EventDto getEvent(@PathParam("id") Long id) {
         Optional<Event> event1 = eventStore.getEventById(id);
-
         if (event1.isPresent()) {
             Event e = event1.get();
             EventDto dto = convertToEventDto(e);

@@ -3,10 +3,7 @@ package lv.ctco.javaschool.eventorganaizer.boundary;
 import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
-import lv.ctco.javaschool.eventorganaizer.entity.Event;
-import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
-import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
-import lv.ctco.javaschool.eventorganaizer.entity.TopicListDto;
+import lv.ctco.javaschool.eventorganaizer.entity.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,12 +47,11 @@ class EventOrganizationApiTest {
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(u1);
         topicDto = new TopicDto(event);
-        td.add(topicDto);
-        events.add(event);
     }
 
     @Test
-    void someTest() {
+    void TestingIfGetAllOpenEventsReturnsCorrectDto() {
+        events.add(event);
         when(eventStore.getAllEvents())
                 .thenReturn(events);
         TopicListDto td2 = new TopicListDto(eventOrganizationApi.getAllOpenEvents().getTopicList());
@@ -64,6 +60,34 @@ class EventOrganizationApiTest {
         assertEquals(td.get(0).getTopicName(), td2.getTopicList().get(0).getTopicName());
         assertEquals(td.get(0).getTopicAuthor(), td2.getTopicList().get(0).getTopicAuthor());
         assertEquals(td.get(0).getDate(), td2.getTopicList().get(0).getDate());
+    }
+
+    @Test
+    void TestingIfGetAllOpenEventsReturnsEmptyDto() {
+        when(eventStore.getAllEvents())
+                .thenReturn(events);
+        TopicListDto td2 = new TopicListDto(eventOrganizationApi.getAllOpenEvents().getTopicList());
+        assertEquals(td.size(), td2.getTopicList().size());
+    }
+
+    @Test
+    void TestingIfGetEventByIdReturnsNeededEvent() {
+        EventDto evDto = new EventDto(event);
+        when(eventStore.getEventById((long) 1))
+                .thenReturn(java.util.Optional.ofNullable(event));
+        assertEquals(evDto.getEventID(), eventOrganizationApi.getEventById((long) 1).getEventID());
+    }
+
+    @Test
+    void TestingIfGetEventByIdTrowsException() {
+        when(eventStore.getEventById((long) 1))
+                .thenReturn(java.util.Optional.empty());
+        assertThrows(IllegalArgumentException.class, () -> eventOrganizationApi.getEventById((long) 1));
+    }
+
+    @Test
+    void TestingIfGetEventByIdTrowsExceptionIfNullAsArgument() {
+        assertThrows(IllegalArgumentException.class, () -> eventOrganizationApi.getEventById(null));
     }
 
 
