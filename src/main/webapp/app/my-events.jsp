@@ -73,7 +73,7 @@
         }).then(function (events) {
             console.log(events);
             if (events.eventList.length > 0) {
-                document.getElementById("myevent-list").classList.remove("w3-hide");
+                document.getElementById("eventElement").classList.remove("w3-hide");
                 w3DisplayData("myevent-list", events);
             }
         })
