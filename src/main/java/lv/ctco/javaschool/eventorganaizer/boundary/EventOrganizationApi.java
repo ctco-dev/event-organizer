@@ -91,6 +91,9 @@ public class EventOrganizationApi {
             case ("datepicker"):
                 event.setDate(value);
                 break;
+            case ("agenda"):
+                event.setAgenda(value);
+                break;
             case ("id"):
                 event.setId(Long.valueOf(value));
                 break;

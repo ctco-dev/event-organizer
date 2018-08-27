@@ -31,6 +31,8 @@
     <h1>{{eventName}}</h1>
     <h4 style="background: #c4e5ff">{{eventDate}}</h4>
     <p style="border: thick">{{eventDescription}}</p>
+    <p style="border: thick">{{eventAgenda}}</p>
+
 </div>
 
 
@@ -51,6 +53,7 @@
                 document.getElementById("event-field").classList.remove("w3-hide");
                 w3.displayObject("title", event);
                 w3.displayObject("event-field", event);
+//                w3.displayObject("event-field", event);
             }
         })
 

@@ -5,6 +5,8 @@ public class EventDto {
     private String eventName;
     private String eventDescription;
     private String eventDate;
+    private String eventAgenda;
+
 
     public EventDto() {
     }
@@ -14,6 +16,7 @@ public class EventDto {
         this.eventName = e.getName();
         this.eventDescription = e.getDescription();
         this.eventID = e.getId();
+        this.eventAgenda = e.getAgenda();
     }
 
     public long getEventID() {
@@ -45,4 +48,9 @@ public class EventDto {
     public void setEventDate(String eventDate) {
         this.eventDate = eventDate;
     }
+
+    public String getEventAgenda() { return eventAgenda; }
+
+    public void setEventAgenda(String eventAgenda) { this.eventAgenda = eventAgenda; }
+
 }
