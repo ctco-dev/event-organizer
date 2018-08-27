@@ -60,8 +60,51 @@
 
 
     }
-    $(function () {
-        $( "#datepicker" ).datepicker();
-    } );
+
+    <p id="datepairExample">
+        <input type="text" class="date start" />
+        <input type="text" class="time start" /> to
+        <input type="text" class="time end" />
+        <input type="text" class="date end" />
+        </p>
+
+        <script type="text/javascript" src="datepair.js"></script>
+<script type="text/javascript" src="jquery.datepair.js"></script>
+<script>
+    // initialize input widgets first
+    $('#datepairExample .time').timepicker({
+        'showDuration': true,
+        'timeFormat': 'g:ia'
+    });
+
+    $('#datepairExample .date').datepicker({
+        'format': 'yyyy-m-d',
+        'autoclose': true
+    });
+
+    // initialize datepair
+    $('#datepairExample').datepair();
+</script>
+    // initialize input widgets first
+    $('#datepairExample .time').timepicker({
+        'showDuration': true,
+        'timeFormat': 'g:ia'
+    });
+
+    $('#datepairExample .date').datepicker({
+        'format': 'yyyy-m-d',
+        'autoclose': true
+    });
+
+    // initialize datepair
+    $('#datepairExample').datepair();
+</script>
+
+//http://jonthornton.github.io/jquery-timepicker/
+
+//    $(function () {
+//        $( "#datepicker" ).datepicker();
+//    } );
+
 </script>
 </html>
