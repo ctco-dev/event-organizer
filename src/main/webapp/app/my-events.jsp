@@ -44,7 +44,7 @@
         <a href="<c:url value='/app/event.jsp'/>?id={{eventID}}">{{eventName}}</a>
         <p>
             <button onclick="goToEditPage('{{eventID}}')" id="edit">Edit</button>
-            <button onclick="goToCreatePoolPage()" id="createPoolButton">Create Pool</button>
+            <button onclick="goToCreatePollPage('{{eventID}}')" id="createPoolButton">Create Pool</button>
         </p>
     </li>
 </ul>
@@ -52,9 +52,8 @@
 <script>
 
 
-    function goToCreatePoolPage() {
-
-
+    function goToCreatePollPage(x) {
+        location.href = "<c:url value='/app/poll.jsp?id='/>" + x;
     }
 
     function goToTheMainPage(){

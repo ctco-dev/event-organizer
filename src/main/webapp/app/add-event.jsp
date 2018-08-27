@@ -93,7 +93,6 @@
             location.href = "<c:url value='/app/start.jsp'/>";
         });
 
-
     }
 
 
