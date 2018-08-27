@@ -59,10 +59,9 @@ public class EventOrganizationApi {
         }
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(user);
-        if(event.getId()==null) {
+        if (event.getId() == null) {
             em.persist(event);
-        }
-        else {
+        } else {
             em.merge(event);
         }
     }
@@ -116,6 +115,4 @@ public class EventOrganizationApi {
         }
         return new EventListDto(listE);
     }
-
-
 }
