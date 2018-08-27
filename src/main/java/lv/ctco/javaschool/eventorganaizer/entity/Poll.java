@@ -6,7 +6,6 @@ import lv.ctco.javaschool.auth.entity.domain.User;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 
 @Entity
@@ -16,9 +15,6 @@ public class Poll {
     private Long id;
 
     private Event event;
-
-    @ManyToOne
-    private User author;
 
     private String question;
     private ArrayList<String> answers;
@@ -38,14 +34,6 @@ public class Poll {
 
     public void setEvent(Event event) {
         this.event = event;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
     }
 
     public String getQuestion() {

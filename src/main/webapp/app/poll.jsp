@@ -13,6 +13,12 @@
     <h4>Event data:  {{eventDate}}</h4>
 </div>
 
+
+
+<p>
+    <button onclick="addPoll()">Create new Poll</button>
+</p>
+
 <script>
     function loadEvent() {
         var id = getQueryVariable("id");
@@ -43,6 +49,9 @@
             }
         }
         return (false);
+    }
+    function addPoll() {
+
     }
 
 </script>

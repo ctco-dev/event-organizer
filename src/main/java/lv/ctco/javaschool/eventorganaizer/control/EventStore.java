@@ -37,6 +37,7 @@ public class EventStore {
                 .getResultStream()
                 .findFirst();
     }
+
     public List<Event> getAuthorEvents(User user) {
         return em.createQuery("select e from Event e where e.author=:user", Event.class)
                 .setParameter("user", user)
