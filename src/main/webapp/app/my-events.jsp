@@ -72,15 +72,21 @@
             return response.json();
         }).then(function (events) {
             console.log(events);
-            if (events.eventList.length > 0) {
+            if (events.length > 0) {
                 document.getElementById("eventElement").classList.remove("w3-hide");
-                w3DisplayData("myevent-list", events);
+                w3DisplayData("myevent-list", new EventList(events));
             }
         })
     }
 
     function goToEditPage(x) {
         location.href = "<c:url value='/app/add-event.jsp?id='/>" + x;
+    }
+
+    class EventList {
+        constructor(events) {
+            this.eventList = events
+        }
     }
 
 </script>

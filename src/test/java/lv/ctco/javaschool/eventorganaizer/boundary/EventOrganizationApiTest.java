@@ -102,9 +102,9 @@ class EventOrganizationApiTest {
                 .thenReturn(u1);
         when(eventStore.getAuthorEvents(u1))
                 .thenReturn(events);
-        assertEquals("qwe",eventOrganizationApi.getAllAuthorEvents().getEventList().get(0).getEventName());
-        assertEquals(1,eventOrganizationApi.getAllAuthorEvents().getEventList().get(0).getEventID());
-        assertEquals(EventDto.class ,eventOrganizationApi.getAllAuthorEvents().getEventList().get(0).getClass());
+        assertEquals("qwe",eventOrganizationApi.getAllAuthorEvents().get(0).getEventName());
+        assertEquals(1,eventOrganizationApi.getAllAuthorEvents().get(0).getEventID());
+        assertEquals(EventDto.class ,eventOrganizationApi.getAllAuthorEvents().get(0).getClass());
 
     }
 
@@ -115,7 +115,7 @@ class EventOrganizationApiTest {
                 .thenReturn(u1);
         when(eventStore.getAuthorEvents(u1))
                 .thenReturn(events);
-        assertEquals(EventListDto.class,eventOrganizationApi.getAllAuthorEvents().getClass());
+        assertEquals(EventDto.class,eventOrganizationApi.getAllAuthorEvents().getClass());
     }
 
     //NON MOCKITO TESTS
@@ -135,7 +135,7 @@ class EventOrganizationApiTest {
         assertThrows(IllegalArgumentException.class, () -> {
             EventOrganizationApi eventOrganizationApi = new EventOrganizationApi();
             String adrr = "date";
-            String value = "datepicker";
+            String value = "date";
             Event e = new Event();
             eventOrganizationApi.setFieldsToEvent(e, adrr, value);
         });
@@ -146,7 +146,7 @@ class EventOrganizationApiTest {
         assertThrows(NullPointerException.class, () -> {
             EventOrganizationApi eventOrganizationApi = new EventOrganizationApi();
             String adrr = null;
-            String value = "datepicker";
+            String value = "date";
             Event e = new Event();
             eventOrganizationApi.setFieldsToEvent(e, adrr, value);
         });

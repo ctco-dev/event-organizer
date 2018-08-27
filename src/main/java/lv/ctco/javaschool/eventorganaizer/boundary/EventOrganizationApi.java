@@ -4,6 +4,7 @@ import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.entity.*;
+import sun.rmi.runtime.Log;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 @Path("/event")
 @Stateless
@@ -46,26 +49,29 @@ public class EventOrganizationApi {
         return new TopicListDto(listTopics);
     }
 
+
     @POST
     @Path("/save")
     @RolesAllowed({"USER", "ADMIN"})
-    public void saveEvent(JsonObject jsonObject) {
+    public void saveEvent(Event event) {
         User user = userStore.getCurrentUser();
-        Event event = new Event();
-        for (Map.Entry<String, JsonValue> pair : jsonObject.entrySet()) {
-            String adr = pair.getKey();
-            String value = ((JsonString) pair.getValue()).getString();
-            event = setFieldsToEvent(event, adr, value);
-        }
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(user);
-        if(event.getId()==null) {
-            em.persist(event);
-        }
-        else {
-            em.merge(event);
-        }
+        em.persist(event);
+
     }
+
+    @POST
+    @Path("/update")
+    @RolesAllowed({"USER", "ADMIN"})
+    public void updateEvent(Event event) {
+        User user = userStore.getCurrentUser();
+        event.setStatus(EventStatus.OPEN);
+        event.setAuthor(user);
+        em.merge(event);
+
+    }
+
 
     @GET
     @RolesAllowed({"USER", "ADMIN"})
@@ -88,7 +94,7 @@ public class EventOrganizationApi {
             case ("description"):
                 event.setDescription(value);
                 break;
-            case ("datepicker"):
+            case ("date"):
                 event.setDate(value);
                 break;
             case ("id"):
@@ -103,7 +109,7 @@ public class EventOrganizationApi {
     @GET
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/getevents")
-    public EventListDto getAllAuthorEvents() {
+    public List<EventDto> getAllAuthorEvents() {
         User user = userStore.getCurrentUser();
         List<Event> event = eventStore.getAuthorEvents(user);
         List<EventDto> listE = new ArrayList<>();
@@ -111,7 +117,7 @@ public class EventOrganizationApi {
             EventDto eventDto = new EventDto(e);
             listE.add(eventDto);
         }
-        return new EventListDto(listE);
+        return listE;
     }
 
 
