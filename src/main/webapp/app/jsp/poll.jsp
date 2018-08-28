@@ -4,13 +4,14 @@
 <head>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
     <title id="title">Poll Event</title>
 </head>
 <body onload="loadEvent()">
 <header id="header"><h1>Event Poll</h1></header>
 <div id="event-field" class="w3-hide">
-    <h2>Event name: {{eventName}}</h2>
-    <h4>Event data: {{eventDate}}</h4>
+    <h2> Event name: {{eventName}}</h2>
+    <h4> Event data: {{eventDate}}</h4>
 </div>
 
 <form name="pollform" method="post" style="padding: 15px">
@@ -25,7 +26,7 @@
 
 
 <p>
-    <button onclick="savePollToDB()">Create new Poll</button>
+    <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
 </p>
 
 <script>

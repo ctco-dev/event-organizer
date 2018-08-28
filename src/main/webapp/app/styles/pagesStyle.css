@@ -12,7 +12,7 @@ textarea {
 
 }
 
-#add, #edit, #header {
+#add, #edit, #header, #title {
     /*border: dotted;*/
     text: bold;
     text-align: center;
@@ -66,4 +66,8 @@ a {
 
 #eventName-field {
     align-content: center;
+}
+
+#event-field {
+    margin: 0px 0px 5px 15px;
 }
