@@ -97,7 +97,6 @@ public class EventOrganizationApi {
     public void savePoll(Poll poll,@PathParam("id") Long id){
        poll.setEventID(id);
        em.persist(poll);
-
     }
 //
 //    @GET
@@ -107,8 +106,4 @@ public class EventOrganizationApi {
 //        List<Poll> pollList=pollStore.getPollByIdEvent();
 //
 //    }
-
-
-
-
 }

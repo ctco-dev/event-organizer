@@ -35,7 +35,6 @@
     var data = {};
 
     function getData() {
-        data["eventId"] = id.value;
         var question = document.getElementById("question");
         data["question"] = question.value;
         var answers = document.getElementById("answers");
@@ -43,6 +42,8 @@
         var isFeedback = document.getElementById("isFeedback");
         if (isFeedback.value == "on") {
             data["isFeedback"] = true;
+        } else {
+            data["isFeedback"] = false;
         }
     }
 

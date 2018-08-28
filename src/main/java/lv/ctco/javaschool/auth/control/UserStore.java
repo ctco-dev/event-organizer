@@ -75,5 +75,4 @@ public class UserStore {
                 .orElseThrow(IllegalStateException::new);
     }
 
-
 }

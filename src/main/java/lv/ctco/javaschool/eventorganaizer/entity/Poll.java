@@ -15,7 +15,6 @@ public class Poll {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
     private Long eventID;
 
     private String question;
