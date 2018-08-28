@@ -5,12 +5,11 @@
     <title>Add/Edit Event</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="pagesStyle.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body onload="checkFunction()">
-<link rel="stylesheet" type="text/css" href="pagesStyle.css">
-
 <header id="add" class="w3-hide"><h1>Add New Event</h1></header>
 <header id="edit" class="w3-hide"><h1>Edit Event</h1></header>
 <form name="eventform" method="post" style="padding: 15px">
@@ -35,21 +34,19 @@
     var id = getQueryVariable("id");
 
     function goToTheMainPage() {
-        location.href = "<c:url value='/app/start.jsp'/>";
+        location.href = "<c:url value='/app/jsp/start.jsp'/>";
     }
-
 
     function getDataFromField() {
         var name = document.getElementById("name");
         data["name"] = name.value;
-        var date = document.getElementById("datepicker");
-        data["date"] = date.value;
+        var eventdate = document.getElementById("datepicker");
+        data["date"] = eventdate.value;
         var description = document.getElementById("description");
         data["description"] = description.value;
         if (id) {
             data["id"] = id;
         }
-
     }
 
     function checkFunction() {
@@ -79,7 +76,7 @@
                 'Content-Type': 'application/json'
             }, body: JSON.stringify(data)
         }).then(function (response) {
-            location.href = "<c:url value='/app/start.jsp'/>";
+            location.href = "<c:url value='/app/jsp/start.jsp'/>";
         });
 
 
@@ -94,7 +91,7 @@
                 'Content-Type': 'application/json'
             }, body: JSON.stringify(data)
         }).then(function (response) {
-            location.href = "<c:url value='/app/start.jsp'/>";
+            location.href = "<c:url value='/app/jsp/start.jsp'/>";
 
         });
 
@@ -115,7 +112,7 @@
         }).then(function (event) {
             document.getElementById("name").value = event.eventName;
             document.getElementById("description").value = event.eventDescription;
-            document.getElementById("date").value = event.eventDate;
+            document.getElementById("datepicker").value = event.eventDate;
         })
     }
 

@@ -16,7 +16,7 @@
 </div>
 <div id="event-field" class="w3-hide" align="center">
     <h1>{{eventName}}</h1>
-    <h4 style="background: #c4e5ff">{{date}}</h4>
+    <h4 style="background: #c4e5ff">{{eventDate}}</h4>
     <p style="border: thick">{{eventDescription}}</p>
 </div>
 
@@ -44,14 +44,14 @@
     }
 
     function addEvent() {
-        location.href = "/app/add-event.jsp"
+        location.href = "/app/jsp/add-event.jsp"
     }
     function main() {
-        location.href = "/app/start.jsp"
+        location.href = "/app/jsp/start.jsp"
     }
 
     function myEvents() {
-        location.href = "/app/my-events.jsp"
+        location.href = "/app/jsp/my-events.jsp"
     }
 
     function getQueryVariable(variable) {

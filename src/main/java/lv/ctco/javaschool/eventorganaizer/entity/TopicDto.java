@@ -12,11 +12,6 @@ public class TopicDto {
         this.topicName = topicName;
         this.topicAuthor = topicAuthor;
         this.date = date;
-        if (isFeedbackPool) {
-            this.path = "pool.jsp";
-        } else {
-            this.path = "event.jsp";
-        }
         this.id = id;
     }
 
@@ -24,7 +19,6 @@ public class TopicDto {
         this.topicName = event.getName();
         this.topicAuthor = event.getAuthor().getUsername();
         this.date = event.getDate();
-        this.path = "event.jsp";
         this.id = event.getId();
     }
 

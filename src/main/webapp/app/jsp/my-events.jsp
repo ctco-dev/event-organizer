@@ -16,7 +16,7 @@
 </p>
 <ul class="w3-ul" id="myevent-list">
     <li w3-repeat="eventList" type="text" id="eventElement" class="w3-hide">
-        <a href="<c:url value='/app/event.jsp'/>?id={{eventID}}">{{eventName}}</a>
+        <a href="<c:url value='/app/jsp/event.jsp'/>?id={{eventID}}">{{eventName}}</a>
         <p>
             <button onclick="goToEditPage('{{eventID}}')" id="goToEdit">Edit</button>
             <button onclick="goToCreatePoolPage()" id="createPoolButton">Create Pool</button>
@@ -31,7 +31,7 @@
     }
 
     function goToTheMainPage() {
-        location.href = "<c:url value='/app/start.jsp'/>"
+        location.href = "<c:url value='/app/jsp/start.jsp'/>"
     }
 
     function getEventsFromDB() {
@@ -53,7 +53,7 @@
     }
 
     function goToEditPage(x) {
-        location.href = "<c:url value='/app/add-event.jsp?id='/>" + x;
+        location.href = "<c:url value='/app/jsp/add-event.jsp?id='/>" + x;
     }
 
     class EventList {

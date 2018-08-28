@@ -17,17 +17,17 @@
 
 <ul id="topic-list" class="w3-hide">
     <li w3-repeat="topicList">
-        <div style="float: left"><a href="<c:url value='/app/'/>{{path}}?id={{id}}">{{topicName}}</a> </div>
+        <div style="float: left"><a href="<c:url value='/app'/>{{path}}?id={{id}}">{{topicName}}</a> </div>
         <div style="float: right" >{{topicAuthor}}</div>
     </li>
 </ul>
 
 <script>
     function addEvent() {
-        location.href = "/app/add-event.jsp"
+        location.href = "/app/jsp/add-event.jsp"
     }
     function myEvents() {
-        location.href = "/app/my-events.jsp"
+        location.href = "/app/jsp/my-events.jsp"
     }
     function checkTopics() {
         fetch("<c:url value='/api/event'/>", {
