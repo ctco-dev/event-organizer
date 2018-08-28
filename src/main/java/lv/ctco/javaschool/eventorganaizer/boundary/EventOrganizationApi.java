@@ -17,6 +17,7 @@ import javax.ws.rs.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Path("/event")
 @Stateless
@@ -46,9 +47,8 @@ public class EventOrganizationApi {
     @Path("/save")
     @RolesAllowed({"USER", "ADMIN"})
     public void saveEvent(Event event) {
-        User user = userStore.getCurrentUser();
         event.setStatus(EventStatus.OPEN);
-        event.setAuthor(user);
+        event.setAuthor(userStore.getCurrentUser());
         em.persist(event);
     }
 
@@ -56,9 +56,8 @@ public class EventOrganizationApi {
     @Path("/update")
     @RolesAllowed({"USER", "ADMIN"})
     public void updateEvent(Event event) {
-        User user = userStore.getCurrentUser();
         event.setStatus(EventStatus.OPEN);
-        event.setAuthor(user);
+        event.setAuthor(userStore.getCurrentUser());
         em.merge(event);
 
     }
@@ -81,13 +80,10 @@ public class EventOrganizationApi {
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/getevents")
     public List<EventDto> getAllAuthorEvents() {
-        User user = userStore.getCurrentUser();
-        List<Event> event = eventStore.getAuthorEvents(user);
-        List<EventDto> listE = new ArrayList<>();
-        for (Event e : event) {
-            EventDto eventDto = new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId());
-            listE.add(eventDto);
-        }
-        return listE;
+        List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
+
+      return event.stream()
+              .map(e -> new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId()))
+              .collect(Collectors.toList());
     }
 }
