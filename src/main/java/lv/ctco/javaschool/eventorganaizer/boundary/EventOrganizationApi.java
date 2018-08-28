@@ -4,14 +4,10 @@ import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.entity.*;
-import sun.rmi.runtime.Log;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.json.JsonObject;
-import javax.json.JsonString;
-import javax.json.JsonValue;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
@@ -20,10 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 @Path("/event")
 @Stateless
@@ -58,7 +51,6 @@ public class EventOrganizationApi {
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(user);
         em.persist(event);
-
     }
 
     @POST
@@ -86,26 +78,6 @@ public class EventOrganizationApi {
         }
     }
 
-    Event setFieldsToEvent(Event event, String adr, String value) throws IllegalArgumentException {
-        switch (adr) {
-            case ("name"):
-                event.setName(value);
-                break;
-            case ("description"):
-                event.setDescription(value);
-                break;
-            case ("date"):
-                event.setDate(value);
-                break;
-            case ("id"):
-                event.setId(Long.valueOf(value));
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
-        return event;
-    }
-
     @GET
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/getevents")
@@ -119,6 +91,4 @@ public class EventOrganizationApi {
         }
         return listE;
     }
-
-
 }

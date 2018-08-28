@@ -33,10 +33,10 @@ class EventOrganizationApiTest {
     EventOrganizationApi eventOrganizationApi;
 
     User u1 = new User();
-    User u2=new User();
+    User u2 = new User();
     List<Event> events = new ArrayList<>();
     Event event = new Event();
-    Event event1=new Event();
+    Event event1 = new Event();
     TopicDto topicDto;
     List<TopicDto> td = new ArrayList<>();
 
@@ -51,7 +51,6 @@ class EventOrganizationApiTest {
         topicDto = new TopicDto(event);
 
     }
-
 
 
     @Test
@@ -96,60 +95,27 @@ class EventOrganizationApiTest {
     }
 
     @Test
-    void TestingOfThatAllAuthorsEventReturnsCorretly(){
+    void TestingOfThatAllAuthorsEventReturnsCorretly() {
         events.add(event);
         when(userStore.getCurrentUser())
                 .thenReturn(u1);
         when(eventStore.getAuthorEvents(u1))
                 .thenReturn(events);
-        assertEquals("qwe",eventOrganizationApi.getAllAuthorEvents().get(0).getEventName());
-        assertEquals(1,eventOrganizationApi.getAllAuthorEvents().get(0).getEventID());
-        assertEquals(EventDto.class ,eventOrganizationApi.getAllAuthorEvents().get(0).getClass());
+        assertEquals("qwe", eventOrganizationApi.getAllAuthorEvents().get(0).getEventName());
+        assertEquals(1, eventOrganizationApi.getAllAuthorEvents().get(0).getEventID());
+        assertEquals(EventDto.class, eventOrganizationApi.getAllAuthorEvents().get(0).getClass());
 
     }
 
     @Test
-    void TestingOfReurningEmptyListOfAllAuthorsEvents(){
+    void TestingOfReurningEmptyListOfAllAuthorsEvents() {
 
         when(userStore.getCurrentUser())
                 .thenReturn(u1);
         when(eventStore.getAuthorEvents(u1))
                 .thenReturn(events);
-        assertEquals(EventDto.class,eventOrganizationApi.getAllAuthorEvents().getClass());
+        assertEquals(EventDto.class, eventOrganizationApi.getAllAuthorEvents().getClass());
     }
 
-    //NON MOCKITO TESTS
-
-    @Test
-    void setFieldsToEventSetsUpName() {
-        EventOrganizationApi eventOrganizationApi = new EventOrganizationApi();
-        String adrr = "name";
-        String value = "name";
-        Event e = new Event();
-
-        assertEquals(value, eventOrganizationApi.setFieldsToEvent(e, adrr, value).getName());
-    }
-
-    @Test
-    void setFieldsToEventWrongAddressReturnsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            EventOrganizationApi eventOrganizationApi = new EventOrganizationApi();
-            String adrr = "date";
-            String value = "date";
-            Event e = new Event();
-            eventOrganizationApi.setFieldsToEvent(e, adrr, value);
-        });
-    }
-
-    @Test
-    void setFieldsToEventNullAddressThrowsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> {
-            EventOrganizationApi eventOrganizationApi = new EventOrganizationApi();
-            String adrr = null;
-            String value = "date";
-            Event e = new Event();
-            eventOrganizationApi.setFieldsToEvent(e, adrr, value);
-        });
-    }
 
 }

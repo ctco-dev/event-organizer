@@ -7,33 +7,8 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
 </head>
-<style>
-    ul{
-       border: solid;
-        text-align: left;
-    }
-    li {
+<link rel="stylesheet" type="text/css" href="pagesStyle.css">
 
-        border: thin;
-        width: auto;
-    }
-
-    #edit {
-        margin-left: 600px;
-    }
-
-    #createPoolButton {
-        margin-left: 10px;
-    }
-    #header{
-        border: dotted;
-        text:bold;
-        text-align: center;
-    }
-    a {
-        text-underline-mode: none;
-    }
-</style>
 <body onload="getEventsFromDB()">
 <header id="header"><h1>My Events</h1></header>
 <p>
@@ -43,7 +18,7 @@
     <li w3-repeat="eventList" type="text" id="eventElement" class="w3-hide">
         <a href="<c:url value='/app/event.jsp'/>?id={{eventID}}">{{eventName}}</a>
         <p>
-            <button onclick="goToEditPage('{{eventID}}')" id="edit">Edit</button>
+            <button onclick="goToEditPage('{{eventID}}')" id="goToEdit">Edit</button>
             <button onclick="goToCreatePoolPage()" id="createPoolButton">Create Pool</button>
         </p>
     </li>
@@ -53,11 +28,9 @@
 
 
     function goToCreatePoolPage() {
-
-
     }
 
-    function goToTheMainPage(){
+    function goToTheMainPage() {
         location.href = "<c:url value='/app/start.jsp'/>"
     }
 

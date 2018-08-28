@@ -9,28 +9,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body onload="checkFunction()">
-<style>
-    textarea {
+<link rel="stylesheet" type="text/css" href="pagesStyle.css">
 
-        height: 50px;
-        width: 400px;
-    }
-
-    #buttons {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 60px;
-
-    }
-
-    #add, #edit {
-        border: dotted;
-        text: bold;
-        text-align: center;
-    }
-
-</style>
 <header id="add" class="w3-hide"><h1>Add New Event</h1></header>
 <header id="edit" class="w3-hide"><h1>Edit Event</h1></header>
 <form name="eventform" method="post" style="padding: 15px">
@@ -39,7 +19,7 @@
     <p><b>Description</b></p>
     <p><textarea name="desc" id="description"></textarea></p>
     <p><b>Date</b></p>
-    <p><input type="text" id="date"></p>
+    <p><input type="text" id="datepicker"></p>
 </form>
 
 <div id="buttons">
@@ -62,9 +42,8 @@
     function getDataFromField() {
         var name = document.getElementById("name");
         data["name"] = name.value;
-        var datepicker = document.getElementById("date");
-        data["datepicker"] = datepicker.value;
-        console.log(datepicker.value)
+        var date = document.getElementById("datepicker");
+        data["date"] = date.value;
         var description = document.getElementById("description");
         data["description"] = description.value;
         if (id) {
@@ -153,7 +132,7 @@
     }
 
     $(function () {
-        $("#date").datepicker();
+        $("#datepicker").datepicker();
     });
 
 </script>

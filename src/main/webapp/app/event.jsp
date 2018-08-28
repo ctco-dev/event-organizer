@@ -6,21 +6,8 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title id="title">{{eventName}}</title>
 </head>
-<style>
-    #displayInfo {
-        float: inherit;
-        padding: inherit;
-    }
+<link rel="stylesheet" type="text/css" href="pagesStyle.css">
 
-    #eventName-field {
-        align-content: center;
-    }
-    #header{
-        border: dotted;
-        text:bold;
-        text-align: center;
-    }
-</style>
 <body onload="loadEvent()">
 <div id="menu">
     <button type="button" onclick="main()">Back To Main</button>
@@ -29,7 +16,7 @@
 </div>
 <div id="event-field" class="w3-hide" align="center">
     <h1>{{eventName}}</h1>
-    <h4 style="background: #c4e5ff">{{eventDate}}</h4>
+    <h4 style="background: #c4e5ff">{{date}}</h4>
     <p style="border: thick">{{eventDescription}}</p>
 </div>
 
