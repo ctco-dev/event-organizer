@@ -32,6 +32,8 @@
     var data = {};
 
     function getData() {
+        var id = getQueryVariable("id");
+        data["eventId"] = id.value;
         var question = document.getElementById("question");
         data["question"] = question.value;
         var answers = document.getElementById("answers");

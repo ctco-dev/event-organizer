@@ -16,7 +16,7 @@ public class Poll {
     private Long id;
 
     @ManyToOne
-    private Event event;
+    private Event eventId;
 
     private String question;
     private String answers;
@@ -31,11 +31,11 @@ public class Poll {
     }
 
     public Event getEvent() {
-        return event;
+        return eventId;
     }
 
     public void setEvent(Event event) {
-        this.event = event;
+        this.eventId = event;
     }
 
     public String getQuestion() {
