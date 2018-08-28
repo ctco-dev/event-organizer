@@ -12,12 +12,12 @@ public class PollDto {
 
     }
 
-    public PollDto(String question, String answers, boolean isFeedback, Long pollEventID, Long pollID) {
+    public PollDto(String question, String answers, boolean isFeedback, Long eventID, Long id) {
         this.pollquestion = question;
         this.pollanswers = answers;
         this.pollIsFeedback = isFeedback;
-        this.pollEventID = pollEventID;
-        this.pollID = pollID;
+        this.pollEventID = eventID;
+        this.pollID = id;
     }
 
     public String getPollquestion() {

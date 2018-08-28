@@ -1,7 +1,6 @@
 package lv.ctco.javaschool.eventorganaizer.boundary;
 
 import lv.ctco.javaschool.auth.control.UserStore;
-import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.control.PollStore;
 import lv.ctco.javaschool.eventorganaizer.entity.*;
@@ -96,20 +95,19 @@ public class EventOrganizationApi {
     @Path("/savePoll/{id}")
     public void savePoll(Poll poll,@PathParam("id") Long id){
        poll.setEventID(id);
+       System.out.println(id);
        em.persist(poll);
     }
 
-//    @GET
-//    @RolesAllowed({"ADMIN", "USER"})
-//    @Path("/getPoll/{id}")
-//    public List<PollDto> getPollForEvent(@PathParam("id") Long id){
-//        Optional<Poll> poll=pollStore.getPollByIdEvent(id);
-//
-//        if (poll.isPresent()) {
-//            Poll p=new Poll();
-//            return new PollDto();
-//        } else {
-//            throw new IllegalArgumentException();
-//        }
-//    }
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/getPoll/{id}")
+    public List<PollDto> getPollForEvent(@PathParam("id") Long id){
+        List<Poll> poll=pollStore.getPollByEventID(id);
+        return poll.stream()
+                .map(p -> new PollDto(p.getQuestion(),p.getAnswers(),
+                        p.isFeedback(),p.getEventID(),p.getId()))
+                .collect(Collectors.toList());
+
+    }
 }

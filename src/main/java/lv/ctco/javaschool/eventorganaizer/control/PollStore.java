@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 import java.util.Optional;
 
 @Stateless
@@ -17,12 +18,11 @@ public class PollStore {
     @Inject
     private PollStore pollStore;
 
-    public Optional<Poll> getPollByIdEvent(Long id) {
+    public List<Poll> getPollByEventID(Long id) {
         return em.createQuery("select  p from Poll p" +
-                " where p.event=:id", Poll.class)
+                " where p.eventID=:id", Poll.class)
                 .setParameter("id", id)
-                .getResultStream()
-                .findFirst();
+                .getResultList();
     }
 
 
