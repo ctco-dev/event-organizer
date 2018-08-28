@@ -5,6 +5,8 @@
     <title>Add Event</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.css" crossorigin="anonymous">
 </head>
 <body>
 <style>
@@ -22,6 +24,8 @@
     <p><textarea name="text" id="description"></textarea></p>
     <p><b>Date</b>></p>
     <p><input type="text" id="datepicker"></p>
+    <p><b>Time</b>></p>
+    <p><input type="text" id="timepicker"></p>
 </form>
 <p>
     <button type="submit" onclick="saveDataToDB()">Save</button>
@@ -43,6 +47,8 @@
         data["datepicker"] = datepciker.value;
         var description=document.getElementById("description");
         data["description"] = description.value;
+        var timepicker=document.getElementById("timepicker");
+        data["timepicker"] = timepicker.value;
     }
 
 
@@ -57,54 +63,54 @@
         }).then(function (response) {
             location.href = "<c:url value='/app/start.jsp'/>";
         });
-
-
     }
+<%--//-------------------------------------%>
+    <%--<p id="datepairExample">--%>
+        <%--<input type="text" class="date start" />--%>
+        <%--<input type="text" class="time start" /> to--%>
+        <%--<input type="text" class="time end" />--%>
+        <%--<input type="text" class="date end" />--%>
+        <%--</p>--%>
 
-    <p id="datepairExample">
-        <input type="text" class="date start" />
-        <input type="text" class="time start" /> to
-        <input type="text" class="time end" />
-        <input type="text" class="date end" />
-        </p>
+        <%--<script type="text/javascript" src="datepair.js"></script>--%>
+<%--<script type="text/javascript" src="jquery.datepair.js"></script>--%>
+<%--<script>--%>
+    <%--// initialize input widgets first--%>
+    <%--$('#datepairExample .time').timepicker({--%>
+        <%--'showDuration': true,--%>
+        <%--'timeFormat': 'g:ia'--%>
+    <%--});--%>
 
-        <script type="text/javascript" src="datepair.js"></script>
-<script type="text/javascript" src="jquery.datepair.js"></script>
-<script>
-    // initialize input widgets first
-    $('#datepairExample .time').timepicker({
-        'showDuration': true,
-        'timeFormat': 'g:ia'
-    });
+    <%--$('#datepairExample .date').datepicker({--%>
+        <%--'format': 'yyyy-m-d',--%>
+        <%--'autoclose': true--%>
+    <%--});--%>
 
-    $('#datepairExample .date').datepicker({
-        'format': 'yyyy-m-d',
-        'autoclose': true
-    });
+    <%--// initialize datepair--%>
+    <%--$('#datepairExample').datepair();--%>
+<%--</script>--%>
+    <%--// initialize input widgets first--%>
+    <%--$('#datepairExample .time').timepicker({--%>
+        <%--'showDuration': true,--%>
+        <%--'timeFormat': 'g:ia'--%>
+    <%--});--%>
+
+    <%--$('#datepairExample .date').datepicker({--%>
+        <%--'format': 'yyyy-m-d',--%>
+        <%--'autoclose': true--%>
+    <%--});--%>
 
     // initialize datepair
-    $('#datepairExample').datepair();
-</script>
-    // initialize input widgets first
-    $('#datepairExample .time').timepicker({
-        'showDuration': true,
-        'timeFormat': 'g:ia'
-    });
+//    $('#datepairExample').datepair();
+<%--</script>--%>
 
-    $('#datepairExample .date').datepicker({
-        'format': 'yyyy-m-d',
-        'autoclose': true
-    });
+//----------------------------------------
 
-    // initialize datepair
-    $('#datepairExample').datepair();
-</script>
 
-//http://jonthornton.github.io/jquery-timepicker/
-
-//    $(function () {
-//        $( "#datepicker" ).datepicker();
-//    } );
+    $(function () {
+        $( "#datepicker" ).datepicker();
+        $( "#timepicker" ).timepicker();
+    } );
 
 </script>
 </html>

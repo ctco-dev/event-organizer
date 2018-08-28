@@ -21,17 +21,21 @@ public class Event {
 
     private String date;
 
+    private String time;
+
     private String description;
 
     private EventStatus status;
 
-    public Event(String name, User author, String description, String date) {
+    public Event() {
+    }
+
+    public Event(String name, User author, String description, String date, String time) {
         this.name = name;
         this.author = author;
         this.description = description;
         this.date = date;
         this.status = EventStatus.OPEN;
-
     }
 
     public EventStatus getStatus() {
@@ -40,9 +44,6 @@ public class Event {
 
     public void setStatus(EventStatus status) {
         this.status = status;
-    }
-
-    public Event() {
     }
 
     public Long getId() {
@@ -76,6 +77,10 @@ public class Event {
     public String getDescription() {
         return description;
     }
+
+    public String getTime() { return time; }
+
+    public void setTime(String time) { this.time = time; }
 
     public void setDescription(String description) {
         this.description = description;
