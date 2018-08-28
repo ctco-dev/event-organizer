@@ -3,9 +3,7 @@ package lv.ctco.javaschool.eventorganaizer.entity;
 
 import lv.ctco.javaschool.auth.entity.domain.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
@@ -14,10 +12,11 @@ public class Poll {
     @GeneratedValue
     private Long id;
 
+    @ManyToOne
     private Event event;
 
     private String question;
-    private ArrayList<String> answers;
+    private String answers;
     private boolean isFeedback;
 
     public Long getId() {
@@ -44,11 +43,11 @@ public class Poll {
         this.question = question;
     }
 
-    public ArrayList<String> getAnswers() {
+    public String getAnswers() {
         return answers;
     }
 
-    public void setAnswers(ArrayList<String> answers) {
+    public void setAnswers(String answers) {
         this.answers = answers;
     }
 

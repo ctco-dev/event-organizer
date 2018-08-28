@@ -86,4 +86,5 @@ public class EventOrganizationApi {
               .map(e -> new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId()))
               .collect(Collectors.toList());
     }
+
 }

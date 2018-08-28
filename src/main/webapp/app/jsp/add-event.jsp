@@ -78,7 +78,6 @@
         }).then(function (response) {
             location.href = "<c:url value='/app/jsp/start.jsp'/>";
         });
-
     }
 
     function updateData() {
@@ -93,8 +92,6 @@
             location.href = "<c:url value='/app/jsp/start.jsp'/>";
 
         });
-
-
     }
 
     function getEventDataFromDB() {

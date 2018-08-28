@@ -13,6 +13,15 @@
     <h4>Event data:  {{eventDate}}</h4>
 </div>
 
+<form name="pollform" method="post" style="padding: 15px">
+    <p><b>question</b></p>
+    <p><textarea name="question" id="question"></textarea></p>
+    <p><b>answers</b></p>
+    <p><textarea name="answers" id="answers"></textarea></p>
+    <p><b>isFeedback</b></p>
+    <p><input type="checkbox" id="isFeedback"></p>
+
+</form>
 
 
 <p>
@@ -20,6 +29,17 @@
 </p>
 
 <script>
+    var data = {};
+
+    function getData() {
+        var question = document.getElementById("question");
+        data["question"] = question.value;
+        var answers = document.getElementById("answers");
+        data["answers"] = answers.value;
+        var isFeedback = document.getElementById("isFeedback");
+        data["isFeedback"] = isFeedback.value;
+    }
+
     function loadEvent() {
         var id = getQueryVariable("id");
         fetch("<c:url value='/api/event/'/>" + id, {
@@ -39,6 +59,20 @@
             }
         })
     }
+
+    function savePoll() {
+        getData();
+        fetch("<c:url value='/api/event/savePoll'/>", {
+            "method": "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify(data)
+        }).then(function (response) {
+
+        });
+    }
+
     function getQueryVariable(variable) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");
@@ -49,9 +83,6 @@
             }
         }
         return (false);
-    }
-    function addPoll() {
-
     }
 
 </script>

@@ -46,6 +46,7 @@
     function addEvent() {
         location.href = "/app/jsp/add-event.jsp"
     }
+
     function main() {
         location.href = "/app/jsp/start.jsp"
     }
