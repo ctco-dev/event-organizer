@@ -12,10 +12,13 @@ textarea {
 
 }
 
-#add, #edit {
-    border: dotted;
+#add, #edit, #header {
+    /*border: dotted;*/
     text: bold;
     text-align: center;
+    color: white;
+    background-color: rgb(21, 190, 155);
+    margin-bottom: 30px;
 }
 
 ul {
@@ -31,11 +34,12 @@ a {
     underline-mode: none;
 }
 
-#header {
-    border: dotted;
-    text: bold;
-    text-align: center;
-}
+/*#header {*/
+    /*border: dotted;*/
+    /*text: bold;*/
+    /*text-align: center;*/
+    /*padding-bottom: 30px;*/
+/*}*/
 
 #goToEdit {
     margin-left: 600px;
@@ -45,11 +49,11 @@ a {
     margin-left: 10px;
 }
 
-#header {
-    border: dotted;
-    text: bold;
-    text-align: center;
-}
+/*#header {*/
+    /*border: dotted;*/
+    /*text: bold;*/
+    /*text-align: center;*/
+/*}*/
 
 a {
     text-underline-mode: none;
