@@ -10,8 +10,10 @@
 <body onload="loadEvent()">
 <header id="header"><h1>Event Poll</h1></header>
 <div id="event-field" class="w3-hide">
-    <h2> Event name: {{eventName}}</h2>
-    <h4> Event data: {{eventDate}}</h4>
+    <h2>Event name: {{eventName}}</h2>
+    <h4>Event data: {{eventDate}}</h4>
+    <h4>Event ID: {{eventID}}</h4>
+
 </div>
 
 <form name="pollform" method="post" style="padding: 15px">
@@ -26,13 +28,14 @@
 
 
 <p>
-    <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
+      <button onclick="savePollToDB('{{eventID}}')" style="margin: 0px 0px 5px 15px">Create new Poll</button>
 </p>
 
 <script>
     var data = {};
 
     function getData() {
+        data["eventId"] = id.value;
         var question = document.getElementById("question");
         data["question"] = question.value;
         var answers = document.getElementById("answers");
@@ -63,10 +66,10 @@
         })
     }
 
-    function savePollToDB() {
+    function savePollToDB(x) {
         getData();
         console.log(data);
-        fetch("<c:url value='/api/event/savePoll'/>", {
+        fetch("<c:url value='/api/event/savePoll/'/>"+x, {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',

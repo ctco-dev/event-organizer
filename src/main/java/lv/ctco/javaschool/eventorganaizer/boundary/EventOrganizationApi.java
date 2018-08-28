@@ -93,8 +93,9 @@ public class EventOrganizationApi {
 
     @POST
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/savePoll")
-    public void savePoll(Poll poll){
+    @Path("/savePoll/{id}")
+    public void savePoll(Poll poll,@PathParam("id") Long id){
+       poll.setEventID(id);
        em.persist(poll);
 
     }
