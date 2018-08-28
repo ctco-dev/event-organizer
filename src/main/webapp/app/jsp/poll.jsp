@@ -9,8 +9,8 @@
 <body onload="loadEvent()">
 <header id="header"><h1>Event Poll</h1></header>
 <div id="event-field" class="w3-hide">
-    <h2>Event name:  {{eventName}}</h2>
-    <h4>Event data:  {{eventDate}}</h4>
+    <h2>Event name: {{eventName}}</h2>
+    <h4>Event data: {{eventDate}}</h4>
 </div>
 
 <form name="pollform" method="post" style="padding: 15px">
@@ -25,7 +25,7 @@
 
 
 <p>
-    <button onclick="addPoll()">Create new Poll</button>
+    <button onclick="savePollToDB()">Create new Poll</button>
 </p>
 
 <script>
@@ -37,7 +37,9 @@
         var answers = document.getElementById("answers");
         data["answers"] = answers.value;
         var isFeedback = document.getElementById("isFeedback");
-        data["isFeedback"] = isFeedback.value;
+        if (isFeedback.value == "on") {
+            data["isFeedback"] = true;
+        }
     }
 
     function loadEvent() {
@@ -60,8 +62,9 @@
         })
     }
 
-    function savePoll() {
+    function savePollToDB() {
         getData();
+        console.log(data);
         fetch("<c:url value='/api/event/savePoll'/>", {
             "method": "POST",
             headers: {

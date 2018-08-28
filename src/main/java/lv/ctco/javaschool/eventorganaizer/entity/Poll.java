@@ -3,7 +3,10 @@ package lv.ctco.javaschool.eventorganaizer.entity;
 
 import lv.ctco.javaschool.auth.entity.domain.User;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 
 @Entity

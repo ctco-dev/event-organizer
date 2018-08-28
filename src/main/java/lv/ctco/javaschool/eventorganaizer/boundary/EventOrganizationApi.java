@@ -3,6 +3,7 @@ package lv.ctco.javaschool.eventorganaizer.boundary;
 import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
+import lv.ctco.javaschool.eventorganaizer.control.PollStore;
 import lv.ctco.javaschool.eventorganaizer.entity.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -30,6 +31,9 @@ public class EventOrganizationApi {
 
     @Inject
     private EventStore eventStore;
+
+    @Inject
+    private PollStore pollStore;
 
     @GET
     @RolesAllowed({"USER", "ADMIN"})
@@ -86,5 +90,24 @@ public class EventOrganizationApi {
               .map(e -> new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId()))
               .collect(Collectors.toList());
     }
+
+    @POST
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/savePoll")
+    public void savePoll(Poll poll){
+       em.persist(poll);
+
+    }
+//
+//    @GET
+//    @RolesAllowed({"ADMIN", "USER"})
+//    @Path("/getPoll/{id}")
+//    public List<PollDto> getPollForEvent(){
+//        List<Poll> pollList=pollStore.getPollByIdEvent();
+//
+//    }
+
+
+
 
 }
