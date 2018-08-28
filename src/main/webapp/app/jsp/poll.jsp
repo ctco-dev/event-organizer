@@ -36,6 +36,7 @@
 
 <p>
       <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
+      <button onclick="getPollFromDB()" style="margin: 0px 0px 5px 15px">Show Poll</button>
 </p>
 
 <script>
@@ -85,6 +86,7 @@
             }, body: JSON.stringify(data)
         }).then(function (response) {
 
+
         });
     }
 
@@ -98,8 +100,9 @@
         }).then(function (response) {
             return response.json();
         }).then(function (poll) {
-            document.getElementById("displayQuestion").value = poll.question;
-            document.getElementById("displayAnswers").value = poll.answers;
+            console.log(poll);
+            document.getElementById("displayQuestion").value = poll.pollquestion;
+            document.getElementById("displayAnswers").value = poll.pollanswers;
         })
 
     }

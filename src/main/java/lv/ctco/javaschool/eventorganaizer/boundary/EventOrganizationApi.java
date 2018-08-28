@@ -99,17 +99,17 @@ public class EventOrganizationApi {
        em.persist(poll);
     }
 
-//    @GET
-//    @RolesAllowed({"ADMIN", "USER"})
-//    @Path("/getPoll/{id}")
-//    public List<PollDto> getPollForEvent(@PathParam("id") Long id){
-//        Optional<Poll> poll=pollStore.getPollByIdEvent(id);
-//
-//        if (poll.isPresent()) {
-//            Poll p=new Poll();
-//            return new PollDto();
-//        } else {
-//            throw new IllegalArgumentException();
-//        }
-//    }
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/getPoll/{id}")
+    public PollDto getPollForEvent(@PathParam("id") Long id){
+        Optional<Poll> poll=pollStore.getPollByIdEvent(id);
+
+        if (poll.isPresent()) {
+            Poll p=poll.get();
+            return new PollDto(p.getQuestion(),p.getAnswers(),p.isFeedback(),p.getEventID(),p.getId());
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
 }

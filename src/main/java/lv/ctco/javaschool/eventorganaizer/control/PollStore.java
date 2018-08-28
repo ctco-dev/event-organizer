@@ -19,7 +19,7 @@ public class PollStore {
 
     public Optional<Poll> getPollByIdEvent(Long id) {
         return em.createQuery("select  p from Poll p" +
-                " where p.event=:id", Poll.class)
+                " where p.eventID=:id", Poll.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst();
