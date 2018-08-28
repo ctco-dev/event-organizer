@@ -42,7 +42,6 @@ public class EventOrganizationApi {
         return new TopicListDto(listTopics);
     }
 
-
     @POST
     @Path("/save")
     @RolesAllowed({"USER", "ADMIN"})
