@@ -27,7 +27,7 @@
 
 
 <p>
-    <button onclick="savePollToDB()">Create new Poll</button>
+    <button onclick="savePollToDB('{{eventID}}')">Create new Poll</button>
 </p>
 
 <script>
@@ -65,10 +65,10 @@
         })
     }
 
-    function savePollToDB() {
+    function savePollToDB(x) {
         getData();
         console.log(data);
-        fetch("<c:url value='/api/event/savePoll'/>", {
+        fetch("<c:url value='/api/event/savePoll/'/>"+x, {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
