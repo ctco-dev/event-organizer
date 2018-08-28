@@ -22,9 +22,9 @@
     <p><textarea name="text" id="name"></textarea></p>
     <p><b>Description</b></p>
     <p><textarea name="text" id="description"></textarea></p>
-    <p><b>Date</b>></p>
+    <p><b>Date</b></p>
     <p><input type="text" id="datepicker"></p>
-    <p><b>Time</b>></p>
+    <p><b>Time</b></p>
     <p><input type="text" id="timepicker"></p>
 </form>
 <p>
@@ -64,47 +64,6 @@
             location.href = "<c:url value='/app/start.jsp'/>";
         });
     }
-<%--//-------------------------------------%>
-    <%--<p id="datepairExample">--%>
-        <%--<input type="text" class="date start" />--%>
-        <%--<input type="text" class="time start" /> to--%>
-        <%--<input type="text" class="time end" />--%>
-        <%--<input type="text" class="date end" />--%>
-        <%--</p>--%>
-
-        <%--<script type="text/javascript" src="datepair.js"></script>--%>
-<%--<script type="text/javascript" src="jquery.datepair.js"></script>--%>
-<%--<script>--%>
-    <%--// initialize input widgets first--%>
-    <%--$('#datepairExample .time').timepicker({--%>
-        <%--'showDuration': true,--%>
-        <%--'timeFormat': 'g:ia'--%>
-    <%--});--%>
-
-    <%--$('#datepairExample .date').datepicker({--%>
-        <%--'format': 'yyyy-m-d',--%>
-        <%--'autoclose': true--%>
-    <%--});--%>
-
-    <%--// initialize datepair--%>
-    <%--$('#datepairExample').datepair();--%>
-<%--</script>--%>
-    <%--// initialize input widgets first--%>
-    <%--$('#datepairExample .time').timepicker({--%>
-        <%--'showDuration': true,--%>
-        <%--'timeFormat': 'g:ia'--%>
-    <%--});--%>
-
-    <%--$('#datepairExample .date').datepicker({--%>
-        <%--'format': 'yyyy-m-d',--%>
-        <%--'autoclose': true--%>
-    <%--});--%>
-
-    // initialize datepair
-//    $('#datepairExample').datepair();
-<%--</script>--%>
-
-//----------------------------------------
 
 
     $(function () {
