@@ -16,26 +16,26 @@ public class Poll {
     private Long id;
 
     @ManyToOne
-    private Event eventId;
+    private Long eventID;
 
     private String question;
     private String answers;
     private boolean isFeedback;
 
+
+    public Long getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(Long eventID) {
+        this.eventID = eventID;
+    }
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Event getEvent() {
-        return eventId;
-    }
-
-    public void setEvent(Event event) {
-        this.eventId = event;
     }
 
     public String getQuestion() {

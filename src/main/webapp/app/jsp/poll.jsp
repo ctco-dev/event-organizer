@@ -11,6 +11,8 @@
 <div id="event-field" class="w3-hide">
     <h2>Event name: {{eventName}}</h2>
     <h4>Event data: {{eventDate}}</h4>
+    <h4>Event ID: {{eventID}}</h4>
+
 </div>
 
 <form name="pollform" method="post" style="padding: 15px">
@@ -32,7 +34,6 @@
     var data = {};
 
     function getData() {
-        var id = getQueryVariable("id");
         data["eventId"] = id.value;
         var question = document.getElementById("question");
         data["question"] = question.value;
