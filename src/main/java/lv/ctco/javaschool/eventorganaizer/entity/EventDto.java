@@ -8,6 +8,10 @@ public class EventDto {
     private String eventDate;
     private long eventID;
 
+    public EventDto(){
+
+    }
+
     public EventDto(String name, String description, String date, Long id) {
         this.eventName = name;
         this.eventDescription = description;

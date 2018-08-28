@@ -71,7 +71,7 @@ public class EventOrganizationApi {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
-            return new EventDto(e);
+            return new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId());
         } else {
             throw new IllegalArgumentException();
         }
@@ -85,7 +85,7 @@ public class EventOrganizationApi {
         List<Event> event = eventStore.getAuthorEvents(user);
         List<EventDto> listE = new ArrayList<>();
         for (Event e : event) {
-            EventDto eventDto = new EventDto(e);
+            EventDto eventDto = new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId());
             listE.add(eventDto);
         }
         return listE;
