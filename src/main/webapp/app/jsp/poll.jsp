@@ -39,6 +39,7 @@
 
 <p>
       <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
+      <button onclick="getPollFromDB()" style="margin: 0px 0px 5px 15px">Show Poll</button>
 </p>
 
 <script>
@@ -73,7 +74,6 @@
     }
 
     function savePollToDB() {
-        console.log("1")
         getData();
         console.log(data);
         fetch("<c:url value='/api/event/savePoll/'/>"+id, {

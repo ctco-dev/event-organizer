@@ -95,7 +95,6 @@ public class EventOrganizationApi {
     @Path("/savePoll/{id}")
     public void savePoll(Poll poll,@PathParam("id") Long id){
        poll.setEventID(id);
-       System.out.println(id);
        em.persist(poll);
     }
 
