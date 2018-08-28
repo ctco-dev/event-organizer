@@ -17,7 +17,7 @@
 
 <ul id="topic-list" class="w3-hide">
     <li w3-repeat="topicList">
-        <div style="float: left"><a href="<c:url value='/app'/>{{path}}?id={{id}}">{{topicName}}</a> </div>
+        <div style="float: left"><a href="<c:url value='/app/jsp/event.jsp'/>?id={{id}}">{{topicName}}</a> </div>
         <div style="float: right" >{{topicAuthor}}</div>
     </li>
 </ul>
