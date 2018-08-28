@@ -98,12 +98,18 @@ public class EventOrganizationApi {
        poll.setEventID(id);
        em.persist(poll);
     }
-//
+
 //    @GET
 //    @RolesAllowed({"ADMIN", "USER"})
 //    @Path("/getPoll/{id}")
-//    public List<PollDto> getPollForEvent(){
-//        List<Poll> pollList=pollStore.getPollByIdEvent();
+//    public List<PollDto> getPollForEvent(@PathParam("id") Long id){
+//        Optional<Poll> poll=pollStore.getPollByIdEvent(id);
 //
+//        if (poll.isPresent()) {
+//            Poll p=new Poll();
+//            return new PollDto();
+//        } else {
+//            throw new IllegalArgumentException();
+//        }
 //    }
 }

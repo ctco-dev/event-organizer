@@ -26,13 +26,21 @@
 
 </form>
 
+<div id="displayPoll">
+    <p><b>question</b></p>
+    <p><textarea name="question" id="displayQuestion"></textarea></p>
+    <p><b>answers</b></p>
+    <p><textarea name="answers" id="displayAnswers"></textarea></p>
+</div>
+
 
 <p>
-      <button onclick="savePollToDB('{{eventID}}')" style="margin: 0px 0px 5px 15px">Create new Poll</button>
+      <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
 </p>
 
 <script>
     var data = {};
+    var id = getQueryVariable("id");
 
     function getData() {
         var question = document.getElementById("question");
@@ -48,7 +56,6 @@
     }
 
     function loadEvent() {
-        var id = getQueryVariable("id");
         fetch("<c:url value='/api/event/'/>" + id, {
             "method": "GET",
             headers: {
@@ -67,10 +74,10 @@
         })
     }
 
-    function savePollToDB(x) {
+    function savePollToDB() {
         getData();
         console.log(data);
-        fetch("<c:url value='/api/event/savePoll/'/>"+x, {
+        fetch("<c:url value='/api/event/savePoll/'/>"+id, {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -79,6 +86,22 @@
         }).then(function (response) {
 
         });
+    }
+
+    function getPollFromDB() {
+        fetch("<c:url value='/api/event/getPoll/'/>" + id, {
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        }).then(function (poll) {
+            document.getElementById("displayQuestion").value = poll.question;
+            document.getElementById("displayAnswers").value = poll.answers;
+        })
+
     }
 
     function getQueryVariable(variable) {
