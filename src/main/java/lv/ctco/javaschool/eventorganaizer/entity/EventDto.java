@@ -1,20 +1,23 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
+import lv.ctco.javaschool.auth.entity.domain.User;
+
 public class EventDto {
-    private long eventID;
     private String eventName;
     private String eventDescription;
     private String eventDate;
+    private long eventID;
 
-    public EventDto() {
+    public EventDto(){
+
     }
 
-    public EventDto(Event e) {
-        this.eventDate = e.getDate();
-        this.eventName = e.getName();
-        this.eventDescription = e.getDescription();
-        this.eventID = e.getId();
-    }
+    public EventDto(String name, String description, String date, Long id) {
+        this.eventName = name;
+        this.eventDescription = description;
+        this.eventDate = date;
+        this.eventID = id;
+     }
 
     public long getEventID() {
         return eventID;

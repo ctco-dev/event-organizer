@@ -17,139 +17,124 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class EventOrganizationApiTest {
-
-
     @Mock
-    EntityManager em;
+    private EntityManager em;
     @Mock
-    UserStore userStore;
+    private UserStore userStore;
     @Mock
-    EventStore eventStore;
+    private EventStore eventStore;
     @InjectMocks
-    EventOrganizationApi eventOrganizationApi;
+    private EventOrganizationApi eventOrganizationApi;
 
-    User u1 = new User();
-    User u2=new User();
-    List<Event> events = new ArrayList<>();
-    Event event = new Event();
-    Event event1=new Event();
-    TopicDto topicDto;
-    List<TopicDto> td = new ArrayList<>();
+    private User testUser;
+    private List<Event> userEvents;
+    private Event event;
+    private TopicDto expectedTopicDto;
+    private List<TopicDto> topicDtoList;
+    private EventDto eventDto;
 
     @BeforeEach
     void init() {
-        u1.setUsername("admin");
-        event.setId((long) 1);
-        event.setName("qwe");
-        event.setDescription("asdf");
-        event.setStatus(EventStatus.OPEN);
-        event.setAuthor(u1);
-        topicDto = new TopicDto(event);
-
+        userEvents = new ArrayList<>();
+        testUser  = new User();
+        event = initEvent();
+        eventDto = initEventDto(event);
+        topicDtoList = new ArrayList<>();
+        testUser.setUsername("admin");
+        expectedTopicDto = new TopicDto(event);
     }
 
-
-
     @Test
-    void TestingIfGetAllOpenEventsReturnsCorrectDto() {
-        events.add(event);
+    void testReturnsCorrectDTO() {
+        userEvents.add(event);
         when(eventStore.getAllEvents())
-                .thenReturn(events);
-        TopicListDto td2 = new TopicListDto(eventOrganizationApi.getAllOpenEvents().getTopicList());
-        td.add(topicDto);
-        assertEquals(td.get(0).getId(), td2.getTopicList().get(0).getId());
-        assertEquals(td.get(0).getTopicName(), td2.getTopicList().get(0).getTopicName());
-        assertEquals(td.get(0).getTopicAuthor(), td2.getTopicList().get(0).getTopicAuthor());
-        assertEquals(td.get(0).getDate(), td2.getTopicList().get(0).getDate());
+                .thenReturn(userEvents);
+
+        TopicListDto result = eventOrganizationApi.getAllOpenEvents();
+        List<TopicDto> topicList = result.getTopicList();
+        assertEquals(1,topicList.size());
+
+        TopicDto resultTopicDto = topicList.get(0);
+        assertEquals(expectedTopicDto.getId(), resultTopicDto.getId());
+        assertEquals(expectedTopicDto.getTopicName(), resultTopicDto.getTopicName());
+        assertEquals(expectedTopicDto.getTopicAuthor(), resultTopicDto.getTopicAuthor());
+        assertEquals(expectedTopicDto.getDate(), resultTopicDto.getDate());
     }
 
     @Test
-    void TestingIfGetAllOpenEventsReturnsEmptyDto() {
+    void testReturnEmptyDto() {
         when(eventStore.getAllEvents())
-                .thenReturn(events);
+                .thenReturn(userEvents);
         TopicListDto td2 = new TopicListDto(eventOrganizationApi.getAllOpenEvents().getTopicList());
-        assertEquals(td.size(), td2.getTopicList().size());
+        assertEquals(topicDtoList.size(), td2.getTopicList().size());
     }
 
     @Test
-    void TestingIfGetEventByIdReturnsNeededEvent() {
-        EventDto evDto = new EventDto(event);
+    void testFindById() {
         when(eventStore.getEventById((long) 1))
                 .thenReturn(java.util.Optional.ofNullable(event));
-        assertEquals(evDto.getEventID(), eventOrganizationApi.getEventById((long) 1).getEventID());
+        assertEquals(eventDto.getEventID(), eventOrganizationApi.getEventById((long) 1).getEventID());
     }
 
     @Test
-    void TestingIfGetEventByIdTrowsException() {
+    void testValidationThrowsException() {
         when(eventStore.getEventById((long) 1))
                 .thenReturn(java.util.Optional.empty());
         assertThrows(IllegalArgumentException.class, () -> eventOrganizationApi.getEventById((long) 1));
     }
 
     @Test
-    void TestingIfGetEventByIdTrowsExceptionIfNullAsArgument() {
+    void testNullThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> eventOrganizationApi.getEventById(null));
     }
 
     @Test
-    void TestingOfThatAllAuthorsEventReturnsCorretly(){
-        events.add(event);
+    void testGetAllAuthorsEvents() {
+        userEvents.add(event);
         when(userStore.getCurrentUser())
-                .thenReturn(u1);
-        when(eventStore.getAuthorEvents(u1))
-                .thenReturn(events);
-        assertEquals("qwe",eventOrganizationApi.getAllAuthorEvents().getEventList().get(0).getEventName());
-        assertEquals(1,eventOrganizationApi.getAllAuthorEvents().getEventList().get(0).getEventID());
-        assertEquals(EventDto.class ,eventOrganizationApi.getAllAuthorEvents().getEventList().get(0).getClass());
+                .thenReturn(testUser);
+        when(eventStore.getAuthorEvents(testUser))
+                .thenReturn(userEvents);
+        List<EventDto> result = eventOrganizationApi.getAllAuthorEvents();
+        assertEquals(1,result.size());
 
+        EventDto eventDto = result.get(0);
+        assertEquals("qwe",eventDto.getEventName());
+        assertEquals(1,eventDto.getEventID());
     }
 
     @Test
-    void TestingOfReurningEmptyListOfAllAuthorsEvents(){
-
+    void testReturnEmtyList() {
         when(userStore.getCurrentUser())
-                .thenReturn(u1);
-        when(eventStore.getAuthorEvents(u1))
-                .thenReturn(events);
-        assertEquals(EventListDto.class,eventOrganizationApi.getAllAuthorEvents().getClass());
+                .thenReturn(testUser);
+        when(eventStore.getAuthorEvents(testUser))
+                .thenReturn(userEvents);
+        List<EventDto> result = eventOrganizationApi.getAllAuthorEvents();
+
+        assertTrue(result.isEmpty());
     }
 
-    //NON MOCKITO TESTS
-
-    @Test
-    void setFieldsToEventSetsUpName() {
-        EventOrganizationApi eventOrganizationApi = new EventOrganizationApi();
-        String adrr = "name";
-        String value = "name";
-        Event e = new Event();
-
-        assertEquals(value, eventOrganizationApi.setFieldsToEvent(e, adrr, value).getName());
+    private Event initEvent (){
+        Event event = new Event();
+        event.setId((long) 1);
+        event.setName("qwe");
+        event.setDescription("asdf");
+        event.setStatus(EventStatus.OPEN);
+        event.setAuthor(testUser);
+        return event;
     }
 
-    @Test
-    void setFieldsToEventWrongAddressReturnsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            EventOrganizationApi eventOrganizationApi = new EventOrganizationApi();
-            String adrr = "date";
-            String value = "datepicker";
-            Event e = new Event();
-            eventOrganizationApi.setFieldsToEvent(e, adrr, value);
-        });
+    private EventDto initEventDto (Event event){
+        EventDto eventDto = new EventDto();
+        eventDto.setEventName(event.getName());
+        eventDto.setEventDate(event.getDate());
+        eventDto.setEventDescription(event.getDescription());
+        eventDto.setEventID(event.getId());
+        return eventDto;
     }
-
-    @Test
-    void setFieldsToEventNullAddressThrowsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> {
-            EventOrganizationApi eventOrganizationApi = new EventOrganizationApi();
-            String adrr = null;
-            String value = "datepicker";
-            Event e = new Event();
-            eventOrganizationApi.setFieldsToEvent(e, adrr, value);
-        });
-    }
-
 }

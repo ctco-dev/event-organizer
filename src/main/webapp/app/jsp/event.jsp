@@ -6,21 +6,8 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title id="title">{{eventName}}</title>
 </head>
-<style>
-    #displayInfo {
-        float: inherit;
-        padding: inherit;
-    }
+<link rel="stylesheet" type="text/css" href="pagesStyle.css">
 
-    #eventName-field {
-        align-content: center;
-    }
-    #header{
-        border: dotted;
-        text:bold;
-        text-align: center;
-    }
-</style>
 <body onload="loadEvent()">
 <div id="menu">
     <button type="button" onclick="main()">Back To Main</button>
@@ -57,14 +44,14 @@
     }
 
     function addEvent() {
-        location.href = "/app/add-event.jsp"
+        location.href = "/app/jsp/add-event.jsp"
     }
     function main() {
-        location.href = "/app/start.jsp"
+        location.href = "/app/jsp/start.jsp"
     }
 
     function myEvents() {
-        location.href = "/app/my-events.jsp"
+        location.href = "/app/jsp/my-events.jsp"
     }
 
     function getQueryVariable(variable) {

@@ -8,9 +8,6 @@ import lv.ctco.javaschool.eventorganaizer.entity.*;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.json.JsonObject;
-import javax.json.JsonString;
-import javax.json.JsonValue;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
@@ -19,8 +16,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Path("/event")
 @Stateless
@@ -49,23 +46,22 @@ public class EventOrganizationApi {
     @POST
     @Path("/save")
     @RolesAllowed({"USER", "ADMIN"})
-    public void saveEvent(JsonObject jsonObject) {
-        User user = userStore.getCurrentUser();
-        Event event = new Event();
-        for (Map.Entry<String, JsonValue> pair : jsonObject.entrySet()) {
-            String adr = pair.getKey();
-            String value = ((JsonString) pair.getValue()).getString();
-            event = setFieldsToEvent(event, adr, value);
-        }
+    public void saveEvent(Event event) {
         event.setStatus(EventStatus.OPEN);
-        event.setAuthor(user);
-        if(event.getId()==null) {
-            em.persist(event);
-        }
-        else {
-            em.merge(event);
-        }
+        event.setAuthor(userStore.getCurrentUser());
+        em.persist(event);
     }
+
+    @POST
+    @Path("/update")
+    @RolesAllowed({"USER", "ADMIN"})
+    public void updateEvent(Event event) {
+        event.setStatus(EventStatus.OPEN);
+        event.setAuthor(userStore.getCurrentUser());
+        em.merge(event);
+
+    }
+
 
     @GET
     @RolesAllowed({"USER", "ADMIN"})
@@ -74,45 +70,20 @@ public class EventOrganizationApi {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
-            return new EventDto(e);
+            return new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId());
         } else {
             throw new IllegalArgumentException();
         }
     }
 
-    Event setFieldsToEvent(Event event, String adr, String value) throws IllegalArgumentException {
-        switch (adr) {
-            case ("name"):
-                event.setName(value);
-                break;
-            case ("description"):
-                event.setDescription(value);
-                break;
-            case ("datepicker"):
-                event.setDate(value);
-                break;
-            case ("id"):
-                event.setId(Long.valueOf(value));
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
-        return event;
-    }
-
     @GET
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/getevents")
-    public EventListDto getAllAuthorEvents() {
-        User user = userStore.getCurrentUser();
-        List<Event> event = eventStore.getAuthorEvents(user);
-        List<EventDto> listE = new ArrayList<>();
-        for (Event e : event) {
-            EventDto eventDto = new EventDto(e);
-            listE.add(eventDto);
-        }
-        return new EventListDto(listE);
+    public List<EventDto> getAllAuthorEvents() {
+        List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
+
+      return event.stream()
+              .map(e -> new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId()))
+              .collect(Collectors.toList());
     }
-
-
 }
