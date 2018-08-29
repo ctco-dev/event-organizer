@@ -20,7 +20,7 @@
     <p><b>Date</b></p>
     <p><input type="text" id="datepicker"></p>
     <p><b>Set status</b></p>
-    <p><input type="checkbox" id="closed" ><b>Closed </b><input type="checkbox" id="finished" ><b>Finished</b></p>
+    <p><input type="checkbox" id="closed"><b>Closed </b><input type="checkbox" id="finished"><b>Finished</b></p>
 
 
 </form>
@@ -50,20 +50,18 @@
         data["description"] = description.value;
         var checkClosed = document.getElementById("closed");
         console.log(id + " " + checkClosed.checked);
-        if(checkClosed.checked){
-            data["status"]="CLOSED"
+        if (checkClosed.checked) {
+            data["status"] = "CLOSED"
         }
         var checkFinished = document.getElementById("finished");
         console.log(id + " " + checkFinished.checked);
-        if(checkFinished.checked){
-            data["status"]="FINISHED"
+        if (checkFinished.checked) {
+            data["status"] = "FINISHED"
         }
         if (id) {
             data["id"] = id;
         }
     }
-
-
 
 
     function checkFunction() {
@@ -106,9 +104,7 @@
                 'Content-Type': 'application/json'
             }, body: JSON.stringify(data)
         }).then(function (response) {
-            console.log(data)
             location.href = "<c:url value='/app/jsp/start.jsp'/>";
-
         });
     }
 
@@ -139,21 +135,21 @@
         }
     }
 
-        function getQueryVariable(variable) {
-            var query = window.location.search.substring(1);
-            var vars = query.split("&");
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split("=");
-                if (pair[0] == variable) {
-                    return pair[1];
-                }
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
             }
-            return (false);
         }
+        return (false);
+    }
 
-        $(function () {
-            $("#datepicker").datepicker();
-        });
+    $(function () {
+        $("#datepicker").datepicker();
+    });
 
 
 </script>
