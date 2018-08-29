@@ -12,7 +12,7 @@
     <h1>Login or Register</h1>
 </header>
 
-<div class="w3-container w3-half w3-margin-top">
+<div class="w3-container w3-half w3-margin-top" align="center">
 
     <form class="w3-container w3-card-4">
         <div id="error-panel" class="w3-panel w3-red w3-hide">
@@ -90,7 +90,7 @@
         }).then(function (response) {
             if (response.status === 200) {
                 console.log("login success");
-                location.href = "/app/start.jsp";
+                location.href = "/app/jsp/start.jsp";
             } else {
                 showError("Username or Password is incorrect!");
             }
@@ -124,7 +124,7 @@
         }).then(function (response) {
             if (response.status === 200) {
                 console.log("registration success");
-                location.href = "<c:url value='/app/start.jsp'/>";
+                location.href = "<c:url value='/app/jsp/start.jsp'/>";
             } else if (response.status === 401) {
                 showError("Something is wrong!");
             } else {

@@ -1,0 +1,65 @@
+textarea {
+
+    height: 50px;
+    width: 400px;
+}
+
+#buttons {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+
+}
+
+#add, #edit {
+    border: dotted;
+    text: bold;
+    text-align: center;
+}
+
+ul {
+    border: solid;
+}
+
+li {
+    border: thin;
+    width: auto;
+}
+
+a {
+    underline-mode: none;
+}
+
+#header {
+    border: dotted;
+    text: bold;
+    text-align: center;
+}
+
+#goToEdit {
+    margin-left: 600px;
+}
+
+#createPoolButton {
+    margin-left: 10px;
+}
+
+#header {
+    border: dotted;
+    text: bold;
+    text-align: center;
+}
+
+a {
+    text-underline-mode: none;
+}
+
+#displayInfo {
+    float: inherit;
+    padding: inherit;
+}
+
+#eventName-field {
+    align-content: center;
+}
