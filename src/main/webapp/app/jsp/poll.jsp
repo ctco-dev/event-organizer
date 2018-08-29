@@ -31,6 +31,7 @@
         <h2>question: {{pollquestion}}</h2>
         <p><b>answers</b></p>
         <h2>answers: {{pollanswers}}</h2>
+        <button onclick="deletePoll()">Delete Poll</button>
         <hr/>
     </div>
 

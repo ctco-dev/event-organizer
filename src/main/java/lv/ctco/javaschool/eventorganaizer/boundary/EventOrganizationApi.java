@@ -117,4 +117,11 @@ public class EventOrganizationApi {
         int event = eventStore.deleteEventById(id);
     }
 
+    @POST
+    @Path("/deletePoll/{id}")
+    @RolesAllowed({"USER", "ADMIN"})
+    public void deletePoll(@PathParam("id") Long id) throws IllegalArgumentException {
+        int poll = pollStore.deletePollById(id);
+    }
+
 }
