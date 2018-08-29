@@ -89,7 +89,7 @@ public class EventOrganizationApi {
     @Path("/delete/{id}")
     @RolesAllowed({"USER", "ADMIN"})
     public void deleteEvent(@PathParam("id") Long id) throws IllegalArgumentException {
-        int event = eventStore.deleteEventById(id);
+        eventStore.deleteEventById(id);
     }
 }
 
