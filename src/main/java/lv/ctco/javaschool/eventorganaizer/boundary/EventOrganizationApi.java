@@ -106,7 +106,6 @@ public class EventOrganizationApi {
                 .map(p -> new PollDto(p.getQuestion(), p.getAnswers(),
                         p.isFeedback(), p.getEventID(), p.getId()))
                 .collect(Collectors.toList());
-
     }
 
     @POST
