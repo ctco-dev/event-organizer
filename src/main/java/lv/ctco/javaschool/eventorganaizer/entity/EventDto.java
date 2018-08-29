@@ -6,7 +6,7 @@ public class EventDto {
     private String eventName;
     private String eventDescription;
     private String eventDate;
-    private long eventID;
+    private Long eventID;
 
     public EventDto(){
 

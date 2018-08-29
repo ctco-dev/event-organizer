@@ -10,12 +10,6 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserStoreTest {
-    @Test
-    void getCurrentUser() {
-
-
-    }
-
 
     @Test
     void validateUsername() {

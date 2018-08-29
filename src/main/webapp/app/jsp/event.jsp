@@ -21,7 +21,6 @@
     <p style="border: thick">{{eventDescription}}</p>
 </div>
 
-
 <script>
     function loadEvent() {
         var id = getQueryVariable("id");
@@ -41,7 +40,6 @@
                 w3.displayObject("event-field", event);
             }
         })
-
     }
 
     function addEvent() {
