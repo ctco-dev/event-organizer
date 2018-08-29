@@ -60,7 +60,6 @@ public class EventOrganizationApi {
     @Path("/update")
     @RolesAllowed({"USER", "ADMIN"})
     public void updateEvent(Event event) {
-        event.setStatus(EventStatus.OPEN);
         event.setAuthor(userStore.getCurrentUser());
         em.merge(event);
 
@@ -74,7 +73,7 @@ public class EventOrganizationApi {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
-            return new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId());
+            return new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId(),e.getStatus());
         } else {
             throw new IllegalArgumentException();
         }
@@ -87,7 +86,7 @@ public class EventOrganizationApi {
         List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
 
       return event.stream()
-              .map(e -> new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId()))
+              .map(e -> new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId(),e.getStatus()))
               .collect(Collectors.toList());
     }
 

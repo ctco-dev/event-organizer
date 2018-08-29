@@ -5,15 +5,8 @@ public class TopicDto {
     private String topicName;
     private String topicAuthor;
     private String date;
-    private String path;
     private Long id;
 
-    public TopicDto(String topicName, String topicAuthor, String date, boolean isFeedbackPool, Long id) {
-        this.topicName = topicName;
-        this.topicAuthor = topicAuthor;
-        this.date = date;
-        this.id = id;
-    }
 
     public TopicDto(Event event) {
         this.topicName = event.getName();
@@ -44,14 +37,6 @@ public class TopicDto {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public Long getId() {

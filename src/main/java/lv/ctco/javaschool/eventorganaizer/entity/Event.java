@@ -24,12 +24,12 @@ public class Event {
 
     private EventStatus status;
 
-    public Event(String name, User author, String description, String date) {
+    public Event(String name, User author, String description, String date,EventStatus status) {
         this.name = name;
         this.author = author;
         this.description = description;
         this.date = date;
-        this.status = EventStatus.OPEN;
+        this.status = status;
 
     }
 

@@ -43,7 +43,6 @@
             if (topics.topicList.length > 0) {
                 document.getElementById("topic-list").classList.remove("w3-hide");
                 w3DisplayData("topic-list", topics);
-                console.log(topics)
             }
         })
     }
