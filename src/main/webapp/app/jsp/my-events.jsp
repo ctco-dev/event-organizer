@@ -19,7 +19,7 @@
         <a href="<c:url value='/app/jsp/event.jsp'/>?id={{eventID}}">{{eventName}}</a>
         <p>
             <button onclick="goToEditPage('{{eventID}}')" id="goToEdit">Edit</button>
-            <button onclick="deleteEvent('{{eventID}}')" id="delete">Delete</button>
+            <button onclick="deleteEvent('{{eventID}}'),window.location.reload()" id="delete">Delete</button>
             <button onclick="goToCreatePoolPage()" id="createPoolButton">Create Pool</button>
         </p>
     </li>
