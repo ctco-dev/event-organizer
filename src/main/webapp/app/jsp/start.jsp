@@ -5,34 +5,28 @@
     <title>Event Organizer</title>
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <style>
-        ul {
-            list-style: none;
-        }
-
-        a {
-            underline-mode: none;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="pagesStyle.css">
 </head>
 <body onload="checkTopics()">
-<button type="button" onclick="logout()">Log out</button>
+<header id="header"><h1>Our Events</h1></header>
 <div>
+    <button type="button" onclick="logout()">Log out</button>
     <button type="button" onclick="addEvent()">Add Event</button>
     <button type="button" onclick="myEvents()">My Events</button>
 </div>
 
 <ul id="topic-list" class="w3-hide">
-    <li w3-repeat="topicList"><a href="<c:url value='/app/event.jsp'/>">{{topicName}}</a> - {{topicAuthor}}</li>
+    <li w3-repeat="topicList">
+        <div style="float: left"><a href="<c:url value='/app/jsp/event.jsp'/>?id={{id}}">{{topicName}}</a> </div>
+        <div style="float: right" >{{topicAuthor}}</div>
+    </li>
 </ul>
-
 <script>
     function addEvent() {
-        location.href = "/app/add-event.jsp"
+        location.href = "/app/jsp/add-event.jsp"
     }
-
     function myEvents() {
-        location.href = "/app/my-events.jsp"
+        location.href = "/app/jsp/my-events.jsp"
     }
     function checkTopics() {
         fetch("<c:url value='/api/event'/>", {
@@ -47,11 +41,10 @@
             if (topics.topicList.length > 0) {
                 document.getElementById("topic-list").classList.remove("w3-hide");
                 w3DisplayData("topic-list", topics);
+                console.log(topics)
             }
         })
     }
-
-
     function logout() {
         fetch("<c:url value='/api/auth/logout'/>", {"method": "POST"})
             .then(function (response) {
