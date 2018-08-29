@@ -25,7 +25,7 @@
 
 </form>
 
-<div id="displayPoll" >
+<div id="displayPoll">
     <div w3-repeat="pollArray">
         <p><b>question</b></p>
         <h2>question: {{pollquestion}}</h2>
