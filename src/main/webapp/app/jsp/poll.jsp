@@ -84,6 +84,10 @@
             }, body: JSON.stringify(data)
         }).then(function (response) {
             getPollFromDB();
+            document.getElementById("question").value='';
+            document.getElementById("answers").value='';
+            document.getElementById("isFeedback").value=false;
+
         });
     }
 
