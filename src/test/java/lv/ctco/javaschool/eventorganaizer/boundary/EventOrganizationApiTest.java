@@ -41,11 +41,11 @@ class EventOrganizationApiTest {
     @BeforeEach
     void init() {
         userEvents = new ArrayList<>();
-        testUser  = new User();
+        testUser = new User();
+        testUser.setUsername("admin");
         event = initEvent();
         eventDto = initEventDto(event);
         topicDtoList = new ArrayList<>();
-        testUser.setUsername("admin");
         expectedTopicDto = new TopicDto(event);
     }
 
@@ -57,7 +57,7 @@ class EventOrganizationApiTest {
 
         TopicListDto result = eventOrganizationApi.getAllOpenEvents();
         List<TopicDto> topicList = result.getTopicList();
-        assertEquals(1,topicList.size());
+        assertEquals(1, topicList.size());
 
         TopicDto resultTopicDto = topicList.get(0);
         assertEquals(expectedTopicDto.getId(), resultTopicDto.getId());
@@ -101,11 +101,11 @@ class EventOrganizationApiTest {
         when(eventStore.getAuthorEvents(testUser))
                 .thenReturn(userEvents);
         List<EventDto> result = eventOrganizationApi.getAllAuthorEvents();
-        assertEquals(1,result.size());
+        assertEquals(1, result.size());
 
         EventDto eventDto = result.get(0);
-        assertEquals("qwe",eventDto.getEventName());
-        assertEquals(1,eventDto.getEventID());
+        assertEquals("qwe", eventDto.getEventName());
+        assertEquals(1, eventDto.getEventID());
     }
 
     @Test
@@ -114,12 +114,12 @@ class EventOrganizationApiTest {
                 .thenReturn(testUser);
         when(eventStore.getAuthorEvents(testUser))
                 .thenReturn(userEvents);
-        List<EventDto> result = eventOrganizationApi.getAllAuthorEvents();
 
+        List<EventDto> result = eventOrganizationApi.getAllAuthorEvents();
         assertTrue(result.isEmpty());
     }
 
-    private Event initEvent (){
+    private Event initEvent() {
         Event event = new Event();
         event.setId((long) 1);
         event.setName("qwe");
@@ -129,7 +129,7 @@ class EventOrganizationApiTest {
         return event;
     }
 
-    private EventDto initEventDto (Event event){
+    private EventDto initEventDto(Event event) {
         EventDto eventDto = new EventDto();
         eventDto.setEventName(event.getName());
         eventDto.setEventDate(event.getDate());

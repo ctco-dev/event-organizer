@@ -34,13 +34,11 @@ public class EventOrganizationApi {
     @GET
     @RolesAllowed({"USER", "ADMIN"})
     public TopicListDto getAllOpenEvents() {
-        List<Event> listOfEvents = eventStore.getAllEvents();
-        List<TopicDto> listTopics = new ArrayList<>();
-        listOfEvents.forEach(e -> {
-            TopicDto topicDto = new TopicDto(e);
-            listTopics.add(topicDto);
-        });
-        return new TopicListDto(listTopics);
+        List<TopicDto> listOfTopicDto = eventStore.getAllEvents()
+                .stream()
+                .map(TopicDto::new)
+                .collect(Collectors.toList());
+        return new TopicListDto(listOfTopicDto);
     }
 
     @POST
@@ -59,9 +57,7 @@ public class EventOrganizationApi {
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(userStore.getCurrentUser());
         em.merge(event);
-
     }
-
 
     @GET
     @RolesAllowed({"USER", "ADMIN"})
@@ -70,7 +66,7 @@ public class EventOrganizationApi {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
-            return new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId());
+            return new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId());
         } else {
             throw new IllegalArgumentException();
         }
@@ -82,8 +78,8 @@ public class EventOrganizationApi {
     public List<EventDto> getAllAuthorEvents() {
         List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
 
-      return event.stream()
-              .map(e -> new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId()))
-              .collect(Collectors.toList());
+        return event.stream()
+                .map(e -> new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId()))
+                .collect(Collectors.toList());
     }
 }

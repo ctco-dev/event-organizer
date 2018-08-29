@@ -8,13 +8,6 @@ public class TopicDto {
     private String path;
     private Long id;
 
-    public TopicDto(String topicName, String topicAuthor, String date, boolean isFeedbackPool, Long id) {
-        this.topicName = topicName;
-        this.topicAuthor = topicAuthor;
-        this.date = date;
-        this.id = id;
-    }
-
     public TopicDto(Event event) {
         this.topicName = event.getName();
         this.topicAuthor = event.getAuthor().getUsername();
