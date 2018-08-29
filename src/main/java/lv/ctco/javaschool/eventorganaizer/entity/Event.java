@@ -22,12 +22,15 @@ public class Event {
 
     private String description;
 
+    private String agenda;
+
     private EventStatus status;
 
-    public Event(String name, User author, String description, String date) {
+    public Event(String name, User author, String description, String agenda, String date) {
         this.name = name;
         this.author = author;
         this.description = description;
+        this.agenda = agenda;
         this.date = date;
         this.status = EventStatus.OPEN;
 
@@ -83,4 +86,8 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getAgenda() { return agenda; }
+
+    public void setAgenda(String agenda) { this.agenda = agenda; }
 }
