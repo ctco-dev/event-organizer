@@ -14,10 +14,10 @@
     <button type="button" onclick="myEvents()">My Events</button>
     <button type="button" onclick="addEvent()">Add Event</button>
 </div>
-<div id="event-field" class="w3-hide" align="center">
+<div id="event-field" class="w3-hide" >
     <h1>{{eventName}}</h1>
-    <h4 style="background: #c4e5ff">{{eventDate}}</h4>
-    <p style="border: thick">{{eventDescription}}</p>
+    <h4 >{{eventDate}}</h4>
+    <p >{{eventDescription}}</p>
 </div>
 
 <script>

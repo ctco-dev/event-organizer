@@ -4,7 +4,6 @@
 <head>
     <title>Event Organizer</title>
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
-    <script src="javascript/start-page-logic.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" type="text/css" href="pagesStyle.css">
 </head>
@@ -22,6 +21,36 @@
         <div style="float: right" >{{topicAuthor}}</div>
     </li>
 </ul>
-
+<script>
+    function addEvent() {
+        location.href = "/app/jsp/add-event.jsp"
+    }
+    function myEvents() {
+        location.href = "/app/jsp/my-events.jsp"
+    }
+    function checkTopics() {
+        fetch("<c:url value='/api/event'/>", {
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then(function (response) {
+            return response.json();
+        }).then(function (topics) {
+            if (topics.topicList.length > 0) {
+                document.getElementById("topic-list").classList.remove("w3-hide");
+                w3DisplayData("topic-list", topics);
+                console.log(topics)
+            }
+        })
+    }
+    function logout() {
+        fetch("<c:url value='/api/auth/logout'/>", {"method": "POST"})
+            .then(function (response) {
+                location.href = "/";
+            });
+    }
+</script>
 </body>
 </html>

@@ -9,6 +9,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -68,7 +69,7 @@ public class EventOrganizationApi {
             Event e = event.get();
             return new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId());
         } else {
-            throw new IllegalArgumentException();
+            throw new EntityNotFoundException();
         }
     }
 
