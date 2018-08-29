@@ -7,13 +7,12 @@
     <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
     <title id="title">Poll Event</title>
 </head>
-<body onload="loadEvent()">
+<body onload="loadEvent(),getPollFromDB()">
 <header id="header"><h1>Event Poll</h1></header>
 <div id="event-field" class="w3-hide">
     <h2>Event name: {{eventName}}</h2>
     <h4>Event data: {{eventDate}}</h4>
     <h4>Event ID: {{eventID}}</h4>
-
 </div>
 
 <form name="pollform" method="post" style="padding: 15px">
@@ -27,10 +26,15 @@
 </form>
 
 <div id="displayPoll">
-    <p><b>question</b></p>
-    <p><textarea name="question" id="displayQuestion"></textarea></p>
-    <p><b>answers</b></p>
-    <p><textarea name="answers" id="displayAnswers"></textarea></p>
+    <div w3-repeat="pollArray">
+        <p><b>question</b></p>
+        <h2>question: {{pollquestion}}</h2>
+        <p><b>answers</b></p>
+        <h2>answers: {{pollanswers}}</h2>
+        <button onclick="deletePoll('{{pollID}}'),window.location.reload()">Delete Poll</button>
+        <hr/>
+    </div>
+
 </div>
 
 
@@ -49,11 +53,7 @@
         var answers = document.getElementById("answers");
         data["answers"] = answers.value;
         var isFeedback = document.getElementById("isFeedback");
-        if (isFeedback.value == "on") {
-            data["isFeedback"] = true;
-        } else {
-            data["isFeedback"] = false;
-        }
+        data["isFeedback"] = isFeedback.checked;
     }
 
     function loadEvent() {
@@ -69,7 +69,6 @@
             console.log(JSON.stringify(event));
             if (event !== undefined) {
                 document.getElementById("event-field").classList.remove("w3-hide");
-                w3.displayObject("title", event);
                 w3.displayObject("event-field", event);
             }
         })
@@ -85,7 +84,10 @@
                 'Content-Type': 'application/json'
             }, body: JSON.stringify(data)
         }).then(function (response) {
-
+            getPollFromDB();
+            document.getElementById("question").value='';
+            document.getElementById("answers").value='';
+            document.getElementById("isFeedback").value=false;
 
         });
     }
@@ -100,9 +102,22 @@
         }).then(function (response) {
             return response.json();
         }).then(function (poll) {
-            console.log(poll);
-            document.getElementById("displayQuestion").value = poll.pollquestion;
-            document.getElementById("displayAnswers").value = poll.pollanswers;
+            var z = {pollArray:poll};
+            w3.displayObject("displayPoll", z);
+        })
+    }
+
+    function deletePoll(x){
+        fetch("<c:url value='/api/event/deletePoll/'/>" + x, {
+            "method": "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then(function (response) {
+            if (response.status === 200) {
+                location.reload();
+            }
         })
 
     }

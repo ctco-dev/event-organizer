@@ -1,7 +1,6 @@
 package lv.ctco.javaschool.eventorganaizer.boundary;
 
 import lv.ctco.javaschool.auth.control.UserStore;
-import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.control.PollStore;
 import lv.ctco.javaschool.eventorganaizer.entity.*;
@@ -93,22 +92,35 @@ public class EventOrganizationApi {
     @POST
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/savePoll/{id}")
-    public void savePoll(Poll poll,@PathParam("id") Long id){
-       poll.setEventID(id);
-       em.persist(poll);
+    public void savePoll(Poll poll, @PathParam("id") Long id) {
+        poll.setEventID(id);
+        em.persist(poll);
     }
 
     @GET
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/getPoll/{id}")
-    public PollDto getPollForEvent(@PathParam("id") Long id){
-        Optional<Poll> poll=pollStore.getPollByIdEvent(id);
+    public List<PollDto> getPollForEvent(@PathParam("id") Long id) {
+        List<Poll> poll = pollStore.getPollByEventID(id);
+        return poll.stream()
+                .map(p -> new PollDto(p.getQuestion(), p.getAnswers(),
+                        p.isFeedback(), p.getEventID(), p.getId()))
+                .collect(Collectors.toList());
 
-        if (poll.isPresent()) {
-            Poll p=poll.get();
-            return new PollDto(p.getQuestion(),p.getAnswers(),p.isFeedback(),p.getEventID(),p.getId());
-        } else {
-            throw new IllegalArgumentException();
-        }
     }
+
+    @POST
+    @Path("/delete/{id}")
+    @RolesAllowed({"USER", "ADMIN"})
+    public void deleteEvent(@PathParam("id") Long id) throws IllegalArgumentException {
+        eventStore.deleteEventById(id);
+    }
+
+    @POST
+    @Path("/deletePoll/{id}")
+    @RolesAllowed({"USER", "ADMIN"})
+    public void deletePoll(@PathParam("id") Long id) throws IllegalArgumentException {
+        pollStore.deletePollById(id);
+    }
+
 }
