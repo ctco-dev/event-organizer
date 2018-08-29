@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,12 +86,12 @@ class EventOrganizationApiTest {
     void testValidationThrowsException() {
         when(eventStore.getEventById((long) 1))
                 .thenReturn(java.util.Optional.empty());
-        assertThrows(IllegalArgumentException.class, () -> eventOrganizationApi.getEventById((long) 1));
+        assertThrows(EntityNotFoundException.class, () -> eventOrganizationApi.getEventById((long) 1));
     }
 
     @Test
     void testNullThrowsException() {
-        assertThrows(IllegalArgumentException.class, () -> eventOrganizationApi.getEventById(null));
+        assertThrows(EntityNotFoundException.class, () -> eventOrganizationApi.getEventById(null));
     }
 
     @Test
