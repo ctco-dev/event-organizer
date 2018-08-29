@@ -31,7 +31,7 @@
         <h2>question: {{pollquestion}}</h2>
         <p><b>answers</b></p>
         <h2>answers: {{pollanswers}}</h2>
-        <button onclick="deletePoll()">Delete Poll</button>
+        <button onclick="deletePoll('{{pollID}}'),window.location.reload()">Delete Poll</button>
         <hr/>
     </div>
 
@@ -105,6 +105,21 @@
             var z = {pollArray:poll};
             w3.displayObject("displayPoll", z);
         })
+    }
+
+    function deletePoll(x){
+        fetch("<c:url value='/api/event/deletePoll/'/>" + x, {
+            "method": "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then(function (response) {
+            if (response.status === 200) {
+                location.reload();
+            }
+        })
+
     }
 
     function getQueryVariable(variable) {

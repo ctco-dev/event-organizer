@@ -73,7 +73,7 @@ public class EventOrganizationApi {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
-            return new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId());
+            return new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId());
         } else {
             throw new IllegalArgumentException();
         }
@@ -85,27 +85,27 @@ public class EventOrganizationApi {
     public List<EventDto> getAllAuthorEvents() {
         List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
 
-      return event.stream()
-              .map(e -> new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId()))
-              .collect(Collectors.toList());
+        return event.stream()
+                .map(e -> new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId()))
+                .collect(Collectors.toList());
     }
 
     @POST
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/savePoll/{id}")
-    public void savePoll(Poll poll,@PathParam("id") Long id){
-       poll.setEventID(id);
-       em.persist(poll);
+    public void savePoll(Poll poll, @PathParam("id") Long id) {
+        poll.setEventID(id);
+        em.persist(poll);
     }
 
     @GET
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/getPoll/{id}")
-    public List<PollDto> getPollForEvent(@PathParam("id") Long id){
-        List<Poll> poll=pollStore.getPollByEventID(id);
+    public List<PollDto> getPollForEvent(@PathParam("id") Long id) {
+        List<Poll> poll = pollStore.getPollByEventID(id);
         return poll.stream()
-                .map(p -> new PollDto(p.getQuestion(),p.getAnswers(),
-                        p.isFeedback(),p.getEventID(),p.getId()))
+                .map(p -> new PollDto(p.getQuestion(), p.getAnswers(),
+                        p.isFeedback(), p.getEventID(), p.getId()))
                 .collect(Collectors.toList());
 
     }
@@ -114,14 +114,14 @@ public class EventOrganizationApi {
     @Path("/delete/{id}")
     @RolesAllowed({"USER", "ADMIN"})
     public void deleteEvent(@PathParam("id") Long id) throws IllegalArgumentException {
-        int event = eventStore.deleteEventById(id);
+        eventStore.deleteEventById(id);
     }
 
     @POST
     @Path("/deletePoll/{id}")
     @RolesAllowed({"USER", "ADMIN"})
     public void deletePoll(@PathParam("id") Long id) throws IllegalArgumentException {
-        int poll = pollStore.deletePollById(id);
+        pollStore.deletePollById(id);
     }
 
 }
