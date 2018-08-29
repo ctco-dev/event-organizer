@@ -92,5 +92,5 @@ public class EventOrganizationApi {
         int event = eventStore.deleteEventById(id);
     }
 }
-}
+
 
