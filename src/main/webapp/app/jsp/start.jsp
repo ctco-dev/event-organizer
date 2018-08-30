@@ -22,7 +22,6 @@
         <div style="float: right" >{{topicAuthor}}</div>
     </li>
 </ul>
-
 <script>
     function addEvent() {
         location.href = "/app/jsp/add-event.jsp"
@@ -36,16 +35,18 @@
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
+            }
         }).then(function (response) {
             return response.json();
         }).then(function (topics) {
             if (topics.topicList.length > 0) {
                 document.getElementById("topic-list").classList.remove("w3-hide");
                 w3DisplayData("topic-list", topics);
+                console.log(topics);
             }
         })
     }
+
     function logout() {
         fetch("<c:url value='/api/auth/logout'/>", {"method": "POST"})
             .then(function (response) {

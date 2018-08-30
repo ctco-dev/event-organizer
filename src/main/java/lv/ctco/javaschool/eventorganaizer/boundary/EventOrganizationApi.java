@@ -9,12 +9,14 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,13 +39,11 @@ public class EventOrganizationApi {
     @GET
     @RolesAllowed({"USER", "ADMIN"})
     public TopicListDto getAllOpenEvents() {
-        List<Event> listOfEvents = eventStore.getAllEvents();
-        List<TopicDto> listTopics = new ArrayList<>();
-        listOfEvents.forEach(e -> {
-            TopicDto topicDto = new TopicDto(e);
-            listTopics.add(topicDto);
-        });
-        return new TopicListDto(listTopics);
+        List<TopicDto> listOfTopicDto = eventStore.getAllEvents()
+                .stream()
+                .map(TopicDto::new)
+                .collect(Collectors.toList());
+        return new TopicListDto(listOfTopicDto);
     }
 
     @POST
@@ -61,9 +61,7 @@ public class EventOrganizationApi {
     public void updateEvent(Event event) {
         event.setAuthor(userStore.getCurrentUser());
         em.merge(event);
-
     }
-
 
     @GET
     @RolesAllowed({"USER", "ADMIN"})
@@ -72,9 +70,9 @@ public class EventOrganizationApi {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
-            return new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId(),e.getStatus());
+            return new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId(), e.getAgenda(), e.getStatus());
         } else {
-            throw new IllegalArgumentException();
+            throw new EntityNotFoundException();
         }
     }
 
@@ -84,16 +82,31 @@ public class EventOrganizationApi {
     public List<EventDto> getAllAuthorEvents() {
         List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
 
-      return event.stream()
-              .map(e -> new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId(),e.getStatus()))
-              .collect(Collectors.toList());
+        return event.stream()
+                .map(e -> new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId(), e.getAgenda(), e.getStatus()))
+                .collect(Collectors.toList());
     }
 
     @POST
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/savePoll/{id}")
-    public void savePoll(Poll poll, @PathParam("id") Long id) {
+    public void savePoll(PollDto pollDto, @PathParam("id") Long id) {
+        List<AnswersDto> answersString = pollDto.getAnswers();
+        //String[] answerList = answersString.split("\n");
+
+        Poll poll = new Poll();
+        poll.setQuestion(pollDto.getQuestion());
         poll.setEventID(id);
+        poll.setIsFeedback(pollDto.isFeedback());
+
+        List<Answer> answerList = new ArrayList<>();
+        for (AnswersDto answersDto : answersString) {
+            Answer answer = new Answer();
+            answer.setPoll(poll);
+            answer.setText(answersDto.getText());
+            answerList.add(answer);
+        }
+        poll.setAnswers(answerList);
         em.persist(poll);
     }
 
@@ -101,11 +114,53 @@ public class EventOrganizationApi {
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/getPoll/{id}")
     public List<PollDto> getPollForEvent(@PathParam("id") Long id) {
-        List<Poll> poll = pollStore.getPollByEventID(id);
+        List<Poll> poll = pollStore.getPollForEvent(id);
         return poll.stream()
-                .map(p -> new PollDto(p.getQuestion(), p.getAnswers(),
+                .map(p -> new PollDto(p.getQuestion(), p.getAnswers().stream().map((Answer it) -> {
+                    return it.getText();
+                }).collect(Collectors.toList()),
                         p.isFeedback(), p.getEventID(), p.getId()))
                 .collect(Collectors.toList());
+    }
+
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/getFeedbackPoll/{id}")
+    public List<PollDto> getFeedbackForEvent(@PathParam("id") Long id) {
+        List<Poll> poll = pollStore.getFeedbackPoll(id);
+        return poll.stream()
+                .map(p -> new PollDto(p.getQuestion(), p.getAnswers().stream().map((Answer it) -> {
+                    return it.getText();
+                }).collect(Collectors.toList()),
+                        p.isFeedback(), p.getEventID(), p.getId()))
+                .collect(Collectors.toList());
+    }
+
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/getVotingPoll/{id}")
+    public List<PollDto> getVotingForEvent(@PathParam("id") Long id) {
+        List<Poll> poll = pollStore.getVotingPoll(id);
+        return poll.stream()
+                .map(p -> new PollDto(p.getQuestion(),
+                        toAnswersDtoList(p.getAnswers()),
+                        p.isFeedback(),
+                        p.getEventID(),
+                        p.getId()))
+                .collect(Collectors.toList());
+    }
+
+    private List<AnswersDto> toAnswersDtoList(List<Answer> list) {
+        return list.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    private AnswersDto toDto(Answer answer) {
+        AnswersDto r = new AnswersDto();
+        r.setText(answer.getText());
+        r.setThisAnswerID(answer.getId());
+        return r;
     }
 
     @POST

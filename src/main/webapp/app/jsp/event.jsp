@@ -15,16 +15,40 @@
     <button type="button" onclick="myEvents()">My Events</button>
     <button type="button" onclick="addEvent()">Add Event</button>
 </div>
-<div id="event-field" class="w3-hide" align="center">
+<div id="event-field" class="w3-hide">
     <h1>{{eventName}}</h1>
-    <h4 style="background: #c4e5ff">{{eventDate}}</h4>
-    <p style="border: thick">{{eventDescription}}</p>
+    <h4>{{eventDate}}</h4>
+    <p>{{eventDescription}}</p>
+    <p>{{eventAgenda}}</p>
+</div>
+
+<div id="voting" class="w3-hide" >
+    VOTING
+    <div w3-repeat="pollArray">
+        <p><b>question</b></p>
+        <h2>question: {{question}}</h2>
+        <p><b>answers</b></p>
+        <h2>answers: {{answers}}</h2>
+        <hr/>
+    </div>
+</div>
+
+<div id="feedback" class="w3-hide">
+    FEEDBACK
+    <div w3-repeat="pollArray">
+        <p><b>question</b></p>
+        <h2>question: {{question}}</h2>
+        <p><b>answers</b></p>
+        <h2>answers: {{answers}}</h2>
+        <hr/>
+    </div>
 </div>
 
 
 <script>
+    var id = getQueryVariable("id");
+
     function loadEvent() {
-        var id = getQueryVariable("id");
         fetch("<c:url value='/api/event/'/>" + id, {
             "method": "GET",
             headers: {
@@ -40,6 +64,57 @@
                 w3.displayObject("title", event);
                 w3.displayObject("event-field", event);
             }
+
+            if (event.eventStatus == "OPEN") {
+                document.getElementById("voting").classList.remove("w3-hide");
+                document.getElementById("feedback").classList.add("w3-hide");
+                getVotingFromDB();
+            }
+            if (event.eventStatus == "CLOSED") {
+                document.getElementById("voting").classList.add("w3-hide");
+                document.getElementById("feedback").classList.remove("w3-hide")
+                getFeedbackFromDB()
+            }
+        })
+    }
+
+    function getFeedbackFromDB() {
+        fetch("<c:url value='/api/event/getFeedbackPoll/'/>" + id , {
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        }).then(function (poll) {
+            if (poll.length === 0) {
+                document.getElementById("feedback").classList.add("w3-hide");
+            } else {
+                document.getElementById("feedback").classList.remove("w3-hide");
+                var z = {pollArray: poll};
+                w3.displayObject("feedback", z);
+            }
+        })
+    }
+
+    function getVotingFromDB() {
+        fetch("<c:url value='/api/event/getVotingPoll/'/>" + id , {
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        }).then(function (poll) {
+            if (poll.length === 0) {
+                document.getElementById("voting").classList.add("w3-hide");
+            } else {
+                document.getElementById("voting").classList.remove("w3-hide");
+                var z = {pollArray: poll};
+                w3.displayObject("voting", z);
+            }
         })
 
     }
@@ -47,7 +122,6 @@
     function addEvent() {
         location.href = "/app/jsp/add-event.jsp"
     }
-
     function main() {
         location.href = "/app/jsp/start.jsp"
     }

@@ -3,11 +3,15 @@ package lv.ctco.javaschool.eventorganaizer.entity;
 
 import lv.ctco.javaschool.auth.entity.domain.User;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Poll {
@@ -18,7 +22,9 @@ public class Poll {
     private Long eventID;
 
     private String question;
-    private String answers;
+
+    @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Answer> answers = new ArrayList<>();
     private boolean isFeedback;
 
 
@@ -45,19 +51,18 @@ public class Poll {
         this.question = question;
     }
 
-    public String getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(String answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
-
     public boolean isFeedback() {
         return isFeedback;
     }
 
-    public void setFeedback(boolean feedback) {
+    public void setIsFeedback(boolean feedback) {
         isFeedback = feedback;
     }
 }

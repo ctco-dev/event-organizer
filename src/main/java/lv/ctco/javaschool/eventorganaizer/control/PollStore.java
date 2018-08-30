@@ -18,7 +18,7 @@ public class PollStore {
     @Inject
     private PollStore pollStore;
 
-    public List<Poll> getPollByEventID(Long id) {
+    public List<Poll> getPollForEvent(Long id) {
         return em.createQuery("select  p from Poll p" +
                 " where p.eventID=:id", Poll.class)
                 .setParameter("id", id)
@@ -31,4 +31,19 @@ public class PollStore {
                 .executeUpdate();
 
     }
+
+    public List<Poll> getVotingPoll(Long id) {
+        return em.createQuery("select  p from Poll p" +
+                " where p.eventID=:id and p.isFeedback=false", Poll.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
+    public List<Poll> getFeedbackPoll(Long id) {
+        return em.createQuery("select p from Poll p" +
+                " where p.eventID=:id and p.isFeedback=true", Poll.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
 }

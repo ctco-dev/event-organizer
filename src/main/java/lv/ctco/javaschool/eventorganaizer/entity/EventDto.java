@@ -6,27 +6,20 @@ public class EventDto {
     private String eventName;
     private String eventDescription;
     private String eventDate;
-    private long eventID;
-
-    public EventStatus getEventStatus() {
-        return eventStatus;
-    }
-
-    public void setEventStatus(EventStatus eventStatus) {
-        this.eventStatus = eventStatus;
-    }
-
+    private Long eventID;
+    private String eventAgenda;
     private EventStatus eventStatus;
 
     public EventDto(){
 
     }
 
-    public EventDto(String name, String description, String date, Long id,EventStatus status) {
+    public EventDto(String name, String description, String date, Long id, String agenda,EventStatus status) {
         this.eventName = name;
         this.eventDescription = description;
         this.eventDate = date;
         this.eventID = id;
+        this.eventAgenda = agenda;
         this.eventStatus=status;
      }
 
@@ -59,4 +52,11 @@ public class EventDto {
     public void setEventDate(String eventDate) {
         this.eventDate = eventDate;
     }
+
+    public String getEventAgenda() { return eventAgenda; }
+
+    public void setEventAgenda(String eventAgenda) { this.eventAgenda = eventAgenda; }
+    public EventStatus getEventStatus() {return eventStatus;}
+
+    public void setEventStatus(EventStatus eventStatus) {this.eventStatus = eventStatus;}
 }

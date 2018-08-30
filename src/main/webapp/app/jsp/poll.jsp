@@ -3,16 +3,17 @@
 <html>
 <head>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
     <title id="title">Poll Event</title>
 </head>
-<body onload="loadEvent(),getPollFromDB()">
+<body onload="init()">
 <header id="header"><h1>Event Poll</h1></header>
 <div id="event-field" class="w3-hide">
     <h2>Event name: {{eventName}}</h2>
     <h4>Event data: {{eventDate}}</h4>
-    <h4>Event ID: {{eventID}}</h4>
+    <h5>Event ID: {{eventID}}</h5>
 </div>
 
 <form name="pollform" method="post" style="padding: 15px">
@@ -22,62 +23,63 @@
     <p><textarea name="answers" id="answers"></textarea></p>
     <p><b>isFeedback</b></p>
     <p><input type="checkbox" id="isFeedback"></p>
-
 </form>
-
-<div id="displayPoll">
-    <div w3-repeat="pollArray">
-        <p><b>question</b></p>
-        <h2>question: {{pollquestion}}</h2>
-        <p><b>answers</b></p>
-        <h2>answers: {{pollanswers}}</h2>
-        <button onclick="deletePoll('{{pollID}}'),window.location.reload()">Delete Poll</button>
-        <hr/>
-    </div>
-
-</div>
-
-
 <p>
-      <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
-      <button onclick="getPollFromDB()" style="margin: 0px 0px 5px 15px">Show Poll</button>
+    <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
+    <button onclick="getPollFromDB()" style="margin: 0px 0px 5px 15px">Show Poll</button>
 </p>
 
+<script id="pollList" type="text/x-handlebars-template">
+    {{#pollArray}}
+    <div>
+        <p><b>question</b></p>
+        <h2>question: {{question}}</h2>
+        <p><b>answers</b></p>
+        {{#answers}}
+        <div>
+            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label for="{{thisAnswerID}}">{{text}}</label>
+        </div>
+        {{/answers}}
+        <p><b>isFeedback</b></p>
+        <h2>isFeedback: {{feedback}}</h2>
+        <button onclick="deletePoll('{{id}}')">Delete Poll</button>
+        <hr/>
+    </div>
+    {{/pollArray}}
+</script>
+
+<div id="displayPoll">
+</div>
+
 <script>
-    var data = {};
     var id = getQueryVariable("id");
 
-    function getData() {
-        var question = document.getElementById("question");
-        data["question"] = question.value;
+    function splitAnswers() {
         var answers = document.getElementById("answers");
-        data["answers"] = answers.value;
-        var isFeedback = document.getElementById("isFeedback");
-        data["isFeedback"] = isFeedback.checked;
+        var result = [];
+        answers.value.split("\n").forEach(function (txt) {
+            var dto = {text: txt};
+            result.push(dto)
+        });
+        return result;
     }
 
-    function loadEvent() {
-        fetch("<c:url value='/api/event/'/>" + id, {
-            "method": "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        }).then(function (response) {
-            return response.json();
-        }).then(function (event) {
-            console.log(JSON.stringify(event));
-            if (event !== undefined) {
-                document.getElementById("event-field").classList.remove("w3-hide");
-                w3.displayObject("event-field", event);
-            }
-        })
+    function buildData() {
+        var question = document.getElementById("question");
+        var data = {};
+        data["question"] = question.value;
+        //var answers = document.getElementById("answers");
+        data["answers"] = splitAnswers();
+        var isFeedback = document.getElementById("isFeedback");
+        data["isFeedback"] = isFeedback.checked;
+        console.log(data);
+        return data;
     }
 
     function savePollToDB() {
-        getData();
+        var data = buildData();
         console.log(data);
-        fetch("<c:url value='/api/event/savePoll/'/>"+id, {
+        fetch("<c:url value='/api/event/savePoll/'/>" + id, {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -85,10 +87,8 @@
             }, body: JSON.stringify(data)
         }).then(function (response) {
             getPollFromDB();
-            document.getElementById("question").value='';
-            document.getElementById("answers").value='';
-            document.getElementById("isFeedback").value=false;
-
+            document.getElementById("question").value = '';
+            document.getElementById("answers").value = '';
         });
     }
 
@@ -102,24 +102,49 @@
         }).then(function (response) {
             return response.json();
         }).then(function (poll) {
-            var z = {pollArray:poll};
-            w3.displayObject("displayPoll", z);
+            if (poll.length === 0) {
+                document.getElementById("displayPoll").classList.add("w3-hide");
+            } else {
+                document.getElementById("displayPoll").classList.remove("w3-hide");
+                var context = {pollArray: poll};
+                console.log(context);
+                var source   = document.getElementById("pollList").innerHTML;
+                var template = Handlebars.compile(source);
+                var html = template(context);
+                document.getElementById("displayPoll").innerHTML = html;
+            }
         })
     }
 
-    function deletePoll(x){
+    function deletePoll(x) {
         fetch("<c:url value='/api/event/deletePoll/'/>" + x, {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
-        }).then(function (response) {
-            if (response.status === 200) {
-                location.reload();
             }
+        }).then(function (response) {
+            getPollFromDB();
         })
 
+    }
+
+    function loadEvent() {
+        fetch("<c:url value='/api/event/'/>" + id, {
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        }).then(function (event) {
+            console.log(JSON.stringify(event));
+            if (event !== undefined) {
+                document.getElementById("event-field").classList.remove("w3-hide");
+                w3.displayObject("event-field", event);
+            }
+        })
     }
 
     function getQueryVariable(variable) {
@@ -132,6 +157,11 @@
             }
         }
         return (false);
+    }
+
+    function init() {
+        loadEvent();
+        getPollFromDB();
     }
 
 </script>
