@@ -85,7 +85,7 @@
             getPollFromDB();
             document.getElementById("question").value='';
             document.getElementById("answers").value='';
-            //document.getElementById("isFeedback").value=false;
+            document.getElementById("isFeedback").value=false;
 
         });
     }
