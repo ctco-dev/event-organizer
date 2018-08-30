@@ -17,8 +17,9 @@
 </div>
 <div id="event-field" class="w3-hide" >
     <h1>{{eventName}}</h1>
-    <h4 >{{eventDate}}</h4>
-    <p >{{eventDescription}}</p>
+    <h4>{{eventDate}}</h4>
+    <p>{{eventDescription}}</p>
+    <p>{{eventAgenda}}</p>
 </div>
 
 <script>
@@ -45,7 +46,6 @@
     function addEvent() {
         location.href = "/app/jsp/add-event.jsp"
     }
-
     function main() {
         location.href = "/app/jsp/start.jsp"
     }

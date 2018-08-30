@@ -17,6 +17,8 @@
     <p><textarea name="name" id="name"></textarea></p>
     <p><b>Description</b></p>
     <p><textarea name="desc" id="description"></textarea></p>
+    <p><b>Agenda</b></p>
+    <p><textarea name="agenda" id="agenda"></textarea></p>
     <p><b>Date</b></p>
     <p><input type="text" id="datepicker"></p>
 </form>
@@ -44,6 +46,8 @@
         data["date"] = eventdate.value;
         var description = document.getElementById("description");
         data["description"] = description.value;
+        var agenda = document.getElementById("agenda");
+        data["agenda"] = agenda.value;
         if (id) {
             data["id"] = id;
         }
@@ -108,6 +112,7 @@
             document.getElementById("name").value = event.eventName;
             document.getElementById("description").value = event.eventDescription;
             document.getElementById("datepicker").value = event.eventDate;
+            document.getElementById("agenda").value = event.eventAgenda;
         })
     }
 

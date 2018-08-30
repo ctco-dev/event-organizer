@@ -7,16 +7,18 @@ public class EventDto {
     private String eventDescription;
     private String eventDate;
     private Long eventID;
+    private String eventAgenda;
 
     public EventDto(){
 
     }
 
-    public EventDto(String name, String description, String date, Long id) {
+    public EventDto(String name, String description, String date, Long id, String agenda) {
         this.eventName = name;
         this.eventDescription = description;
         this.eventDate = date;
         this.eventID = id;
+        this.eventAgenda = agenda;
      }
 
     public long getEventID() {
@@ -48,4 +50,8 @@ public class EventDto {
     public void setEventDate(String eventDate) {
         this.eventDate = eventDate;
     }
+
+    public String getEventAgenda() { return eventAgenda; }
+
+    public void setEventAgenda(String eventAgenda) { this.eventAgenda = eventAgenda; }
 }

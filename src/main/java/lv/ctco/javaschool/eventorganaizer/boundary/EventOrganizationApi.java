@@ -1,6 +1,7 @@
 package lv.ctco.javaschool.eventorganaizer.boundary;
 
 import lv.ctco.javaschool.auth.control.UserStore;
+import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.control.PollStore;
 import lv.ctco.javaschool.eventorganaizer.entity.*;
@@ -70,7 +71,7 @@ public class EventOrganizationApi {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
-            return new EventDto(e.getName(),e.getDescription(),e.getDate(),e.getId());
+            return new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId(), e.getAgenda());
         } else {
             throw new EntityNotFoundException();
         }
@@ -83,7 +84,7 @@ public class EventOrganizationApi {
         List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
 
         return event.stream()
-                .map(e -> new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId()))
+                .map(e -> new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId(), e.getAgenda()))
                 .collect(Collectors.toList());
     }
 
