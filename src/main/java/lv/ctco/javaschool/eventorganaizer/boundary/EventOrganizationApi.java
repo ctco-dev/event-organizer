@@ -116,10 +116,11 @@ public class EventOrganizationApi {
     public List<PollDto> getPollForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getPollForEvent(id);
         return poll.stream()
-                .map(p -> new PollDto(p.getQuestion(), p.getAnswers().stream().map((Answer it) -> {
-                    return it.getText();
-                }).collect(Collectors.toList()),
-                        p.isFeedback(), p.getEventID(), p.getId()))
+                .map(p -> new PollDto(p.getQuestion(),
+                        toAnswersDtoList(p.getAnswers()),
+                        p.isFeedback(),
+                        p.getEventID(),
+                        p.getId()))
                 .collect(Collectors.toList());
     }
 
@@ -129,10 +130,11 @@ public class EventOrganizationApi {
     public List<PollDto> getFeedbackForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getFeedbackPoll(id);
         return poll.stream()
-                .map(p -> new PollDto(p.getQuestion(), p.getAnswers().stream().map((Answer it) -> {
-                    return it.getText();
-                }).collect(Collectors.toList()),
-                        p.isFeedback(), p.getEventID(), p.getId()))
+                .map(p -> new PollDto(p.getQuestion(),
+                        toAnswersDtoList(p.getAnswers()),
+                        p.isFeedback(),
+                        p.getEventID(),
+                        p.getId()))
                 .collect(Collectors.toList());
     }
 

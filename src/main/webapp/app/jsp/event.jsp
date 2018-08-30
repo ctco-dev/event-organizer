@@ -3,6 +3,7 @@
 <html>
 <head>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
     <title id="title">{{eventName}}</title>
@@ -22,28 +23,30 @@
     <p>{{eventAgenda}}</p>
 </div>
 
-<div id="voting" class="w3-hide" >
-    VOTING
-    <div w3-repeat="pollArray">
+
+<script id="pollList" type="text/x-handlebars-template">
+    {{#pollArray}}
+    <div>
         <p><b>question</b></p>
         <h2>question: {{question}}</h2>
         <p><b>answers</b></p>
-        <h2>answers: {{answers}}</h2>
+        {{#answers}}
+        <div>
+            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label
+                for="{{thisAnswerID}}">{{text}}</label>
+        </div>
+        {{/answers}}
         <hr/>
     </div>
-</div>
-
+    {{/pollArray}}
+</script>
 <div id="feedback" class="w3-hide">
     FEEDBACK
-    <div w3-repeat="pollArray">
-        <p><b>question</b></p>
-        <h2>question: {{question}}</h2>
-        <p><b>answers</b></p>
-        <h2>answers: {{answers}}</h2>
-        <hr/>
-    </div>
-</div>
 
+</div>
+<div id="voting" class="w3-hide">
+    VOTING
+</div>
 
 <script>
     var id = getQueryVariable("id");
@@ -79,7 +82,7 @@
     }
 
     function getFeedbackFromDB() {
-        fetch("<c:url value='/api/event/getFeedbackPoll/'/>" + id , {
+        fetch("<c:url value='/api/event/getFeedbackPoll/'/>" + id, {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -92,14 +95,17 @@
                 document.getElementById("feedback").classList.add("w3-hide");
             } else {
                 document.getElementById("feedback").classList.remove("w3-hide");
-                var z = {pollArray: poll};
-                w3.displayObject("feedback", z);
+                var context = {pollArray: poll};
+                var source = document.getElementById("pollList").innerHTML;
+                var template = Handlebars.compile(source);
+                var html = template(context);
+                document.getElementById("feedback").innerHTML = html;
             }
         })
     }
 
     function getVotingFromDB() {
-        fetch("<c:url value='/api/event/getVotingPoll/'/>" + id , {
+        fetch("<c:url value='/api/event/getVotingPoll/'/>" + id, {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -112,8 +118,12 @@
                 document.getElementById("voting").classList.add("w3-hide");
             } else {
                 document.getElementById("voting").classList.remove("w3-hide");
-                var z = {pollArray: poll};
-                w3.displayObject("voting", z);
+                var context = {pollArray: poll};
+                var source = document.getElementById("pollList").innerHTML;
+                var template = Handlebars.compile(source);
+                var html = template(context);
+                document.getElementById("voting").innerHTML = html;
+
             }
         })
 
@@ -122,6 +132,7 @@
     function addEvent() {
         location.href = "/app/jsp/add-event.jsp"
     }
+
     function main() {
         location.href = "/app/jsp/start.jsp"
     }
