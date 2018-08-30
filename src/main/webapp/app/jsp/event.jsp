@@ -4,6 +4,7 @@
 <head>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
     <title id="title">{{eventName}}</title>
 </head>
 <link rel="stylesheet" type="text/css" href="pagesStyle.css">
