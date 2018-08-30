@@ -5,7 +5,7 @@ import java.util.List;
 public class PollDto {
 
     private String question;
-    private List<String> answers;
+    private List<AnswersDto> answers;
     private boolean isFeedback;
     private Long eventID;
     private Long id;
@@ -14,7 +14,7 @@ public class PollDto {
 
     }
 
-    public PollDto(String question, List<String> answers, boolean isFeedback, Long eventID, Long id) {
+    public PollDto(String question, List<AnswersDto> answers, boolean isFeedback, Long eventID, Long id) {
         this.question = question;
         this.answers = answers;
         this.isFeedback = isFeedback;
@@ -30,11 +30,11 @@ public class PollDto {
         this.question = question;
     }
 
-    public List<String> getAnswers() {
+    public List<AnswersDto> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<String> answers) {
+    public void setAnswers(List<AnswersDto> answers) {
         this.answers = answers;
     }
 

@@ -3,11 +3,12 @@
 <html>
 <head>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
     <title id="title">Poll Event</title>
 </head>
-<body onload="loadEvent(),getPollFromDB()">
+<body onload="init()">
 <header id="header"><h1>Event Poll</h1></header>
 <div id="event-field" class="w3-hide">
     <h2>Event name: {{eventName}}</h2>
@@ -28,56 +29,57 @@
     <button onclick="getPollFromDB()" style="margin: 0px 0px 5px 15px">Show Poll</button>
 </p>
 
-<div id="displayPoll">
-    <div w3-repeat="pollArray" >
+<script id="pollList" type="text/x-handlebars-template">
+    {{#pollArray}}
+    <div>
         <p><b>question</b></p>
         <h2>question: {{question}}</h2>
         <p><b>answers</b></p>
-        <h2>answers: {{answers}}</h2>
+        {{#answers}}
+        <div>
+            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label for="{{thisAnswerID}}">{{text}}</label>
+        </div>
+        {{/answers}}
         <p><b>isFeedback</b></p>
         <h2>isFeedback: {{feedback}}</h2>
-        <button onclick="deletePoll('{{id}}'),window.location.reload()">Delete Poll</button>
+        <button onclick="deletePoll('{{id}}')">Delete Poll</button>
         <hr/>
     </div>
+    {{/pollArray}}
+</script>
 
+<div id="displayPoll">
 </div>
 
 <script>
-    var data = {};
     var id = getQueryVariable("id");
 
-    function getData() {
+    function splitAnswers() {
+        var answers = document.getElementById("answers");
+        var result = [];
+        answers.value.split("\n").forEach(function (txt) {
+            var dto = {text: txt};
+            result.push(dto)
+        });
+        return result;
+    }
+
+    function buildData() {
         var question = document.getElementById("question");
+        var data = {};
         data["question"] = question.value;
         //var answers = document.getElementById("answers");
         data["answers"] = splitAnswers();
         var isFeedback = document.getElementById("isFeedback");
         data["isFeedback"] = isFeedback.checked;
-        console.log(data)
-    }
-
-    function loadEvent() {
-        fetch("<c:url value='/api/event/'/>" + id, {
-            "method": "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        }).then(function (response) {
-            return response.json();
-        }).then(function (event) {
-            console.log(JSON.stringify(event));
-            if (event !== undefined) {
-                document.getElementById("event-field").classList.remove("w3-hide");
-                w3.displayObject("event-field", event);
-            }
-        })
+        console.log(data);
+        return data;
     }
 
     function savePollToDB() {
-        getData();
+        var data = buildData();
         console.log(data);
-        fetch("<c:url value='/api/event/savePoll/'/>"+id, {
+        fetch("<c:url value='/api/event/savePoll/'/>" + id, {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -85,8 +87,8 @@
             }, body: JSON.stringify(data)
         }).then(function (response) {
             getPollFromDB();
-            document.getElementById("question").value='';
-            document.getElementById("answers").value='';
+            document.getElementById("question").value = '';
+            document.getElementById("answers").value = '';
         });
     }
 
@@ -100,27 +102,29 @@
         }).then(function (response) {
             return response.json();
         }).then(function (poll) {
-            if(poll.length === 0){
+            if (poll.length === 0) {
                 document.getElementById("displayPoll").classList.add("w3-hide");
-            } else{
+            } else {
                 document.getElementById("displayPoll").classList.remove("w3-hide");
-                var z = {pollArray:poll};
-                w3.displayObject("displayPoll", z);
+                var context = {pollArray: poll};
+                console.log(context);
+                var source   = document.getElementById("pollList").innerHTML;
+                var template = Handlebars.compile(source);
+                var html = template(context);
+                document.getElementById("displayPoll").innerHTML = html;
             }
         })
     }
 
-    function deletePoll(x){
+    function deletePoll(x) {
         fetch("<c:url value='/api/event/deletePoll/'/>" + x, {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
-        }).then(function (response) {
-            if (response.status === 200) {
-                location.reload();
             }
+        }).then(function (response) {
+            getPollFromDB();
         })
 
     }
@@ -131,7 +135,7 @@
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
+            }
         }).then(function (response) {
             return response.json();
         }).then(function (event) {
@@ -154,11 +158,11 @@
         }
         return (false);
     }
-    function splitAnswers() {
-        var answers = document.getElementById("answers");
-        return answers.value.split("\n");
-    }
 
+    function init() {
+        loadEvent();
+        getPollFromDB();
+    }
 
 </script>
 </body>

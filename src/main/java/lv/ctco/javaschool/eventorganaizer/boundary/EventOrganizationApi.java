@@ -70,7 +70,7 @@ public class EventOrganizationApi {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
-            return new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId(), e.getAgenda(),e.getStatus());
+            return new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId(), e.getAgenda(), e.getStatus());
         } else {
             throw new EntityNotFoundException();
         }
@@ -83,7 +83,7 @@ public class EventOrganizationApi {
         List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
 
         return event.stream()
-                .map(e -> new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId(), e.getAgenda(),e.getStatus()))
+                .map(e -> new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getId(), e.getAgenda(), e.getStatus()))
                 .collect(Collectors.toList());
     }
 
@@ -91,7 +91,7 @@ public class EventOrganizationApi {
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/savePoll/{id}")
     public void savePoll(PollDto pollDto, @PathParam("id") Long id) {
-        List<String> answersString = pollDto.getAnswers();
+        List<AnswersDto> answersString = pollDto.getAnswers();
         //String[] answerList = answersString.split("\n");
 
         Poll poll = new Poll();
@@ -100,10 +100,10 @@ public class EventOrganizationApi {
         poll.setIsFeedback(pollDto.isFeedback());
 
         List<Answer> answerList = new ArrayList<>();
-        for (String answerStr : answersString) {
+        for (AnswersDto answersDto : answersString) {
             Answer answer = new Answer();
             answer.setPoll(poll);
-            answer.setText(answerStr);
+            answer.setText(answersDto.getText());
             answerList.add(answer);
         }
         poll.setAnswers(answerList);
@@ -142,11 +142,25 @@ public class EventOrganizationApi {
     public List<PollDto> getVotingForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getVotingPoll(id);
         return poll.stream()
-                .map(p -> new PollDto(p.getQuestion(), p.getAnswers().stream().map((Answer it) -> {
-                    return it.getText();
-                }).collect(Collectors.toList()),
-                        p.isFeedback(), p.getEventID(), p.getId()))
+                .map(p -> new PollDto(p.getQuestion(),
+                        toAnswersDtoList(p.getAnswers()),
+                        p.isFeedback(),
+                        p.getEventID(),
+                        p.getId()))
                 .collect(Collectors.toList());
+    }
+
+    private List<AnswersDto> toAnswersDtoList(List<Answer> list) {
+        return list.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    private AnswersDto toDto(Answer answer) {
+        AnswersDto r = new AnswersDto();
+        r.setText(answer.getText());
+        r.setThisAnswerID(answer.getId());
+        return r;
     }
 
     @POST

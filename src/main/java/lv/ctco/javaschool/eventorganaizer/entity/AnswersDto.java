@@ -5,6 +5,7 @@ public class AnswersDto {
 
     private Long thisAnswerID;
     private int answerCounter;
+    private String text;
 
     public AnswersDto(){
 
@@ -29,5 +30,13 @@ public class AnswersDto {
 
     public void setAnswerCounter(int answerCounter) {
         this.answerCounter = answerCounter;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }
