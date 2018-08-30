@@ -43,6 +43,8 @@
         location.href = "<c:url value='/app/jsp/start.jsp'/>";
     }
 
+
+
     function getDataFromField() {
         var name = document.getElementById("name");
         data["name"] = name.value;
@@ -60,9 +62,19 @@
         }
     }
 
+    function inputNotEmptyLogin() {
+        var name = document.getElementById("name");
+        data["name"] = name.value;
+        if(name.value == "") {
+            alert("Name must be filled out");
+            inputNotEmptyLogin();
+        } else getDataFromField();
+    }
+
     function checkFunction() {
         if (id) {
-            getEventDataFromDB();
+//            getEventDataFromDB();
+            inputNotEmptyLogin ();
             document.getElementById("add").classList.add("w3-hide");
             document.getElementById("edit").classList.remove("w3-hide");
             document.getElementById("update").classList.remove("w3-hide")
