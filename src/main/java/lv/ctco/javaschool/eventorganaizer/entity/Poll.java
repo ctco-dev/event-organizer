@@ -19,6 +19,9 @@ public class Poll {
 
     private String question;
     private String answers;
+
+
+
     private boolean isFeedback;
 
 
@@ -52,7 +55,6 @@ public class Poll {
     public void setAnswers(String answers) {
         this.answers = answers;
     }
-
     public boolean isFeedback() {
         return isFeedback;
     }
@@ -60,4 +62,6 @@ public class Poll {
     public void setIsFeedback(boolean feedback) {
         isFeedback = feedback;
     }
+
+
 }

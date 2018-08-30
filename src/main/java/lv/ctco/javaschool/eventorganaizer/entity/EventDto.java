@@ -8,15 +8,20 @@ public class EventDto {
     private String eventDate;
     private long eventID;
 
+
+
+    private EventStatus eventStatus;
+
     public EventDto(){
 
     }
 
-    public EventDto(String name, String description, String date, Long id) {
+    public EventDto(String name, String description, String date, Long id,EventStatus status) {
         this.eventName = name;
         this.eventDescription = description;
         this.eventDate = date;
         this.eventID = id;
+        this.eventStatus=status;
      }
 
     public long getEventID() {
@@ -48,4 +53,7 @@ public class EventDto {
     public void setEventDate(String eventDate) {
         this.eventDate = eventDate;
     }
+    public EventStatus getEventStatus() {return eventStatus;}
+
+    public void setEventStatus(EventStatus eventStatus) {this.eventStatus = eventStatus;}
 }

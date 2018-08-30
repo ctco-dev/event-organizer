@@ -5,14 +5,15 @@ public class TopicDto {
     private String topicName;
     private String topicAuthor;
     private String date;
-    private String path;
     private Long id;
+    private EventStatus status;
 
-    public TopicDto(String topicName, String topicAuthor, String date, boolean isFeedbackPool, Long id) {
+    public TopicDto(String topicName, String topicAuthor, String date, Long id,EventStatus status) {
         this.topicName = topicName;
         this.topicAuthor = topicAuthor;
         this.date = date;
         this.id = id;
+        this.status=status;
     }
 
     public TopicDto(Event event) {
@@ -20,6 +21,7 @@ public class TopicDto {
         this.topicAuthor = event.getAuthor().getUsername();
         this.date = event.getDate();
         this.id = event.getId();
+        this.status=event.getStatus();
     }
 
     public String getTopicName() {
@@ -46,14 +48,6 @@ public class TopicDto {
         this.date = date;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
     public Long getId() {
         return id;
     }
@@ -61,4 +55,8 @@ public class TopicDto {
     public void setId(Long id) {
         this.id = id;
     }
+    public EventStatus getStatus() {return status;}
+
+    public void setStatus(EventStatus status) {this.status = status;}
+
 }

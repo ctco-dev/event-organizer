@@ -25,7 +25,7 @@
     <p><b>answers</b></p>
     <p><textarea name="answers" id="answers"></textarea></p>
     <p><b>isFeedback</b></p>
-    <p><input type="checkbox" id="isFeedback"></p>
+    <p><input type="checkbox" id="isFeedback" ></p>
 
 </form>
 
@@ -52,6 +52,7 @@
         data["answers"] = answers.value;
         var isFeedback = document.getElementById("isFeedback");
         data["isFeedback"] = isFeedback.checked;
+        console.log(data)
     }
 
     function loadEvent() {
