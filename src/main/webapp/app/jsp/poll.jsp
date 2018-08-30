@@ -29,7 +29,7 @@
 </p>
 
 <div id="displayPoll">
-    <div w3-repeat="pollArray">
+    <div w3-repeat="pollArray" >
         <p><b>question</b></p>
         <h2>question: {{question}}</h2>
         <p><b>answers</b></p>

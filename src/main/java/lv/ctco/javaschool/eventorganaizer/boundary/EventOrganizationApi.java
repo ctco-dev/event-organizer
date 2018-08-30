@@ -106,12 +106,6 @@ public class EventOrganizationApi {
             answer.setText(answerStr);
             answerList.add(answer);
         }
-        /*List<Answer> answerList = answersString.stream().map(it -> {
-            Answer answer = new Answer();
-            answer.setPoll(poll);
-            answer.setText(String.valueOf(it));
-            return answer;
-        }).collect(Collectors.toList());*/
         poll.setAnswers(answerList);
         em.persist(poll);
     }
@@ -120,7 +114,33 @@ public class EventOrganizationApi {
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/getPoll/{id}")
     public List<PollDto> getPollForEvent(@PathParam("id") Long id) {
-        List<Poll> poll = pollStore.getPollsByEventID(id);
+        List<Poll> poll = pollStore.getPollForEvent(id);
+        return poll.stream()
+                .map(p -> new PollDto(p.getQuestion(), p.getAnswers().stream().map((Answer it) -> {
+                    return it.getText();
+                }).collect(Collectors.toList()),
+                        p.isFeedback(), p.getEventID(), p.getId()))
+                .collect(Collectors.toList());
+    }
+
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/getFeedbackPoll/{id}")
+    public List<PollDto> getFeedbackForEvent(@PathParam("id") Long id) {
+        List<Poll> poll = pollStore.getFeedbackPoll(id);
+        return poll.stream()
+                .map(p -> new PollDto(p.getQuestion(), p.getAnswers().stream().map((Answer it) -> {
+                    return it.getText();
+                }).collect(Collectors.toList()),
+                        p.isFeedback(), p.getEventID(), p.getId()))
+                .collect(Collectors.toList());
+    }
+
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/getVotingPoll/{id}")
+    public List<PollDto> getVotingForEvent(@PathParam("id") Long id) {
+        List<Poll> poll = pollStore.getVotingPoll(id);
         return poll.stream()
                 .map(p -> new PollDto(p.getQuestion(), p.getAnswers().stream().map((Answer it) -> {
                     return it.getText();
