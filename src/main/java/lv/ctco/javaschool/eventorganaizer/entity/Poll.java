@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Poll {
@@ -16,11 +18,10 @@ public class Poll {
     private Long id;
 
     private Long eventID;
-
     private String question;
-    private String answers;
+    @OneToMany
+    private List<Answer> answers = new ArrayList<>();
     private boolean isFeedback;
-
 
     public Long getEventID() {
         return eventID;
@@ -29,6 +30,7 @@ public class Poll {
     public void setEventID(Long eventID) {
         this.eventID = eventID;
     }
+
     public Long getId() {
         return id;
     }
@@ -45,14 +47,6 @@ public class Poll {
         this.question = question;
     }
 
-    public String getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(String answers) {
-        this.answers = answers;
-    }
-
     public boolean isFeedback() {
         return isFeedback;
     }
@@ -60,4 +54,13 @@ public class Poll {
     public void setIsFeedback(boolean feedback) {
         isFeedback = feedback;
     }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
 }

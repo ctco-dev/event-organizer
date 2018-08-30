@@ -1,9 +1,11 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
+import java.util.List;
+
 public class PollDto {
 
     private String pollquestion;
-    private String pollanswers;
+    private List<Answer> pollanswers;
     private boolean pollIsFeedback;
     private Long pollEventID;
     private Long pollID;
@@ -12,7 +14,7 @@ public class PollDto {
 
     }
 
-    public PollDto(String question, String answers, boolean isFeedback, Long eventID, Long id) {
+    public PollDto(String question, List<Answer> answers, boolean isFeedback, Long eventID, Long id) {
         this.pollquestion = question;
         this.pollanswers = answers;
         this.pollIsFeedback = isFeedback;
@@ -28,11 +30,11 @@ public class PollDto {
         this.pollquestion = pollquestion;
     }
 
-    public String getPollanswers() {
+    public List<Answer> getPollanswers() {
         return pollanswers;
     }
 
-    public void setPollanswers(String pollanswers) {
+    public void setPollanswers(List<Answer> pollanswers) {
         this.pollanswers = pollanswers;
     }
 

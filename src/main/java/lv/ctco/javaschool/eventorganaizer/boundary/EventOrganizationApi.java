@@ -16,7 +16,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -100,12 +99,11 @@ public class EventOrganizationApi {
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/getPoll/{id}")
     public List<PollDto> getPollForEvent(@PathParam("id") Long id) {
-        List<Poll> poll = pollStore.getPollByEventID(id);
+        List<Poll> poll = pollStore.getPollsByEventID(id);
         return poll.stream()
                 .map(p -> new PollDto(p.getQuestion(), p.getAnswers(),
                         p.isFeedback(), p.getEventID(), p.getId()))
                 .collect(Collectors.toList());
-
     }
 
     @POST

@@ -12,12 +12,8 @@
 <div id="event-field" class="w3-hide">
     <h2>Event name: {{eventName}}</h2>
     <h4>Event data: {{eventDate}}</h4>
-    <h4>Event ID: {{eventID}}</h4>
+    <h5>Event ID: {{eventID}}</h5>
 </div>
-<p>
-    <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
-    <button onclick="getPollFromDB()" style="margin: 0px 0px 5px 15px">Show Poll</button>
-</p>
 
 <form name="pollform" method="post" style="padding: 15px">
     <p><b>question</b></p>
@@ -26,8 +22,11 @@
     <p><textarea name="answers" id="answers"></textarea></p>
     <p><b>isFeedback</b></p>
     <p><input type="checkbox" id="isFeedback"></p>
-
 </form>
+<p>
+    <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
+    <button onclick="getPollFromDB()" style="margin: 0px 0px 5px 15px">Show Poll</button>
+</p>
 
 <div id="displayPoll">
     <div w3-repeat="pollArray">
@@ -35,6 +34,8 @@
         <h2>question: {{pollquestion}}</h2>
         <p><b>answers</b></p>
         <h2>answers: {{pollanswers}}</h2>
+        <p><b>isFeedback</b></p>
+        <h2>isFeedback: {{pollIsFeedback}}</h2>
         <button onclick="deletePoll('{{pollID}}'),window.location.reload()">Delete Poll</button>
         <hr/>
     </div>
@@ -54,24 +55,6 @@
         data["isFeedback"] = isFeedback.checked;
     }
 
-    function loadEvent() {
-        fetch("<c:url value='/api/event/'/>" + id, {
-            "method": "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        }).then(function (response) {
-            return response.json();
-        }).then(function (event) {
-            console.log(JSON.stringify(event));
-            if (event !== undefined) {
-                document.getElementById("event-field").classList.remove("w3-hide");
-                w3.displayObject("event-field", event);
-            }
-        })
-    }
-
     function savePollToDB() {
         getData();
         console.log(data);
@@ -85,8 +68,6 @@
             getPollFromDB();
             document.getElementById("question").value='';
             document.getElementById("answers").value='';
-            document.getElementById("isFeedback").value=false;
-
         });
     }
 
@@ -123,6 +104,24 @@
             }
         })
 
+    }
+
+    function loadEvent() {
+        fetch("<c:url value='/api/event/'/>" + id, {
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then(function (response) {
+            return response.json();
+        }).then(function (event) {
+            console.log(JSON.stringify(event));
+            if (event !== undefined) {
+                document.getElementById("event-field").classList.remove("w3-hide");
+                w3.displayObject("event-field", event);
+            }
+        })
     }
 
     function getQueryVariable(variable) {

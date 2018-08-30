@@ -18,7 +18,7 @@ public class PollStore {
     @Inject
     private PollStore pollStore;
 
-    public List<Poll> getPollByEventID(Long id) {
+    public List<Poll> getPollsByEventID(Long id) {
         return em.createQuery("select  p from Poll p" +
                 " where p.eventID=:id", Poll.class)
                 .setParameter("id", id)
