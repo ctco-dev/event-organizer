@@ -14,6 +14,10 @@
     <h4>Event data: {{eventDate}}</h4>
     <h4>Event ID: {{eventID}}</h4>
 </div>
+<p>
+    <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
+    <button onclick="getPollFromDB()" style="margin: 0px 0px 5px 15px">Show Poll</button>
+</p>
 
 <form name="pollform" method="post" style="padding: 15px">
     <p><b>question</b></p>
@@ -36,12 +40,6 @@
     </div>
 
 </div>
-
-
-<p>
-      <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
-      <button onclick="getPollFromDB()" style="margin: 0px 0px 5px 15px">Show Poll</button>
-</p>
 
 <script>
     var data = {};
@@ -87,7 +85,7 @@
             getPollFromDB();
             document.getElementById("question").value='';
             document.getElementById("answers").value='';
-            document.getElementById("isFeedback").value=false;
+            //document.getElementById("isFeedback").value=false;
 
         });
     }
@@ -102,8 +100,13 @@
         }).then(function (response) {
             return response.json();
         }).then(function (poll) {
-            var z = {pollArray:poll};
-            w3.displayObject("displayPoll", z);
+            if(poll.length === 0){
+                document.getElementById("displayPoll").classList.add("w3-hide");
+            } else{
+                document.getElementById("displayPoll").classList.remove("w3-hide");
+                var z = {pollArray:poll};
+                w3.displayObject("displayPoll", z);
+            }
         })
     }
 

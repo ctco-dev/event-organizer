@@ -57,7 +57,7 @@ public class Poll {
         return isFeedback;
     }
 
-    public void setFeedback(boolean feedback) {
+    public void setIsFeedback(boolean feedback) {
         isFeedback = feedback;
     }
 }
