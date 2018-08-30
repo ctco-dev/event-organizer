@@ -47,7 +47,12 @@
 
     function getDataFromField() {
         var name = document.getElementById("name");
-        data["name"] = name.value;
+        data["name"] = (name.value).trim();
+         if(name === "" || value === " ") {
+//             alert("Please input correct Event Name");
+//             name.value ="";
+             return;
+        }
         var eventdate = document.getElementById("datepicker");
         data["date"] = eventdate.value;
         var description = document.getElementById("description");
@@ -62,19 +67,10 @@
         }
     }
 
-    function inputNotEmptyLogin() {
-        var name = document.getElementById("name");
-        data["name"] = name.value;
-        if(name.value == "") {
-            alert("Name must be filled out");
-            inputNotEmptyLogin();
-        } else getDataFromField();
-    }
 
     function checkFunction() {
         if (id) {
-//            getEventDataFromDB();
-            inputNotEmptyLogin ();
+            getEventDataFromDB();
             document.getElementById("add").classList.add("w3-hide");
             document.getElementById("edit").classList.remove("w3-hide");
             document.getElementById("update").classList.remove("w3-hide")
@@ -92,15 +88,20 @@
 
     function saveDataToDB() {
         getDataFromField();
-        fetch("<c:url value='/api/event/save'/>", {
-            "method": "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }, body: JSON.stringify(data)
-        }).then(function (response) {
-            location.href = "<c:url value='/app/jsp/start.jsp'/>";
-        });
+                if(data.name == "" || data.name == " ")  {
+            alert("Please input correct Event Name");
+            return;
+        } else {
+            fetch("<c:url value='/api/event/save'/>", {
+                "method": "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }, body: JSON.stringify(data)
+            }).then(function (response) {
+                location.href = "<c:url value='/app/jsp/start.jsp'/>";
+            });
+        }
     }
 
     function updateData() {
