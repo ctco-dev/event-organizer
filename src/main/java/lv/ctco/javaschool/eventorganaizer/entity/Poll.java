@@ -20,12 +20,12 @@ public class Poll {
     private Long id;
 
     private Long eventID;
+
     private String question;
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Answer> answers = new ArrayList<>();
     private boolean isFeedback;
-
 
 
     public Long getEventID() {
@@ -35,7 +35,6 @@ public class Poll {
     public void setEventID(Long eventID) {
         this.eventID = eventID;
     }
-
     public Long getId() {
         return id;
     }
@@ -59,7 +58,6 @@ public class Poll {
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
-
     public boolean isFeedback() {
         return isFeedback;
     }

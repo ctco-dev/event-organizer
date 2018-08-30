@@ -53,6 +53,25 @@
         data["answers"] = splitAnswers();
         var isFeedback = document.getElementById("isFeedback");
         data["isFeedback"] = isFeedback.checked;
+        console.log(data)
+    }
+
+    function loadEvent() {
+        fetch("<c:url value='/api/event/'/>" + id, {
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then(function (response) {
+            return response.json();
+        }).then(function (event) {
+            console.log(JSON.stringify(event));
+            if (event !== undefined) {
+                document.getElementById("event-field").classList.remove("w3-hide");
+                w3.displayObject("event-field", event);
+            }
+        })
     }
 
     function savePollToDB() {

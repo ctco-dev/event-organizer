@@ -24,8 +24,9 @@ public class EventStore {
     public List<Event> getAllEvents() {
         List<Event> list;
         list = em.createQuery("select e from Event e" +
-                " where e.status = :status", Event.class)
-                .setParameter("status", EventStatus.OPEN)
+                " where e.status = :status1 or e.status=:status2", Event.class)
+                .setParameter("status1", EventStatus.OPEN)
+                .setParameter("status2",EventStatus.CLOSED)
                 .getResultList();
         return list;
     }

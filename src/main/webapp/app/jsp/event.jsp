@@ -22,6 +22,14 @@
     <p>{{eventAgenda}}</p>
 </div>
 
+<div id="voting" class="w3-hide">
+    VOTING
+</div>
+<div id="feedback" class="w3-hide">
+    FEEDBACK
+</div>
+
+
 <script>
     function loadEvent() {
         var id = getQueryVariable("id");
@@ -39,6 +47,15 @@
                 document.getElementById("event-field").classList.remove("w3-hide");
                 w3.displayObject("title", event);
                 w3.displayObject("event-field", event);
+            }
+
+            if(event.eventStatus=="OPEN"){
+                document.getElementById("voting").classList.remove("w3-hide")
+                document.getElementById("feedback").classList.add("w3-hide")
+            }
+            if(event.eventStatus=="CLOSED"){
+                document.getElementById("voting").classList.add("w3-hide")
+                document.getElementById("feedback").classList.remove("w3-hide")
             }
         })
     }

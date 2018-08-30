@@ -26,13 +26,13 @@ public class Event {
 
     private EventStatus status;
 
-    public Event(String name, User author, String description, String agenda, String date) {
+    public Event(String name, User author, String description, String agenda, String date,EventStatus status) {
         this.name = name;
         this.author = author;
         this.description = description;
         this.agenda = agenda;
         this.date = date;
-        this.status = EventStatus.OPEN;
+        this.status = status;
 
     }
 

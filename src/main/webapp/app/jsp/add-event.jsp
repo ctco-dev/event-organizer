@@ -21,6 +21,7 @@
     <p><textarea name="agenda" id="agenda"></textarea></p>
     <p><b>Date</b></p>
     <p><input type="text" id="datepicker"></p>
+    <p><b id="chboxClosed"><input type="checkbox" id="closed">Closed</b> <b id="chboxFinished"><input type="checkbox" id="finished">Finished</b></p>
 </form>
 
 <div id="buttons">
@@ -48,6 +49,14 @@
         data["description"] = description.value;
         var agenda = document.getElementById("agenda");
         data["agenda"] = agenda.value;
+        var statusClosed=document.getElementById("closed");
+        var statusFinished=document.getElementById("finished");
+        if(statusClosed.checked){
+            data["status"]="CLOSED"
+        }
+        if(statusFinished.checked){
+            data["status"]="FINISHED"
+        }
         if (id) {
             data["id"] = id;
         }
@@ -56,17 +65,23 @@
     function checkFunction() {
         if (id) {
             getEventDataFromDB();
-            document.getElementById("add").classList.add("w3-hide");
             document.getElementById("edit").classList.remove("w3-hide");
-            document.getElementById("update").classList.remove("w3-hide")
-            document.getElementById("save").classList.add("w3-hide")
+            document.getElementById("update").classList.remove("w3-hide");
+            document.getElementById("closed").classList.remove("w3-hide");
+            document.getElementById("finished").classList.remove("w3-hide");
+            document.getElementById("save").classList.add("w3-hide");
+            document.getElementById("add").classList.add("w3-hide");
+
+
 
         }
         else {
             document.getElementById("add").classList.remove("w3-hide");
             document.getElementById("edit").classList.add("w3-hide");
-            document.getElementById("update").classList.add("w3-hide")
-            document.getElementById("save").classList.remove("w3-hide")
+            document.getElementById("update").classList.add("w3-hide");
+            document.getElementById("save").classList.remove("w3-hide");
+            document.getElementById("chboxClosed").classList.add("w3-hide");
+            document.getElementById("chboxFinished").classList.add("w3-hide");
         }
     }
 
