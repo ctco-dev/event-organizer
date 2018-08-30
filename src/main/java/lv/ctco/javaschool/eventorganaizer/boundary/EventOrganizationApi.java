@@ -1,7 +1,6 @@
 package lv.ctco.javaschool.eventorganaizer.boundary;
 
 import lv.ctco.javaschool.auth.control.UserStore;
-import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.control.PollStore;
 import lv.ctco.javaschool.eventorganaizer.entity.*;
@@ -16,6 +15,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -90,8 +91,29 @@ public class EventOrganizationApi {
     @POST
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/savePoll/{id}")
-    public void savePoll(Poll poll, @PathParam("id") Long id) {
+    public void savePoll(PollDto pollDto, @PathParam("id") Long id) {
+        List<String> answersString = pollDto.getAnswers();
+        //String[] answerList = answersString.split("\n");
+
+        Poll poll = new Poll();
+        poll.setQuestion(pollDto.getQuestion());
         poll.setEventID(id);
+        poll.setIsFeedback(pollDto.isFeedback());
+
+        List<Answer> answerList = new ArrayList<>();
+        for (String answerStr : answersString) {
+            Answer answer = new Answer();
+            answer.setPoll(poll);
+            answer.setText(answerStr);
+            answerList.add(answer);
+        }
+        /*List<Answer> answerList = answersString.stream().map(it -> {
+            Answer answer = new Answer();
+            answer.setPoll(poll);
+            answer.setText(String.valueOf(it));
+            return answer;
+        }).collect(Collectors.toList());*/
+        poll.setAnswers(answerList);
         em.persist(poll);
     }
 
@@ -101,7 +123,9 @@ public class EventOrganizationApi {
     public List<PollDto> getPollForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getPollsByEventID(id);
         return poll.stream()
-                .map(p -> new PollDto(p.getQuestion(), p.getAnswers(),
+                .map(p -> new PollDto(p.getQuestion(), p.getAnswers().stream().map((Answer it) -> {
+                    return it.getText();
+                }).collect(Collectors.toList()),
                         p.isFeedback(), p.getEventID(), p.getId()))
                 .collect(Collectors.toList());
     }

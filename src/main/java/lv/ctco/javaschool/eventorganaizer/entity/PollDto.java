@@ -4,62 +4,62 @@ import java.util.List;
 
 public class PollDto {
 
-    private String pollquestion;
-    private List<Answer> pollanswers;
-    private boolean pollIsFeedback;
-    private Long pollEventID;
-    private Long pollID;
+    private String question;
+    private List<String> answers;
+    private boolean isFeedback;
+    private Long eventID;
+    private Long id;
 
     public PollDto(){
 
     }
 
-    public PollDto(String question, List<Answer> answers, boolean isFeedback, Long eventID, Long id) {
-        this.pollquestion = question;
-        this.pollanswers = answers;
-        this.pollIsFeedback = isFeedback;
-        this.pollEventID = eventID;
-        this.pollID = id;
+    public PollDto(String question, List<String> answers, boolean isFeedback, Long eventID, Long id) {
+        this.question = question;
+        this.answers = answers;
+        this.isFeedback = isFeedback;
+        this.eventID = eventID;
+        this.id = id;
     }
 
-    public String getPollquestion() {
-        return pollquestion;
+    public String getQuestion() {
+        return question;
     }
 
-    public void setPollquestion(String pollquestion) {
-        this.pollquestion = pollquestion;
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
-    public List<Answer> getPollanswers() {
-        return pollanswers;
+    public List<String> getAnswers() {
+        return answers;
     }
 
-    public void setPollanswers(List<Answer> pollanswers) {
-        this.pollanswers = pollanswers;
+    public void setAnswers(List<String> answers) {
+        this.answers = answers;
     }
 
-    public boolean isPollIsFeedback() {
-        return pollIsFeedback;
+    public boolean isFeedback() {
+        return isFeedback;
     }
 
-    public void setPollIsFeedback(boolean pollIsFeedback) {
-        this.pollIsFeedback = pollIsFeedback;
+    public void setIsFeedback(boolean feedback) {
+        this.isFeedback = feedback;
     }
 
-    public Long getPollEventID() {
-        return pollEventID;
+    public Long getEventID() {
+        return eventID;
     }
 
-    public void setPollEventID(Long pollEventID) {
-        this.pollEventID = pollEventID;
+    public void setEventID(Long eventID) {
+        this.eventID = eventID;
     }
 
-    public Long getPollID() {
-        return pollID;
+    public Long getId() {
+        return id;
     }
 
-    public void setPollID(Long pollID) {
-        this.pollID = pollID;
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 

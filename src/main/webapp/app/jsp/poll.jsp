@@ -31,12 +31,12 @@
 <div id="displayPoll">
     <div w3-repeat="pollArray">
         <p><b>question</b></p>
-        <h2>question: {{pollquestion}}</h2>
+        <h2>question: {{question}}</h2>
         <p><b>answers</b></p>
-        <h2>answers: {{pollanswers}}</h2>
+        <h2>answers: {{answers}}</h2>
         <p><b>isFeedback</b></p>
-        <h2>isFeedback: {{pollIsFeedback}}</h2>
-        <button onclick="deletePoll('{{pollID}}'),window.location.reload()">Delete Poll</button>
+        <h2>isFeedback: {{feedback}}</h2>
+        <button onclick="deletePoll('{{id}}'),window.location.reload()">Delete Poll</button>
         <hr/>
     </div>
 
@@ -49,8 +49,8 @@
     function getData() {
         var question = document.getElementById("question");
         data["question"] = question.value;
-        var answers = document.getElementById("answers");
-        data["answers"] = answers.value;
+        //var answers = document.getElementById("answers");
+        data["answers"] = splitAnswers();
         var isFeedback = document.getElementById("isFeedback");
         data["isFeedback"] = isFeedback.checked;
     }
@@ -135,6 +135,11 @@
         }
         return (false);
     }
+    function splitAnswers() {
+        var answers = document.getElementById("answers");
+        return answers.value.split("\n");
+    }
+
 
 </script>
 </body>

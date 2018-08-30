@@ -4,7 +4,6 @@ package lv.ctco.javaschool.eventorganaizer.entity;
 public class AnswersDto {
 
     private Long thisAnswerID;
-    private Long pollID;
     private int answerCounter;
 
     public AnswersDto(){
