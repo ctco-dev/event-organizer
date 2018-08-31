@@ -34,9 +34,11 @@
         <div>
             <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label
                 for="{{thisAnswerID}}">{{text}}</label>
+                <div id="votes" class="w3-hide">"Votes: {{answerCounter}}"</div>
+
         </div>
         {{/answers}}
-        <button id="voteButton" onclick="vote()">VOTE</button>
+        <button id="voteButton{{../id}}" onclick="vote({{id}})">VOTE!</button>
         <hr/>
     </div>
     {{/pollArray}}
@@ -130,9 +132,9 @@
 
     }
 
-    function vote() {
+    function vote(qid) {
         console.log();
-        var checked = document.querySelector('input[name=quest{{../id}}]:checked');
+        var checked = document.querySelector('input[name=quest'+qid+']:checked');
         var checkedAddr = checked.id;
         console.log("checked:"+checkedAddr)
         fetch("<c:url value='/api/event/vote/'/>" + checkedAddr, {
@@ -142,8 +144,15 @@
                 'Content-Type': 'application/json'
             },
         }).then(function (response) {
-            console.log("DONE");
+            loadEvent();
+            deleteVoites();
         });
+    }
+
+    function deleteVoites() {
+        document.getElementById("votes").classList.remove("w3-hide");
+        document.getElementById("voteButton").classList.add("w3-hide");
+        console.log("DONE");
     }
 
     function addEvent() {

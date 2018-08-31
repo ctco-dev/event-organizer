@@ -1,6 +1,7 @@
 package lv.ctco.javaschool.eventorganaizer.boundary;
 
 import lv.ctco.javaschool.auth.control.UserStore;
+import lv.ctco.javaschool.eventorganaizer.control.AnswersStore;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.control.PollStore;
 import lv.ctco.javaschool.eventorganaizer.entity.*;
@@ -35,6 +36,10 @@ public class EventOrganizationApi {
 
     @Inject
     private PollStore pollStore;
+
+    @Inject
+    private AnswersStore answersStore;
+
 
     @GET
     @RolesAllowed({"USER", "ADMIN"})
@@ -128,8 +133,12 @@ public class EventOrganizationApi {
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/vote/{id}")
     public void vote(@PathParam("id") Long id){
-
-
+        Optional<Answer> answer=answersStore.getAnswerByID(id);
+        if(answer.isPresent()){
+            Answer a=answer.get();
+            a.setCounter(a.getCounter()+1);
+            System.out.print(a.getCounter());
+        }
     }
 
     @GET
