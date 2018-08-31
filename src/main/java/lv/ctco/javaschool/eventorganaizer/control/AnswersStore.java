@@ -1,6 +1,7 @@
 package lv.ctco.javaschool.eventorganaizer.control;
 
 import lv.ctco.javaschool.eventorganaizer.entity.Answer;
+import lv.ctco.javaschool.eventorganaizer.entity.Poll;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -17,10 +18,10 @@ public class AnswersStore {
     @Inject
     private AnswersStore answersStore;
 
-    public List<Answer> getAnswersByPollID(Long id) {
+    public List<Answer> getAnswersByPollID(Poll poll) {
         return em.createQuery("select  a from Answer a" +
-                " where a.pollID=:id", Answer.class)
-                .setParameter("id", id)
+                " where a.poll=:poll", Answer.class)
+                .setParameter("poll", poll)
                 .getResultList();
     }
 

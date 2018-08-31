@@ -34,11 +34,12 @@
         <div>
             <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label
                 for="{{thisAnswerID}}">{{text}}</label>
-                <div id="votes" class="w3-hide">"Votes: {{answerCounter}}"</div>
+            <div id="votes" class="w3-hide"><label
+                    for="{{thisAnswerID}}">Votes: {{answerCounter}}</label></div>
 
         </div>
         {{/answers}}
-        <button id="voteButton{{../id}}" onclick="vote({{id}})">VOTE!</button>
+        <button id="voteButton{{../id}}" onclick="vote({{id}}),showStatistics({{id}})">VOTE!</button>
         <hr/>
     </div>
     {{/pollArray}}
@@ -60,7 +61,7 @@
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
+            }
         }).then(function (response) {
             return response.json();
         }).then(function (event) {
@@ -70,7 +71,6 @@
                 w3.displayObject("title", event);
                 w3.displayObject("event-field", event);
             }
-
             if (event.eventStatus == "OPEN") {
                 document.getElementById("voting").classList.remove("w3-hide");
                 document.getElementById("feedback").classList.add("w3-hide");
@@ -133,10 +133,9 @@
     }
 
     function vote(qid) {
-        console.log();
-        var checked = document.querySelector('input[name=quest'+qid+']:checked');
+        var checked = document.querySelector('input[name=quest' + qid + ']:checked');
         var checkedAddr = checked.id;
-        console.log("checked:"+checkedAddr)
+        console.log("checked:" + checkedAddr)
         fetch("<c:url value='/api/event/vote/'/>" + checkedAddr, {
             "method": "POST",
             headers: {
@@ -144,12 +143,29 @@
                 'Content-Type': 'application/json'
             },
         }).then(function (response) {
-            loadEvent();
-            deleteVoites();
+            showStatistics(qid);
+            hideVotes();
         });
     }
 
-    function deleteVoites() {
+    function showStatistics(x){
+        fetch("<c:url value='/api/event/getVotes/'/>" + x, {
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        }).then(function (answers) {
+            console.log(answers);
+            document.getElementById("votes").value=answers.answerCounter;
+        });
+
+    }
+
+
+    function hideVotes() {
         document.getElementById("votes").classList.remove("w3-hide");
         document.getElementById("voteButton").classList.add("w3-hide");
         console.log("DONE");

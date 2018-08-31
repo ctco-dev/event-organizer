@@ -143,6 +143,19 @@ public class EventOrganizationApi {
 
     @GET
     @RolesAllowed({"ADMIN", "USER"})
+    @Path("/getVotes/{id}")
+    public List<AnswersDto> getVotes(@PathParam("id") Long id){
+        Poll poll=new Poll();
+        poll.setId(id);
+        List<Answer> answerList=answersStore.getAnswersByPollID(poll);
+        System.out.print(answerList);
+        return answerList.stream()
+                .map(a->new AnswersDto(a.getId(),a.getCounter()))
+                .collect(Collectors.toList());
+    }
+
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
     @Path("/getFeedbackPoll/{id}")
     public List<PollDto> getFeedbackForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getFeedbackPoll(id);
