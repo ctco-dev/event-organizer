@@ -61,11 +61,11 @@
             }
         var eventdate = document.getElementById("datepicker");
         data["date"] = eventdate.value;
-            if((eventdate.value) === "" || (eventdate.value)  === " ") {
+            if((eventdate.value) === "") {
                 return;
             }
         var eventtime=document.getElementById("timepicker");
-        data["time"] = eventtime.value;
+        data["time"] = (eventtime.value).trim();
             if((eventtime.value) === "" || (eventtime.value) === " ") {
                 return;
             }
@@ -75,24 +75,22 @@
         }
     }
 
-
     function checkFunction() {
         if (id) {
             getEventDataFromDB();
             document.getElementById("add").classList.add("w3-hide");
             document.getElementById("edit").classList.remove("w3-hide");
-            document.getElementById("update").classList.remove("w3-hide")
+            document.getElementById("update").classList.remove("w3-hide");
             document.getElementById("save").classList.add("w3-hide")
 
         }
         else {
             document.getElementById("add").classList.remove("w3-hide");
             document.getElementById("edit").classList.add("w3-hide");
-            document.getElementById("update").classList.add("w3-hide")
-            document.getElementById("save").classList.remove("w3-hide")
+            document.getElementById("update").classList.add("w3-hide");
+            document.getElementById("save").classList.remove("w3-hide");
         }
     }
-
 
     function saveDataToDB() {
         getDataFromField();
@@ -108,7 +106,8 @@
                         alert("Please input Event Agenda");
                         return;
                     } else {
-                        if (data.date == "" || data.date == " ") {
+//                        if (data.date == "" || data.date == " ") {
+                        if (data.date == "") {
                             alert("Please input Event Date");
                             return;
                         } else {
@@ -118,7 +117,6 @@
                             }
                         }
                     }
-
                 }
             }
 
