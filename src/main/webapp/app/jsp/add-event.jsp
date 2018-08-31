@@ -46,16 +46,29 @@
     function getDataFromField() {
         var name = document.getElementById("name");
         data["name"] = (name.value).trim();
-         if(name === "" || name === " ") {
-             return;
-        }
-
+            if(name === "" || name === " ") {
+                return;
+            }
         var description = document.getElementById("description");
-        data["description"] = description.value;
+        data["description"] = (description.value).trim();
+            if(description === "" || description === " ") {
+               return;
+            }
         var agenda = document.getElementById("agenda");
-        data["agenda"] = agenda.value;
+        data["agenda"] = (agenda.value).trim();
+            if(agenda === "" || agenda === " ") {
+            return;
+            }
+        var eventdate = document.getElementById("datepicker");
+        data["date"] = (eventdate.value).trim();
+            if(eventdate === "" || eventdate === " ") {
+                return;
+            }
         var eventtime=document.getElementById("timepicker");
-        data["time"] = eventtime.value;
+        data["time"] = (eventtime.value).trim();
+            if(eventtime === "" || eventtime === " ") {
+                return;
+            }
 
         if (id) {
             data["id"] = id;
@@ -84,13 +97,31 @@
     function saveDataToDB() {
         getDataFromField();
             if(data.name == "" || data.name == " ")  {
-            alert("Please input correct Event Name");
+            alert("Please input Event Name");
             return;
-        } else {
-                if(data.name == "" || data.name == " ")  {
-                    alert("Please input correct Event Name");
+            } else {
+                if (data.description == "" || data.description == " ") {
+                    alert("Please input Event Description");
                     return;
                 } else {
+                    if (data.agenda == "" || data.agenda == " ") {
+                        alert("Please input Event Agenda");
+                        return;
+                    } else {
+                        if (data.eventdate == "" || data.eventdate == " ") {
+                            alert("Please input Event Date");
+                            return;
+                        } else {
+                            if (data.eventtime == "" || data.eventtime == " ") {
+                                alert("Please input Event Time");
+                                return;
+                            }
+                        }
+                    }
+
+                }
+            }
+
             fetch("<c:url value='/api/event/save'/>", {
                 "method": "POST",
                 headers: {
