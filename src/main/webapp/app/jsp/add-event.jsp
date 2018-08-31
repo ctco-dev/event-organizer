@@ -57,16 +57,16 @@
         var agenda = document.getElementById("agenda");
         data["agenda"] = (agenda.value).trim();
             if(agenda === "" || agenda === " ") {
-            return;
+                return;
             }
         var eventdate = document.getElementById("datepicker");
-        data["date"] = (eventdate.value).trim();
-            if(eventdate === "" || eventdate === " ") {
+        data["date"] = eventdate.value;
+            if((eventdate.value) === "" || (eventdate.value)  === " ") {
                 return;
             }
         var eventtime=document.getElementById("timepicker");
-        data["time"] = (eventtime.value).trim();
-            if(eventtime === "" || eventtime === " ") {
+        data["time"] = eventtime.value;
+            if((eventtime.value) === "" || (eventtime.value) === " ") {
                 return;
             }
 
@@ -108,11 +108,11 @@
                         alert("Please input Event Agenda");
                         return;
                     } else {
-                        if (data.eventdate == "" || data.eventdate == " ") {
+                        if (data.date == "" || data.date == " ") {
                             alert("Please input Event Date");
                             return;
                         } else {
-                            if (data.eventtime == "" || data.eventtime == " ") {
+                            if (data.time == "" || data.time == " ") {
                                 alert("Please input Event Time");
                                 return;
                             }
@@ -131,7 +131,6 @@
             }).then(function (response) {
                 location.href = "<c:url value='/app/jsp/start.jsp'/>";
             });
-        }
     }
 
     function updateData() {
