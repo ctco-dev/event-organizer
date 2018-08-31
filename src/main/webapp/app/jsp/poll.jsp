@@ -10,6 +10,9 @@
 </head>
 <body onload="init()">
 <header id="header"><h1>Event Poll</h1></header>
+<p>
+    <button onclick="goToTheMainPage()">Go to the main page</button>
+</p>
 <div id="event-field" class="w3-hide">
     <h2>Event name: {{eventName}}</h2>
     <h4>Event data: {{eventDate}}</h4>
@@ -161,6 +164,10 @@
     function init() {
         loadEvent();
         getPollFromDB();
+    }
+
+    function goToTheMainPage() {
+        location.href = "<c:url value='/app/jsp/start.jsp'/>"
     }
 
 </script>
