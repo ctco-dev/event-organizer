@@ -43,18 +43,13 @@
         location.href = "<c:url value='/app/jsp/start.jsp'/>";
     }
 
-
-
     function getDataFromField() {
         var name = document.getElementById("name");
         data["name"] = (name.value).trim();
-         if(name === "" || value === " ") {
-//             alert("Please input correct Event Name");
-//             name.value ="";
+         if(name === "" || name === " ") {
              return;
         }
-        var eventdate = document.getElementById("datepicker");
-        data["date"] = eventdate.value;
+
         var description = document.getElementById("description");
         data["description"] = description.value;
         var agenda = document.getElementById("agenda");
@@ -88,10 +83,14 @@
 
     function saveDataToDB() {
         getDataFromField();
-                if(data.name == "" || data.name == " ")  {
+            if(data.name == "" || data.name == " ")  {
             alert("Please input correct Event Name");
             return;
         } else {
+                if(data.name == "" || data.name == " ")  {
+                    alert("Please input correct Event Name");
+                    return;
+                } else {
             fetch("<c:url value='/api/event/save'/>", {
                 "method": "POST",
                 headers: {
