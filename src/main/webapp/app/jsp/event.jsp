@@ -36,6 +36,7 @@
                 for="{{thisAnswerID}}">{{text}}</label>
         </div>
         {{/answers}}
+        <button id="voteButton" onclick="vote()">VOTE</button>
         <hr/>
     </div>
     {{/pollArray}}
@@ -126,6 +127,10 @@
 
             }
         })
+
+    }
+
+    function vote(){
 
     }
 

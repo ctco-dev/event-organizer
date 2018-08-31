@@ -21,8 +21,8 @@
     <p><textarea name="agenda" id="agenda"></textarea></p>
     <p><b>Date</b></p>
     <p><input type="text" id="datepicker"></p>
-    <p><b>Set status</b></p>
-    <p><b id="chboxClosed"><input type="checkbox" id="closed">Closed</b> <b id="chboxFinished"><input type="checkbox" id="finished">Finished</b></p>
+    <p id="setStatus"><b>Set status</b></p>
+    <p id="statuses"><b><input type="checkbox" id="closed">Closed</b> <b><input type="checkbox" id="finished">Finished</b></p>
 </form>
 
 <div id="buttons">
@@ -68,8 +68,8 @@
             getEventDataFromDB();
             document.getElementById("edit").classList.remove("w3-hide");
             document.getElementById("update").classList.remove("w3-hide");
-            document.getElementById("closed").classList.remove("w3-hide");
-            document.getElementById("finished").classList.remove("w3-hide");
+            document.getElementById("setStatus").classList.remove("w3-hide");
+            document.getElementById("statuses").classList.remove("w3-hide");
             document.getElementById("save").classList.add("w3-hide");
             document.getElementById("add").classList.add("w3-hide");
 
@@ -81,8 +81,8 @@
             document.getElementById("edit").classList.add("w3-hide");
             document.getElementById("update").classList.add("w3-hide");
             document.getElementById("save").classList.remove("w3-hide");
-            document.getElementById("chboxClosed").classList.add("w3-hide");
-            document.getElementById("chboxFinished").classList.add("w3-hide");
+            document.getElementById("setStatus").classList.add("w3-hide");
+            document.getElementById("statuses").classList.add("w3-hide");
         }
     }
 

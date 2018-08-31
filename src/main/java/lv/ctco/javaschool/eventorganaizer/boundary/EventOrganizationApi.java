@@ -124,6 +124,10 @@ public class EventOrganizationApi {
                 .collect(Collectors.toList());
     }
 
+    @POST
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/vote/{id}")
+
     @GET
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/getFeedbackPoll/{id}")
