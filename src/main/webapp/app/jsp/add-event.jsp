@@ -22,7 +22,7 @@
     <p><b>Date</b></p>
     <p><input type="text" id="datepicker"></p>
     <p id="setStatus"><b>Set status</b></p>
-    <p id="statuses"><b><input type="checkbox" id="closed">Closed</b> <b><input type="checkbox" id="finished">Finished</b></p>
+    <p id="statuses"><b><input type="checkbox" id="open">Open </b><b><input type="checkbox" id="closed">Closed</b> <b><input type="checkbox" id="finished">Finished</b></p>
 </form>
 
 <div id="buttons">
@@ -52,11 +52,15 @@
         data["agenda"] = agenda.value;
         var statusClosed=document.getElementById("closed");
         var statusFinished=document.getElementById("finished");
+        var statusOpen=document.getElementById("open");
         if(statusClosed.checked){
             data["status"]="CLOSED"
         }
         if(statusFinished.checked){
             data["status"]="FINISHED"
+        }
+        if(statusOpen.checked){
+            data["status"]="OPEN"
         }
         if (id) {
             data["id"] = id;
