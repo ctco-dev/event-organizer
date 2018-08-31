@@ -17,11 +17,11 @@
 </div>
 
 <form name="pollform" method="post" style="padding: 15px">
-    <p><b>question</b></p>
+    <p><b>Question</b></p>
     <p><textarea name="question" id="question"></textarea></p>
-    <p><b>answers</b></p>
+    <p><b>Answers</b></p>
     <p><textarea name="answers" id="answers"></textarea></p>
-    <p><b>isFeedback</b></p>
+    <p><b>Feedback poll</b></p>
     <p><input type="checkbox" id="isFeedback"></p>
 </form>
 <p>
@@ -32,16 +32,16 @@
 <script id="pollList" type="text/x-handlebars-template">
     {{#pollArray}}
     <div>
-        <p><b>question</b></p>
-        <h2>question: {{question}}</h2>
-        <p><b>answers</b></p>
+        <p><b>Question:</b></p>
+        <h2>{{question}}</h2>
+        <p><b>Answers:</b></p>
         {{#answers}}
         <div>
             <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label for="{{thisAnswerID}}">{{text}}</label>
         </div>
         {{/answers}}
-        <p><b>isFeedback</b></p>
-        <h2>isFeedback: {{feedback}}</h2>
+        <p><b>Feedback poll:</b></p>
+        <h3>{{feedback}}</h3>
         <button onclick="deletePoll('{{id}}')">Delete Poll</button>
         <hr/>
     </div>
@@ -68,7 +68,6 @@
         var question = document.getElementById("question");
         var data = {};
         data["question"] = question.value;
-        //var answers = document.getElementById("answers");
         data["answers"] = splitAnswers();
         var isFeedback = document.getElementById("isFeedback");
         data["isFeedback"] = isFeedback.checked;
