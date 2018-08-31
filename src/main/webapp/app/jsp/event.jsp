@@ -20,12 +20,16 @@
 <div id="event-field" class="w3-hide">
     <%--<h1>{{eventName}}</h1>--%>
     <div>
+        <p><b>Event name:</b></p>
         <h4>{{eventDate}} &nbsp</h4>
+        <p><b>Event start time:</b></p>
         <h4>{{eventTime}}</h4>
     </div>
-    <p>{{eventDescription}}</p>
-    <p>{{eventAgenda}}</p>
-</div>
+        <p><b>Description:</b></p>
+        <p>{{eventDescription}}</p>
+        <p><b>Agenda:</b></p>
+        <p>{{eventAgenda}}</p>
+    </div>
 
 <script>
     function loadEvent() {
