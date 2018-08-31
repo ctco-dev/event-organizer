@@ -27,9 +27,9 @@
 <script id="pollList" type="text/x-handlebars-template">
     {{#pollArray}}
     <div>
-        <p><b>question</b></p>
-        <h2>question: {{question}}</h2>
-        <p><b>answers</b></p>
+        <p><b>Question</b></p>
+        <h2>{{question}}</h2>
+        <p><b>Answers:</b></p>
         {{#answers}}
         <div>
             <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label
