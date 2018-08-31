@@ -127,6 +127,10 @@ public class EventOrganizationApi {
     @POST
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/vote/{id}")
+    public void vote(@PathParam("id") Long id){
+
+
+    }
 
     @GET
     @RolesAllowed({"ADMIN", "USER"})

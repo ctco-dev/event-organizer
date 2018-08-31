@@ -130,8 +130,20 @@
 
     }
 
-    function vote(){
-
+    function vote() {
+        console.log();
+        var checked = document.querySelector('input[name=quest{{../id}}]:checked');
+        var checkedAddr = checked.id;
+        console.log("checked:"+checkedAddr)
+        fetch("<c:url value='/api/event/vote/'/>" + checkedAddr, {
+            "method": "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then(function (response) {
+            console.log("DONE");
+        });
     }
 
     function addEvent() {
