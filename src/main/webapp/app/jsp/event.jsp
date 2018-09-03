@@ -18,7 +18,10 @@
 </div>
 <div id="event-field" class="w3-hide">
     <h1>{{eventName}}</h1>
-    <h4>{{eventDate}}</h4>
+    <div>
+        <h4>{{eventDate}} &nbsp</h4>
+        <h4>{{eventTime}}</h4>
+    </div>
     <p>{{eventDescription}}</p>
     <p>{{eventAgenda}}</p>
 </div>

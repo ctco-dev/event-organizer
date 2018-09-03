@@ -43,7 +43,12 @@ public class EventStore {
         return em.createQuery("select e from Event e where e.author=:user", Event.class)
                 .setParameter("user", user)
                 .getResultList();
+    }
 
+    public int deleteEventById(Long id){
+        return em.createQuery("delete from Event e where e.id=:id",Event.class)
+                .setParameter("id",id)
+                .executeUpdate();
     }
 
     public int deleteEventById(Long id){
