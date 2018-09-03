@@ -70,6 +70,12 @@
             }
         })
     }
+
+    class EventList {
+        constructor (events) {
+            this.eventList = events;
+        }
+    }
 </script>
 
 </body>
