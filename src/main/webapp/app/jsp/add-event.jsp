@@ -47,32 +47,44 @@
         location.href = "<c:url value='/app/jsp/start.jsp'/>";
     }
 
+//        var name = document.getElementById("name");
+//        data["name"] = (name.value).trim();
+//        if (name === "" || name === " ") {
+//            return;
+//        }
+//        var description = document.getElementById("description");
+//        data["description"] = (description.value).trim();
+//        if (description === "" || description === " ") {
+//            return;
+//        }
+//        var agenda = document.getElementById("agenda");
+//        data["agenda"] = (agenda.value).trim();
+//        if (agenda === "" || agenda === " ") {
+//            return;
+//        }
+//        var eventdate = document.getElementById("datepicker");
+//        data["date"] = eventdate.value;
+//        if ((eventdate.value) === "") {
+//            return;
+//        }
+//        var eventtime = document.getElementById("timepicker");
+//        data["time"] = (eventtime.value).trim();
+//        if ((eventtime.value) === "" || (eventtime.value) === " ") {
+//            return;
+//        }
+
     function getDataFromField() {
+
         var name = document.getElementById("name");
         data["name"] = (name.value).trim();
-        if (name === "" || name === " ") {
-            return;
-        }
         var description = document.getElementById("description");
         data["description"] = (description.value).trim();
-        if (description === "" || description === " ") {
-            return;
-        }
         var agenda = document.getElementById("agenda");
         data["agenda"] = (agenda.value).trim();
-        if (agenda === "" || agenda === " ") {
-            return;
-        }
         var eventdate = document.getElementById("datepicker");
         data["date"] = eventdate.value;
-        if ((eventdate.value) === "") {
-            return;
-        }
         var eventtime = document.getElementById("timepicker");
         data["time"] = (eventtime.value).trim();
-        if ((eventtime.value) === "" || (eventtime.value) === " ") {
-            return;
-        }
 
         var statusClosed = document.getElementById("closed");
         var statusFinished = document.getElementById("finished");
@@ -90,7 +102,62 @@
         if (id) {
             data["id"] = id;
         }
+
+        return data;
     }
+
+    function checkNonEmptyInput(data) {
+        switch (data) {
+            case data.name === "":
+                alert("Please input Event Name");
+                return false;
+                break;
+            case data.description === "":
+                alert("Please input Event Description");
+                return false;
+                break;
+            case data.agenda === "":
+                alert("Please input Event Agenda");
+                return false;
+                break;
+            case data.date === "":
+                alert("Please input Event Date");
+                return false;
+                break;
+            case data.time === "":
+                alert("Please input Event Time");
+                return false;
+                break;
+        }
+    }
+//    This function works OK!
+//    function checkNonEmptyInput(data) {
+//
+//        if (data.name === "") {
+//            alert("Please input Event Name");
+//            return false;
+//        } else {
+//            if (data.description === "") {
+//                alert("Please input Event Description");
+//                return false;
+//            } else {
+//                if (data.agenda === "") {
+//                    alert("Please input Event Agenda");
+//                    return false;
+//                } else {
+//                    if (data.date === "") {
+//                        alert("Please input Event Date");
+//                        return false;
+//                    } else {
+//                        if (data.time === "") {
+//                            alert("Please input Event Time");
+//                            return false;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     function checkFunction() {
         if (id) {
@@ -117,34 +184,17 @@
         }
     }
 
-    function saveDataToDB() {
-        getDataFromField();
-        if (data.name === "" || data.name === " ") {
-            alert("Please input Event Name");
+
+
+
+    function saveData() {
+        var data = getDataFromField();
+
+        if (checkNonEmptyInput(data) === false) {
             return;
-        } else {
-            if (data.description === "" || data.description === " ") {
-                alert("Please input Event Description");
-                return;
-            } else {
-                if (data.agenda === "" || data.agenda === " ") {
-                    alert("Please input Event Agenda");
-                    return;
-                } else {
-                    if (data.date === "") {
-                        alert("Please input Event Date");
-                        return;
-                    } else {
-                        if (data.time === "" || data.time === " ") {
-                            alert("Please input Event Time");
-                            return;
-                        }
-                    }
-                }
-            }
         }
 
-        fetch('/api/event/save', {
+        fetch("<c:url value='/api/event/save'/>", {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -155,8 +205,14 @@
         });
     }
 
+
     function updateData() {
-        getDataFromField();
+        var data = getDataFromField();
+
+        if (checkNonEmptyInput(data) === false) {
+            return;
+        }
+
         fetch('/api/event/update', {
             "method": "POST",
             headers: {
