@@ -34,12 +34,12 @@
         <div>
             <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label
                 for="{{thisAnswerID}}">{{text}}</label>
-            <div id="votes" class="w3-hide"><label
+            <div id="votes{{../id}}" class="w3-hide"><label
                     for="{{thisAnswerID}}">Votes: {{answerCounter}}</label></div>
 
         </div>
         {{/answers}}
-        <button id="voteButton{{../id}}" onclick="vote({{id}}),showStatistics({{id}})">VOTE!</button>
+        <button id="voteButton{{id}}" onclick="vote({{id}}),showStatistics({{id}})">VOTE!</button>
         <hr/>
     </div>
     {{/pollArray}}
@@ -144,7 +144,7 @@
             },
         }).then(function (response) {
             showStatistics(qid);
-            hideVotes();
+            hideVotes(qid);
         });
     }
 
@@ -159,15 +159,15 @@
             return response.json();
         }).then(function (answers) {
             console.log(answers);
-            document.getElementById("votes").value=answers.answerCounter;
+            document.getElementById("votes"+x).value=answers.answerCounter;
         });
 
     }
 
 
-    function hideVotes() {
-        document.getElementById("votes").classList.remove("w3-hide");
-        document.getElementById("voteButton").classList.add("w3-hide");
+    function hideVotes(id) {
+        document.getElementById("votes"+id).classList.remove("w3-hide");
+        document.getElementById("voteButton"+id).classList.add("w3-hide");
         console.log("DONE");
     }
 
