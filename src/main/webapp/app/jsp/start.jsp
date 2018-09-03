@@ -6,7 +6,6 @@
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
-    <link rel="stylesheet" type="text/css" href="pagesStyle.css">
 </head>
 <body onload="checkTopics()">
 <header id="header"><h1>Our Events</h1></header>

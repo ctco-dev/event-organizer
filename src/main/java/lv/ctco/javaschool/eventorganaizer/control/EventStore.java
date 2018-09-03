@@ -50,10 +50,4 @@ public class EventStore {
                 .setParameter("id",id)
                 .executeUpdate();
     }
-
-    public int deleteEventById(Long id){
-        return em.createQuery("delete from Event e where e.id=:id",Event.class)
-                .setParameter("id",id)
-                .executeUpdate();
-    }
 }

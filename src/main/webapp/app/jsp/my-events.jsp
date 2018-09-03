@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
 </head>
-<link rel="stylesheet" type="text/css" href="pagesStyle.css">
 
 <body onload="getEventsFromDB()">
 <header id="header"><h1>My Events</h1></header>
@@ -21,11 +20,10 @@
         <p>
             <button onclick="goToEditPage('{{eventID}}')" id="goToEdit">Edit</button>
             <button onclick="deleteEvent('{{eventID}}'),window.location.reload()" id="delete">Delete</button>
-            <button onclick="goToCreatePoolPage()" id="createPoolButton">Create Pool</button>
+            <button onclick="goToCreatePollPage('{{eventID}}')" id="createPoolButton">Create Pool</button>
         </p>
     </li>
 </ul>
-
 <script>
 
 
@@ -65,20 +63,13 @@
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
+            }
         }).then(function (response) {
             if (response.status === 200) {
                 location.reload();
             }
         })
     }
-
-    class EventList {
-        constructor(events) {
-            this.eventList = events
-        }
-    }
-
 </script>
 
 </body>

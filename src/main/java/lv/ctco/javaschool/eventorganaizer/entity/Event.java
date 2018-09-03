@@ -39,10 +39,7 @@ public class Event {
         this.status = status;
     }
 
-    public Event() {
-    }
-
-    public EventStatus getStatus() {
+     public EventStatus getStatus() {
         return status;
     }
 

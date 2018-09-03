@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
     <title id="title">{{eventName}}</title>
 </head>
-<link rel="stylesheet" type="text/css" href="pagesStyle.css">
 
 <body onload="loadEvent()">
 <div id="menu">
@@ -74,14 +73,14 @@
                 w3.displayObject("title", event);
                 w3.displayObject("event-field", event);
             }
-            if (event.eventStatus == "OPEN") {
+            if (event.eventStatus === "OPEN") {
                 document.getElementById("voting").classList.remove("w3-hide");
                 document.getElementById("feedback").classList.add("w3-hide");
                 getVotingFromDB();
             }
-            if (event.eventStatus == "CLOSED") {
+            if (event.eventStatus === "CLOSED") {
                 document.getElementById("voting").classList.add("w3-hide");
-                document.getElementById("feedback").classList.remove("w3-hide")
+                document.getElementById("feedback").classList.remove("w3-hide");
                 getFeedbackFromDB()
             }
         })
@@ -104,8 +103,7 @@
                 var context = {pollArray: poll};
                 var source = document.getElementById("pollList").innerHTML;
                 var template = Handlebars.compile(source);
-                var html = template(context);
-                document.getElementById("feedback").innerHTML = html;
+                document.getElementById("feedback").innerHTML = template(context);
             }
         })
     }
@@ -127,8 +125,7 @@
                 var context = {pollArray: poll};
                 var source = document.getElementById("pollList").innerHTML;
                 var template = Handlebars.compile(source);
-                var html = template(context);
-                document.getElementById("voting").innerHTML = html;
+                document.getElementById("voting").innerHTML = template(context);
 
             }
         })
@@ -138,13 +135,13 @@
     function vote(qid) {
         var checked = document.querySelector('input[name=quest' + qid + ']:checked');
         var checkedAddr = checked.id;
-        console.log("checked:" + checkedAddr)
+        console.log("checked:" + checkedAddr);
         fetch("<c:url value='/api/event/vote/'/>" + checkedAddr, {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
+            }
         }).then(function (response) {
             showStatistics(qid);
             hideVotes();
@@ -191,7 +188,7 @@
         var vars = query.split("&");
         for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
-            if (pair[0] == variable) {
+            if (pair[0] === variable) {
                 return pair[1];
             }
         }

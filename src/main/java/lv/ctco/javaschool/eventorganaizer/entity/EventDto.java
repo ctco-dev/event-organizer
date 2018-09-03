@@ -15,7 +15,7 @@ public class EventDto {
 
     }
 
-    public EventDto(String name, String description, String date, String time, Long id, String agenda,,EventStatus status) {
+    public EventDto(String name, String description, String date, String time, Long id, String agenda,EventStatus status) {
         this.eventName = name;
         this.eventDescription = description;
         this.eventDate = date;
