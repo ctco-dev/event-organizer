@@ -4,7 +4,15 @@ import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.eventorganaizer.control.AnswersStore;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.control.PollStore;
-import lv.ctco.javaschool.eventorganaizer.entity.*;
+import lv.ctco.javaschool.eventorganaizer.entity.Answer;
+import lv.ctco.javaschool.eventorganaizer.entity.AnswerDto;
+import lv.ctco.javaschool.eventorganaizer.entity.Event;
+import lv.ctco.javaschool.eventorganaizer.entity.EventDto;
+import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
+import lv.ctco.javaschool.eventorganaizer.entity.Poll;
+import lv.ctco.javaschool.eventorganaizer.entity.PollDto;
+import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
+import lv.ctco.javaschool.eventorganaizer.entity.TopicListDto;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -17,7 +25,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,7 +90,7 @@ public class EventOrganizationApi {
 
     @GET
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/getevents")
+    @Path("/getEvents")
     public List<EventDto> getAllAuthorEvents() {
         List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
 
@@ -94,9 +101,9 @@ public class EventOrganizationApi {
 
     @POST
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/savePoll/{id}")
+    @Path("/{id}/savePoll")
     public void savePoll(PollDto pollDto, @PathParam("id") Long id) {
-        List<AnswersDto> answersString = pollDto.getAnswers();
+        List<AnswerDto> answersString = pollDto.getAnswers();
         //String[] answerList = answersString.split("\n");
 
         Poll poll = new Poll();
@@ -105,10 +112,10 @@ public class EventOrganizationApi {
         poll.setIsFeedback(pollDto.isFeedback());
 
         List<Answer> answerList = new ArrayList<>();
-        for (AnswersDto answersDto : answersString) {
+        for (AnswerDto answerDto : answersString) {
             Answer answer = new Answer();
             answer.setPoll(poll);
-            answer.setText(answersDto.getText());
+            answer.setText(answerDto.getText());
             answerList.add(answer);
         }
         poll.setAnswers(answerList);
@@ -117,7 +124,7 @@ public class EventOrganizationApi {
 
     @GET
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/getPoll/{id}")
+    @Path("/{id}/getPoll")
     public List<PollDto> getPollForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getPollForEvent(id);
         return poll.stream()
@@ -131,32 +138,35 @@ public class EventOrganizationApi {
 
     @POST
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/vote/{id}")
-    public void vote(@PathParam("id") Long id){
-        Optional<Answer> answer=answersStore.getAnswerByID(id);
-        if(answer.isPresent()){
-            Answer a=answer.get();
-            a.setCounter(a.getCounter()+1);
-            System.out.print(a.getCounter());
+    @Path("/{id}/vote")
+    public void updateVoteCounter(@PathParam("id") Long id) {
+        Optional<Answer> answer = answersStore.getAnswerByID(id);
+        if (answer.isPresent()) {
+            answer.get().setCounter(answer.get().getCounter() + 1);
         }
     }
 
     @GET
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/getVotes/{id}")
-    public List<AnswersDto> getVotes(@PathParam("id") Long id){
-        Poll poll=new Poll();
+    @Path("/{id}/getVotes")
+    public List<AnswerDto> getVotes(@PathParam("id") Long id) {
+        Poll poll = new Poll();
         poll.setId(id);
-        List<Answer> answerList=answersStore.getAnswersByPollID(poll);
-        System.out.print(answerList);
-        return answerList.stream()
-                .map(a->new AnswersDto(a.getId(),a.getCounter()))
-                .collect(Collectors.toList());
+        List<Answer> answerList = answersStore.getAnswersByPollID(poll);
+        List<AnswerDto> answerDtos = new ArrayList<>();
+
+        answerList.forEach(al -> {
+            AnswerDto a = new AnswerDto();
+            a.setAnswerCounter(al.getCounter());
+            a.setThisAnswerID(al.getId());
+            answerDtos.add(a);
+        });
+        return answerDtos;
     }
 
     @GET
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/getFeedbackPoll/{id}")
+    @Path("/{id}/getFeedbackPoll")
     public List<PollDto> getFeedbackForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getFeedbackPoll(id);
         return poll.stream()
@@ -170,7 +180,7 @@ public class EventOrganizationApi {
 
     @GET
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/getVotingPoll/{id}")
+    @Path("/{id}/getVotingPoll")
     public List<PollDto> getVotingForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getVotingPoll(id);
         return poll.stream()
@@ -182,28 +192,28 @@ public class EventOrganizationApi {
                 .collect(Collectors.toList());
     }
 
-    private List<AnswersDto> toAnswersDtoList(List<Answer> list) {
+    private List<AnswerDto> toAnswersDtoList(List<Answer> list) {
         return list.stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
-    private AnswersDto toDto(Answer answer) {
-        AnswersDto r = new AnswersDto();
+    private AnswerDto toDto(Answer answer) {
+        AnswerDto r = new AnswerDto();
         r.setText(answer.getText());
         r.setThisAnswerID(answer.getId());
         return r;
     }
 
     @POST
-    @Path("/delete/{id}")
+    @Path("/{id}/delete")
     @RolesAllowed({"USER", "ADMIN"})
     public void deleteEvent(@PathParam("id") Long id) throws IllegalArgumentException {
         eventStore.deleteEventById(id);
     }
 
     @POST
-    @Path("/deletePoll/{id}")
+    @Path("/{id}/deletePoll")
     @RolesAllowed({"USER", "ADMIN"})
     public void deletePoll(@PathParam("id") Long id) throws IllegalArgumentException {
         pollStore.deletePollById(id);

@@ -18,16 +18,17 @@ public class AnswersStore {
     @Inject
     private AnswersStore answersStore;
 
+
     public List<Answer> getAnswersByPollID(Poll poll) {
-        return em.createQuery("select  a from Answer a" +
-                " where a.poll=:poll", Answer.class)
+        return em.createQuery("select a from Answer a" +
+                " where a.poll = :poll", Answer.class)
                 .setParameter("poll", poll)
                 .getResultList();
     }
 
-    public Optional<Answer> getAnswerByID(Long id){
-        return em.createQuery("select  a from Answer a" +
-                " where a.id=:id", Answer.class)
+    public Optional<Answer> getAnswerByID(Long id) {
+        return em.createQuery("select a from Answer a" +
+                " where a.id = :id", Answer.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst();

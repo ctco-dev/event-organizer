@@ -26,7 +26,7 @@ public class EventStore {
         list = em.createQuery("select e from Event e" +
                 " where e.status = :status1 or e.status=:status2", Event.class)
                 .setParameter("status1", EventStatus.OPEN)
-                .setParameter("status2",EventStatus.CLOSED)
+                .setParameter("status2", EventStatus.CLOSED)
                 .getResultList();
         return list;
     }
@@ -45,9 +45,9 @@ public class EventStore {
                 .getResultList();
     }
 
-    public int deleteEventById(Long id){
-        return em.createQuery("delete from Event e where e.id=:id",Event.class)
-                .setParameter("id",id)
+    public int deleteEventById(Long id) {
+        return em.createQuery("delete from Event e where e.id=:id", Event.class)
+                .setParameter("id", id)
                 .executeUpdate();
     }
 }

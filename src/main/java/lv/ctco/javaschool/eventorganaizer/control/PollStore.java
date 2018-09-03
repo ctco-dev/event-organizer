@@ -1,6 +1,5 @@
 package lv.ctco.javaschool.eventorganaizer.control;
 
-import lv.ctco.javaschool.eventorganaizer.entity.Event;
 import lv.ctco.javaschool.eventorganaizer.entity.Poll;
 
 import javax.ejb.Stateless;
@@ -8,7 +7,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.Optional;
 
 @Stateless
 public class PollStore {
@@ -26,8 +24,8 @@ public class PollStore {
     }
 
     public int deletePollById(Long id) {
-        return em.createQuery("delete from Poll p where p.id=:id",Poll.class)
-                .setParameter("id",id)
+        return em.createQuery("delete from Poll p where p.id=:id", Poll.class)
+                .setParameter("id", id)
                 .executeUpdate();
 
     }

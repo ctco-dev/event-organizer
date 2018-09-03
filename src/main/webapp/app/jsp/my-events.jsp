@@ -36,7 +36,7 @@
     }
 
     function getEventsFromDB() {
-        fetch("<c:url value='/api/event/getevents'/>", {
+        fetch('/api/event/getEvents', {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -58,7 +58,7 @@
     }
 
     function deleteEvent(x) {
-        fetch("<c:url value='/api/event/delete/'/>" + x, {
+        fetch('/api/event/' + x + '/delete/', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -72,7 +72,7 @@
     }
 
     class EventList {
-        constructor (events) {
+        constructor(events) {
             this.eventList = events;
         }
     }

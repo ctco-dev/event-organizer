@@ -1,14 +1,11 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
 
-import lv.ctco.javaschool.auth.entity.domain.User;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +32,7 @@ public class Poll {
     public void setEventID(Long eventID) {
         this.eventID = eventID;
     }
+
     public Long getId() {
         return id;
     }
@@ -58,6 +56,7 @@ public class Poll {
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
+
     public boolean isFeedback() {
         return isFeedback;
     }

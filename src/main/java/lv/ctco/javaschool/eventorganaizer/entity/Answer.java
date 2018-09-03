@@ -13,6 +13,7 @@ public class Answer {
     private Long id;
 
     private String text;
+
     @ManyToOne
     @JoinColumn(name = "poll_id")
     private Poll poll;

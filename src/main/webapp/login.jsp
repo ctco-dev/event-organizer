@@ -80,7 +80,7 @@
             "password": passwordTxt.value
         };
         console.log("sending login data");
-        fetch("<c:url value='/api/auth/login'/>", {
+        fetch('/api/auth/login', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -114,7 +114,7 @@
             "password": pwd1
         };
         console.log("sending registration data");
-        fetch("<c:url value='/api/auth/register'/>", {
+        fetch('/api/auth/register', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -128,8 +128,8 @@
             } else if (response.status === 401) {
                 showError("Something is wrong!");
             } else {
-                response.json().then(function(json) {
-                    switch(json.errorCode) {
+                response.json().then(function (json) {
+                    switch (json.errorCode) {
                         case "CONFLICT":
                             showError("A user with the same username already exists!");
                             break;
@@ -154,7 +154,7 @@
     function showError(msg) {
         var errorPanel = document.getElementById("error-panel");
         errorPanel.classList.remove("w3-hide");
-        w3DisplayData("error-panel", {"message" : msg});
+        w3DisplayData("error-panel", {"message": msg});
     }
 </script>
 </body>

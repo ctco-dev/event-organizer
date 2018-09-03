@@ -58,7 +58,7 @@
     var id = getQueryVariable("id");
 
     function loadEvent() {
-        fetch("<c:url value='/api/event/'/>" + id, {
+        fetch('/api/event/' + id, {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -87,7 +87,7 @@
     }
 
     function getFeedbackFromDB() {
-        fetch("<c:url value='/api/event/getFeedbackPoll/'/>" + id, {
+        fetch('/api/event/' + id + '/getFeedbackPoll/', {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -109,7 +109,7 @@
     }
 
     function getVotingFromDB() {
-        fetch("<c:url value='/api/event/getVotingPoll/'/>" + id, {
+        fetch('/api/event/' + id + '/getVotingPoll/', {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -136,7 +136,7 @@
         var checked = document.querySelector('input[name=quest' + qid + ']:checked');
         var checkedAddr = checked.id;
         console.log("checked:" + checkedAddr);
-        fetch("<c:url value='/api/event/vote/'/>" + checkedAddr, {
+        fetch('/api/event/' + checkedAddr + '/vote/', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -148,8 +148,8 @@
         });
     }
 
-    function showStatistics(x){
-        fetch("<c:url value='/api/event/getVotes/'/>" + x, {
+    function showStatistics(x) {
+        fetch('/api/event/' + x + '/getVotes/', {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -159,7 +159,7 @@
             return response.json();
         }).then(function (answers) {
             console.log(answers);
-            document.getElementById("votes").value=answers.answerCounter;
+            document.getElementById("votes").value = answers.answerCounter;
         });
 
     }

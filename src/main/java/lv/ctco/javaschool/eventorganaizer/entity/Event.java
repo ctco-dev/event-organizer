@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.Date;
 
 @Entity
 public class Event {
@@ -39,7 +38,7 @@ public class Event {
         this.status = status;
     }
 
-     public EventStatus getStatus() {
+    public EventStatus getStatus() {
         return status;
     }
 
@@ -98,7 +97,11 @@ public class Event {
         this.description = description;
     }
 
-    public String getAgenda() { return agenda; }
+    public String getAgenda() {
+        return agenda;
+    }
 
-    public void setAgenda(String agenda) { this.agenda = agenda; }
+    public void setAgenda(String agenda) {
+        this.agenda = agenda;
+    }
 }

@@ -39,7 +39,8 @@
         <p><b>Answers:</b></p>
         {{#answers}}
         <div>
-            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label for="{{thisAnswerID}}">{{text}}</label>
+            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label
+                for="{{thisAnswerID}}">{{text}}</label>
         </div>
         {{/answers}}
         <p><b>Feedback poll:</b></p>
@@ -80,7 +81,7 @@
     function savePollToDB() {
         var data = buildData();
         console.log(data);
-        fetch("<c:url value='/api/event/savePoll/'/>" + id, {
+        fetch('/api/event/' + id + '/savePoll/', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -94,7 +95,7 @@
     }
 
     function getPollFromDB() {
-        fetch("<c:url value='/api/event/getPoll/'/>" + id, {
+        fetch('/api/event/' + id + '/getPoll/', {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -109,7 +110,7 @@
                 document.getElementById("displayPoll").classList.remove("w3-hide");
                 var context = {pollArray: poll};
                 console.log(context);
-                var source   = document.getElementById("pollList").innerHTML;
+                var source = document.getElementById("pollList").innerHTML;
                 var template = Handlebars.compile(source);
                 var html = template(context);
                 document.getElementById("displayPoll").innerHTML = html;
@@ -118,7 +119,7 @@
     }
 
     function deletePoll(x) {
-        fetch("<c:url value='/api/event/deletePoll/'/>" + x, {
+        fetch('/api/event/' + x + '/deletePoll/', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -131,7 +132,7 @@
     }
 
     function loadEvent() {
-        fetch("<c:url value='/api/event/'/>" + id, {
+        fetch('/api/event/' + id, {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',

@@ -17,8 +17,8 @@
 
 <ul id="topic-list" class="w3-hide">
     <li w3-repeat="topicList">
-        <div style="float: left"><a href="<c:url value='/app/jsp/event.jsp'/>?id={{id}}">{{topicName}}</a> </div>
-        <div style="float: right" >{{topicAuthor}}</div>
+        <div style="float: left"><a href="<c:url value='/app/jsp/event.jsp'/>?id={{id}}">{{topicName}}</a></div>
+        <div style="float: right">{{topicAuthor}}</div>
     </li>
 </ul>
 <script>
@@ -29,7 +29,7 @@
         location.href = "/app/jsp/my-events.jsp"
     }
     function checkTopics() {
-        fetch("<c:url value='/api/event'/>", {
+        fetch('/api/event', {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -47,7 +47,7 @@
     }
 
     function logout() {
-        fetch("<c:url value='/api/auth/logout'/>", {"method": "POST"})
+        fetch('/api/auth/logout', {"method": "POST"})
             .then(function (response) {
                 location.href = "/";
             });
