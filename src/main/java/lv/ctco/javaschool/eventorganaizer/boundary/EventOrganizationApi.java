@@ -83,4 +83,14 @@ public class EventOrganizationApi {
                 .map(e -> new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getTime(), e.getId(), e.getAgenda()))
                 .collect(Collectors.toList());
     }
+
+
+    @POST
+    @Path("/delete/{id}")
+    @RolesAllowed({"USER", "ADMIN"})
+    public void deleteEvent(@PathParam("id") Long id) throws IllegalArgumentException {
+        eventStore.deleteEventById(id);
+    }
 }
+
+

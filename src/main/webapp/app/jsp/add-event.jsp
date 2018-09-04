@@ -45,15 +45,30 @@
 
     function getDataFromField() {
         var name = document.getElementById("name");
-        data["name"] = name.value;
+        data["name"] = (name.value).trim();
+            if(name === "" || name === " ") {
+                return;
+            }
+        var description = document.getElementById("description");
+        data["description"] = (description.value).trim();
+            if(description === "" || description === " ") {
+               return;
+            }
+        var agenda = document.getElementById("agenda");
+        data["agenda"] = (agenda.value).trim();
+            if(agenda === "" || agenda === " ") {
+                return;
+            }
         var eventdate = document.getElementById("datepicker");
         data["date"] = eventdate.value;
-        var description = document.getElementById("description");
-        data["description"] = description.value;
-        var agenda = document.getElementById("agenda");
-        data["agenda"] = agenda.value;
+            if((eventdate.value) === "") {
+                return;
+            }
         var eventtime=document.getElementById("timepicker");
-        data["time"] = eventtime.value;
+        data["time"] = (eventtime.value).trim();
+            if((eventtime.value) === "" || (eventtime.value) === " ") {
+                return;
+            }
 
         if (id) {
             data["id"] = id;
@@ -65,30 +80,55 @@
             getEventDataFromDB();
             document.getElementById("add").classList.add("w3-hide");
             document.getElementById("edit").classList.remove("w3-hide");
-            document.getElementById("update").classList.remove("w3-hide")
+            document.getElementById("update").classList.remove("w3-hide");
             document.getElementById("save").classList.add("w3-hide")
 
         }
         else {
             document.getElementById("add").classList.remove("w3-hide");
             document.getElementById("edit").classList.add("w3-hide");
-            document.getElementById("update").classList.add("w3-hide")
-            document.getElementById("save").classList.remove("w3-hide")
+            document.getElementById("update").classList.add("w3-hide");
+            document.getElementById("save").classList.remove("w3-hide");
         }
     }
 
-
     function saveDataToDB() {
         getDataFromField();
-        fetch("<c:url value='/api/event/save'/>", {
-            "method": "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }, body: JSON.stringify(data)
-        }).then(function (response) {
-            location.href = "<c:url value='/app/jsp/start.jsp'/>";
-        });
+            if(data.name == "" || data.name == " ")  {
+            alert("Please input Event Name");
+            return;
+            } else {
+                if (data.description == "" || data.description == " ") {
+                    alert("Please input Event Description");
+                    return;
+                } else {
+                    if (data.agenda == "" || data.agenda == " ") {
+                        alert("Please input Event Agenda");
+                        return;
+                    } else {
+//                        if (data.date == "" || data.date == " ") {
+                        if (data.date == "") {
+                            alert("Please input Event Date");
+                            return;
+                        } else {
+                            if (data.time == "" || data.time == " ") {
+                                alert("Please input Event Time");
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
+            fetch("<c:url value='/api/event/save'/>", {
+                "method": "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }, body: JSON.stringify(data)
+            }).then(function (response) {
+                location.href = "<c:url value='/app/jsp/start.jsp'/>";
+            });
     }
 
     function updateData() {

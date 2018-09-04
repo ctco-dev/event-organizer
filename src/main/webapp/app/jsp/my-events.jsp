@@ -24,6 +24,7 @@
 
         <p>
             <button onclick="goToEditPage('{{eventID}}')" id="goToEdit">Edit</button>
+            <button onclick="deleteEvent('{{eventID}}'),window.location.reload()" id="delete">Delete</button>
             <button onclick="goToCreatePoolPage()" id="createPoolButton">Create Pool</button>
 
         </p>
@@ -59,6 +60,20 @@
 
     function goToEditPage(x) {
         location.href = "<c:url value='/app/jsp/add-event.jsp?id='/>" + x;
+    }
+
+    function deleteEvent(x) {
+        fetch("<c:url value='/api/event/delete/'/>" + x, {
+            "method": "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then(function (response) {
+            if (response.status === 200) {
+                location.reload();
+            }
+        })
     }
 
     class EventList {
