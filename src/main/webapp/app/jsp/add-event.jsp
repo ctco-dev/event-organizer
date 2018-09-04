@@ -32,10 +32,9 @@
 </form>
 
 <div id="buttons">
-    <button type="submit" id="save" onclick="saveDataToDB()">Save</button>
+    <button type="submit" id="save" onclick="saveData()">Save</button>
     <button type="submit" id="update" onclick="updateData()">Update</button>
     <button onclick="goToTheMainPage()">Cancel</button>
-
 </div>
 </body>
 
@@ -50,29 +49,14 @@
     function getDataFromField() {
         var name = document.getElementById("name");
         data["name"] = (name.value).trim();
-        if (name === "" || name === " ") {
-            return;
-        }
         var description = document.getElementById("description");
         data["description"] = (description.value).trim();
-        if (description === "" || description === " ") {
-            return;
-        }
         var agenda = document.getElementById("agenda");
         data["agenda"] = (agenda.value).trim();
-        if (agenda === "" || agenda === " ") {
-            return;
-        }
         var eventdate = document.getElementById("datepicker");
         data["date"] = eventdate.value;
-        if ((eventdate.value) === "") {
-            return;
-        }
         var eventtime = document.getElementById("timepicker");
         data["time"] = (eventtime.value).trim();
-        if ((eventtime.value) === "" || (eventtime.value) === " ") {
-            return;
-        }
 
         var statusClosed = document.getElementById("closed");
         var statusFinished = document.getElementById("finished");
@@ -90,6 +74,24 @@
         if (id) {
             data["id"] = id;
         }
+        return data;
+    }
+
+    function checkNonEmptyInput(data) {
+        return validateField(data.name, "Name")
+            && validateField(data.description, "Description")
+            && validateField(data.agenda, "Agenda")
+            && validateField(data.date, "Date")
+            && validateField(data.time, "Time");
+
+    }
+
+    function validateField(field, message) {
+        if(field === "") {
+            alert("Please input Event " + message);
+            return false;
+        }
+        return true;
     }
 
     function switchPageStatus() {
@@ -115,34 +117,12 @@
         }
     }
 
-    function saveDataToDB() {
-        getDataFromField();
-        if (data.name === "" || data.name === " ") {
-            alert("Please input Event Name");
+    function saveData() {
+        var data = getDataFromField();
+        if (checkNonEmptyInput(data) === false) {
             return;
-        } else {
-            if (data.description === "" || data.description === " ") {
-                alert("Please input Event Description");
-                return;
-            } else {
-                if (data.agenda === "" || data.agenda === " ") {
-                    alert("Please input Event Agenda");
-                    return;
-                } else {
-                    if (data.date === "") {
-                        alert("Please input Event Date");
-                        return;
-                    } else {
-                        if (data.time === "" || data.time === " ") {
-                            alert("Please input Event Time");
-                            return;
-                        }
-                    }
-                }
-            }
         }
-
-        fetch('/api/event/save', {
+        fetch('/api/event/save/', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -154,8 +134,11 @@
     }
 
     function updateData() {
-        getDataFromField();
-        fetch('/api/event/update', {
+        var data = getDataFromField();
+        if (checkNonEmptyInput(data) === false) {
+            return;
+        }
+        fetch('/api/event/update/', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
