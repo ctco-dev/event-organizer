@@ -5,6 +5,8 @@ import lv.ctco.javaschool.eventorganaizer.entity.AnswerDto;
 import lv.ctco.javaschool.eventorganaizer.entity.Poll;
 import lv.ctco.javaschool.eventorganaizer.entity.PollDto;
 
+import javax.ws.rs.PathParam;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,5 +32,28 @@ public class Mapper {
                         p.getEventID(),
                         p.getId()))
                 .collect(Collectors.toList());
+    }
+
+    public List<Answer> mapPollToAnswerList(Poll poll, PollDto pollDto) {
+        List<AnswerDto> answersString = pollDto.getAnswers();
+        List<Answer> answerList = new ArrayList<>();
+        for (AnswerDto answerDto : answersString) {
+            Answer answer = new Answer();
+            answer.setPoll(poll);
+            answer.setText(answerDto.getText());
+            answerList.add(answer);
+        }
+        return answerList;
+    }
+
+    public List<AnswerDto> mapAnswerToAnswerDto(List<Answer> answerList) {
+        List<AnswerDto> answerDtos = new ArrayList<>();
+        answerList.forEach(al -> {
+            AnswerDto a = new AnswerDto();
+            a.setAnswerCounter(al.getCounter());
+            a.setThisAnswerID(al.getId());
+            answerDtos.add(a);
+        });
+        return answerDtos;
     }
 }

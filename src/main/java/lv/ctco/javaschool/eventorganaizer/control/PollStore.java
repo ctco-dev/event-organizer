@@ -1,5 +1,6 @@
 package lv.ctco.javaschool.eventorganaizer.control;
 
+import lv.ctco.javaschool.eventorganaizer.entity.Event;
 import lv.ctco.javaschool.eventorganaizer.entity.Poll;
 
 import javax.ejb.Stateless;
@@ -51,5 +52,9 @@ public class PollStore {
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst();
+    }
+
+    public void persistPoll(Poll poll) {
+        em.persist(poll);
     }
 }

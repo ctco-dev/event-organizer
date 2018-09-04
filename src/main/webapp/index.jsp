@@ -2,29 +2,15 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<style>
-    body, h1 {
-        font-family: "Raleway", sans-serif
-    }
-
-    body, html {
-        height: 100%
-    }
-
-    .bgimg {
-        background-image: url('https://www.w3schools.com/w3images/forestbridge.jpg');
-        min-height: 100%;
-        background-position: center;
-        background-size: cover;
-    }
-</style>
-<body>
-
+<head>
+    <title>W3.CSS Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body class="index-page-body">
 <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
     <div class="w3-display-topleft w3-padding-large w3-xlarge">
         Logo
@@ -35,9 +21,8 @@
         <p class="w3-large w3-center">35 days left</p>
     </div>
     <div class="w3-display-bottomleft w3-padding-large">
-        <a href="<c:url value='/login.jsp'/>">Log in</a>
+        <a href='/login.jsp'>Log in</a>
     </div>
 </div>
-
 </body>
 </html>

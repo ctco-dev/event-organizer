@@ -104,22 +104,12 @@ public class EventOrganizationApi {
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/{id}/savePoll/")
     public void savePoll(PollDto pollDto, @PathParam("id") Long id) {
-        List<AnswerDto> answersString = pollDto.getAnswers();
-
         Poll poll = new Poll();
         poll.setQuestion(pollDto.getQuestion());
         poll.setEventID(id);
         poll.setIsFeedback(pollDto.isFeedback());
-
-        List<Answer> answerList = new ArrayList<>();
-        for (AnswerDto answerDto : answersString) {
-            Answer answer = new Answer();
-            answer.setPoll(poll);
-            answer.setText(answerDto.getText());
-            answerList.add(answer);
-        }
-        poll.setAnswers(answerList);
-        em.persist(poll);
+        poll.setAnswers(mapper.mapPollToAnswerList(poll, pollDto));
+        pollStore.persistPoll(poll);
     }
 
     @GET
@@ -148,13 +138,7 @@ public class EventOrganizationApi {
         List<AnswerDto> answerDtos = new ArrayList<>();
         poll.ifPresent(p -> {
             List<Answer> answerList = answersStore.getAnswersByPollID(p);
-
-            answerList.forEach(al -> {
-                AnswerDto a = new AnswerDto();
-                a.setAnswerCounter(al.getCounter());
-                a.setThisAnswerID(al.getId());
-                answerDtos.add(a);
-            });
+            mapper.mapAnswerToAnswerDto(answerList);
         });
         return answerDtos;
     }
