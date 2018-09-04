@@ -1,5 +1,4 @@
-
- function loadEvent() {
+function loadEvent() {
     var id = getQueryVariable("id");
     fetch('/api/event/' + id, {
         "method": "GET",

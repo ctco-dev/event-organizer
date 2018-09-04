@@ -5,8 +5,7 @@
     <title>Event Organizer</title>
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
-    <link rel="stylesheet" type="text/css" href="pagesStyle.css">
+    <link rel="stylesheet" type="text/css" href="../../style.css">
 </head>
 <body onload="checkTopics()">
 <header id="header"><h1>Our Events</h1></header>
@@ -18,8 +17,8 @@
 
 <ul id="topic-list" class="w3-hide">
     <li w3-repeat="topicList">
-        <div style="float: left"><a href="<c:url value='/app/jsp/event.jsp'/>?id={{id}}">{{topicName}}</a> </div>
-        <div style="float: right" >{{topicAuthor}}</div>
+        <div style="float: left"><a href="<c:url value='/app/jsp/event.jsp'/>?id={{id}}">{{topicName}}</a></div>
+        <div style="float: right">{{topicAuthor}}</div>
     </li>
 </ul>
 <script>
@@ -30,7 +29,7 @@
         location.href = "/app/jsp/my-events.jsp"
     }
     function checkTopics() {
-        fetch("<c:url value='/api/event'/>", {
+        fetch('/api/event', {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -48,7 +47,7 @@
     }
 
     function logout() {
-        fetch("<c:url value='/api/auth/logout'/>", {"method": "POST"})
+        fetch('/api/auth/logout', {"method": "POST"})
             .then(function (response) {
                 location.href = "/";
             });

@@ -3,18 +3,17 @@ package lv.ctco.javaschool.eventorganaizer.entity;
 import java.util.List;
 
 public class PollDto {
-
     private String question;
-    private List<AnswersDto> answers;
+    private List<AnswerDto> answers;
     private boolean isFeedback;
     private Long eventID;
     private Long id;
 
-    public PollDto(){
+    public PollDto() {
 
     }
 
-    public PollDto(String question, List<AnswersDto> answers, boolean isFeedback, Long eventID, Long id) {
+    public PollDto(String question, List<AnswerDto> answers, boolean isFeedback, Long eventID, Long id) {
         this.question = question;
         this.answers = answers;
         this.isFeedback = isFeedback;
@@ -30,11 +29,11 @@ public class PollDto {
         this.question = question;
     }
 
-    public List<AnswersDto> getAnswers() {
+    public List<AnswerDto> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<AnswersDto> answers) {
+    public void setAnswers(List<AnswerDto> answers) {
         this.answers = answers;
     }
 

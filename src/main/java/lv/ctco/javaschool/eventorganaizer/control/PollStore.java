@@ -26,8 +26,8 @@ public class PollStore {
     }
 
     public int deletePollById(Long id) {
-        return em.createQuery("delete from Poll p where p.id=:id",Poll.class)
-                .setParameter("id",id)
+        return em.createQuery("delete from Poll p where p.id=:id", Poll.class)
+                .setParameter("id", id)
                 .executeUpdate();
 
     }
@@ -46,4 +46,15 @@ public class PollStore {
                 .getResultList();
     }
 
+    public Optional<Poll> getPollById (Long id) {
+        return em.createQuery("select p from Poll p" +
+                " where p.id = :id", Poll.class)
+                .setParameter("id", id)
+                .getResultStream()
+                .findFirst();
+    }
+
+    public void persistPoll(Poll poll) {
+        em.persist(poll);
+    }
 }
