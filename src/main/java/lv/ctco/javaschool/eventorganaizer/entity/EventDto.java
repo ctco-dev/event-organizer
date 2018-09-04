@@ -1,7 +1,5 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
-import lv.ctco.javaschool.auth.entity.domain.User;
-
 public class EventDto {
     private String eventName;
     private String eventDescription;
@@ -9,26 +7,29 @@ public class EventDto {
     private String eventTime;
     private Long eventID;
     private String eventAgenda;
+    private EventStatus eventStatus;
 
-    public EventDto(){
-
+    public EventDto() {
     }
 
-    public EventDto(String name, String description, String date, String time, Long id, String agenda) {
+    public EventDto(String name, String description, String date, String time, Long id, String agenda, EventStatus status) {
         this.eventName = name;
         this.eventDescription = description;
         this.eventDate = date;
         this.eventTime = time;
         this.eventID = id;
         this.eventAgenda = agenda;
-     }
+        this.eventStatus = status;
+    }
 
     public long getEventID() {
         return eventID;
     }
+
     public void setEventID(long eventID) {
         this.eventID = eventID;
     }
+
     public String getEventName() {
         return eventName;
     }
@@ -67,5 +68,13 @@ public class EventDto {
 
     public void setEventTime(String eventTime) {
         this.eventTime = eventTime;
+    }
+
+    public EventStatus getEventStatus() {
+        return eventStatus;
+    }
+
+    public void setEventStatus(EventStatus eventStatus) {
+        this.eventStatus = eventStatus;
     }
 }

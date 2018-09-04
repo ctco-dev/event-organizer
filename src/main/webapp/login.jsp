@@ -7,24 +7,19 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="http://www.w3schools.com/lib/w3data.js"></script>
 <body>
-
 <header class="w3-container w3-teal">
     <h1>Login or Register</h1>
 </header>
-
 <div class="w3-container w3-half w3-margin-top" align="center">
-
     <form class="w3-container w3-card-4">
         <div id="error-panel" class="w3-panel w3-red w3-hide">
             <h3>Error!</h3>
             <p>{{message}}</p>
         </div>
-
         <p>
             <input id="register-cb" class="w3-check" type="checkbox" onchange="switchRegistration()">
             <label for="register-cb">Registration</label>
         </p>
-
         <p>
             <input id="username-txt" class="w3-input" type="text" style="width:90%" required>
             <label for="username-txt">Name</label>
@@ -38,7 +33,6 @@
             <input id="password2-txt" class="w3-input" type="password" style="width:90%" required>
             <label for="password2-txt">Repeat Password</label>
         </p>
-
         <p>
             <button id="login-btn" type="button" class="w3-button w3-section w3-teal w3-ripple" onclick="login()">Log
                 in
@@ -47,11 +41,8 @@
                     onclick="register()">Register
             </button>
         </p>
-
     </form>
-
 </div>
-
 <script>
     function switchRegistration() {
         hideError();
@@ -80,7 +71,7 @@
             "password": passwordTxt.value
         };
         console.log("sending login data");
-        fetch("<c:url value='/api/auth/login'/>", {
+        fetch('/api/auth/login', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -114,7 +105,7 @@
             "password": pwd1
         };
         console.log("sending registration data");
-        fetch("<c:url value='/api/auth/register'/>", {
+        fetch('/api/auth/register', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -128,8 +119,8 @@
             } else if (response.status === 401) {
                 showError("Something is wrong!");
             } else {
-                response.json().then(function(json) {
-                    switch(json.errorCode) {
+                response.json().then(function (json) {
+                    switch (json.errorCode) {
                         case "CONFLICT":
                             showError("A user with the same username already exists!");
                             break;
@@ -154,7 +145,7 @@
     function showError(msg) {
         var errorPanel = document.getElementById("error-panel");
         errorPanel.classList.remove("w3-hide");
-        w3DisplayData("error-panel", {"message" : msg});
+        w3DisplayData("error-panel", {"message": msg});
     }
 </script>
 </body>

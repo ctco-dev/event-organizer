@@ -1,6 +1,21 @@
+.index-page-body, h1 {
+    font-family: "Raleway", sans-serif;
+}
+
+.index-page-body, html {
+    height: 100%;
+}
+
+.bgimg {
+    background-image: url('https://www.w3schools.com/w3images/forestbridge.jpg');
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
 textarea {
-    height: 60px;
-    width: 800px;
+    height: 50px;
+    width: 400px;
 }
 
 #buttons {
@@ -8,7 +23,6 @@ textarea {
     bottom: 0;
     width: 100%;
     height: 60px;
-
 }
 
 #add, #edit, #header, #title {
@@ -32,14 +46,12 @@ a {
     underline-mode: none;
 }
 
-
-
 #goToEdit {
-    margin-right: 15px;
+    margin-left: 600px;
 }
 
 #createPoolButton {
-        margin-right: 15px;
+    margin-left: 10px;
 }
 
 a {
@@ -57,10 +69,4 @@ a {
 
 #event-field {
     margin: 0px 0px 5px 15px;
-}
-
-#topic-list, #myevent-list {
-    background-color: #d3fbef;
-    border: none;
-    margin: 0px 30px 5px 0px;
 }

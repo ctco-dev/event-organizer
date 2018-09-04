@@ -3,13 +3,16 @@ package lv.ctco.javaschool.eventorganaizer.boundary;
 import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
-import lv.ctco.javaschool.eventorganaizer.entity.*;
+import lv.ctco.javaschool.eventorganaizer.entity.Event;
+import lv.ctco.javaschool.eventorganaizer.entity.EventDto;
+import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
+import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
+import lv.ctco.javaschool.eventorganaizer.entity.TopicListDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -21,12 +24,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 class EventOrganizationApiTest {
     @Mock
     private EntityManager em;
     @Mock
     private UserStore userStore;
+    @Mock
+    private Mapper mapper;
     @Mock
     private EventStore eventStore;
     @InjectMocks
@@ -41,6 +45,8 @@ class EventOrganizationApiTest {
 
     @BeforeEach
     void init() {
+        MockitoAnnotations.initMocks(this);
+
         userEvents = new ArrayList<>();
         testUser = new User();
         testUser.setUsername("admin");
@@ -127,6 +133,8 @@ class EventOrganizationApiTest {
         event.setDescription("asdf");
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(testUser);
+        event.setAgenda("test");
+        event.setDate("12.09.2018");
         return event;
     }
 
@@ -136,6 +144,8 @@ class EventOrganizationApiTest {
         eventDto.setEventDate(event.getDate());
         eventDto.setEventDescription(event.getDescription());
         eventDto.setEventID(event.getId());
+        eventDto.setEventAgenda(event.getAgenda());
+        eventDto.setEventDate(event.getDate());
         return eventDto;
     }
 }
