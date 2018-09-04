@@ -32,10 +32,9 @@
 </form>
 
 <div id="buttons">
-    <button type="submit" id="save" onclick="saveDataToDB()">Save</button>
+    <button type="submit" id="save" onclick="saveData()">Save</button>
     <button type="submit" id="update" onclick="updateData()">Update</button>
     <button onclick="goToTheMainPage()">Cancel</button>
-
 </div>
 </body>
 
@@ -47,34 +46,7 @@
         location.href = "<c:url value='/app/jsp/start.jsp'/>";
     }
 
-//        var name = document.getElementById("name");
-//        data["name"] = (name.value).trim();
-//        if (name === "" || name === " ") {
-//            return;
-//        }
-//        var description = document.getElementById("description");
-//        data["description"] = (description.value).trim();
-//        if (description === "" || description === " ") {
-//            return;
-//        }
-//        var agenda = document.getElementById("agenda");
-//        data["agenda"] = (agenda.value).trim();
-//        if (agenda === "" || agenda === " ") {
-//            return;
-//        }
-//        var eventdate = document.getElementById("datepicker");
-//        data["date"] = eventdate.value;
-//        if ((eventdate.value) === "") {
-//            return;
-//        }
-//        var eventtime = document.getElementById("timepicker");
-//        data["time"] = (eventtime.value).trim();
-//        if ((eventtime.value) === "" || (eventtime.value) === " ") {
-//            return;
-//        }
-
     function getDataFromField() {
-
         var name = document.getElementById("name");
         data["name"] = (name.value).trim();
         var description = document.getElementById("description");
@@ -102,62 +74,25 @@
         if (id) {
             data["id"] = id;
         }
-
         return data;
     }
 
     function checkNonEmptyInput(data) {
-        switch (data) {
-            case data.name === "":
-                alert("Please input Event Name");
-                return false;
-                break;
-            case data.description === "":
-                alert("Please input Event Description");
-                return false;
-                break;
-            case data.agenda === "":
-                alert("Please input Event Agenda");
-                return false;
-                break;
-            case data.date === "":
-                alert("Please input Event Date");
-                return false;
-                break;
-            case data.time === "":
-                alert("Please input Event Time");
-                return false;
-                break;
-        }
+        return validateField(data.name, "Name")
+            && validateField(data.description, "Description")
+            && validateField(data.agenda, "Agenda")
+            && validateField(data.date, "Date")
+            && validateField(data.time, "Time");
+
     }
-//    This function works OK!
-//    function checkNonEmptyInput(data) {
-//
-//        if (data.name === "") {
-//            alert("Please input Event Name");
-//            return false;
-//        } else {
-//            if (data.description === "") {
-//                alert("Please input Event Description");
-//                return false;
-//            } else {
-//                if (data.agenda === "") {
-//                    alert("Please input Event Agenda");
-//                    return false;
-//                } else {
-//                    if (data.date === "") {
-//                        alert("Please input Event Date");
-//                        return false;
-//                    } else {
-//                        if (data.time === "") {
-//                            alert("Please input Event Time");
-//                            return false;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+
+    function validateField(field, message) {
+        if(field === "") {
+            alert("Please input Event " + message);
+            return false;
+        }
+        return true;
+    }
 
     function checkFunction() {
         if (id) {
@@ -184,17 +119,12 @@
         }
     }
 
-
-
-
     function saveData() {
         var data = getDataFromField();
-
         if (checkNonEmptyInput(data) === false) {
             return;
         }
-
-        fetch("<c:url value='/api/event/save'/>", {
+        fetch('/api/event/save/', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
@@ -205,15 +135,12 @@
         });
     }
 
-
     function updateData() {
         var data = getDataFromField();
-
         if (checkNonEmptyInput(data) === false) {
             return;
         }
-
-        fetch('/api/event/update', {
+        fetch('/api/event/update/', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
