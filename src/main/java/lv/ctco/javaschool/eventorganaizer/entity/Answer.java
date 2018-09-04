@@ -1,10 +1,13 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Answer {
@@ -14,8 +17,8 @@ public class Answer {
 
     private String text;
 
-    @ManyToOne
-    @JoinColumn(name = "poll_id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "poll")
     private Poll poll;
 
     private int counter;

@@ -32,4 +32,11 @@ public class AnswersStore {
                 .getResultStream()
                 .findFirst();
     }
+
+    public void deleteAnswersByPoll(Poll poll) {
+        em.createQuery("select a from Answer a" +
+                " where a.poll = :poll", Answer.class)
+                .setParameter("poll", poll)
+                .executeUpdate();
+    }
 }

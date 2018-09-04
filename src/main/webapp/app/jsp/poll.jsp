@@ -44,7 +44,7 @@
         {{/answers}}
         <p><b>Feedback poll:</b></p>
         <h3>{{feedback}}</h3>
-        <button onclick="deletePoll('{{id}}')">Delete Poll</button>
+        <button onclick="deletePoll('{{ id }}')">Delete Poll</button>
         <hr/>
     </div>
     {{/pollArray}}
