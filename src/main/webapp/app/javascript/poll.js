@@ -61,8 +61,8 @@ function getPollFromDB() {
     })
 }
 
-function deletePoll(x) {
-    fetch('/api/event/' + x + '/deletePoll/', {
+function deletePoll(id) {
+    fetch('/api/event/' + id + '/deletePoll/', {
         "method": "POST",
         headers: {
             'Accept': 'application/json',
@@ -71,7 +71,6 @@ function deletePoll(x) {
     }).then(function (response) {
         getPollFromDB();
     })
-
 }
 
 function loadEvent() {
