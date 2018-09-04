@@ -31,7 +31,7 @@ function getQueryVariable(variable) {
 }
 
 function addEvent() {
-    location.href = "/app/jsp/add-event.jsp"
+    location.href = "/app/add-event.jsp"
 }
 
 function main() {

@@ -105,7 +105,7 @@ function getQueryVariable(variable) {
 }
 
 function goToTheMainPage() {
-    location.href = '/app/jsp/start.jsp';
+    location.href = '/app/start.jsp';
 }
 
 function init() {
