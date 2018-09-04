@@ -5,22 +5,28 @@
     <title>My Events</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
 </head>
 <link rel="stylesheet" type="text/css" href="pagesStyle.css">
 
 <body onload="getEventsFromDB()">
 <header id="header"><h1>My Events</h1></header>
-<p>
+<div>
+<div style="margin: 0px 0px 20px 15px">
     <button onclick="goToTheMainPage()">Go to the main page</button>
-</p>
+</div>
+
 <ul class="w3-ul" id="myevent-list">
     <li w3-repeat="eventList" type="text" id="eventElement" class="w3-hide">
         <a href="<c:url value='/app/jsp/event.jsp'/>?id={{eventID}}">{{eventName}}</a>
+        <div style="border-style: none none solid none; border-color: white"; padding-top: 5px ></div>
+
         <p>
             <button onclick="goToEditPage('{{eventID}}')" id="goToEdit">Edit</button>
             <button onclick="deleteEvent('{{eventID}}'),window.location.reload()" id="delete">Delete</button>
             <button onclick="goToCreatePoolPage()" id="createPoolButton">Create Pool</button>
+
         </p>
     </li>
 </ul>

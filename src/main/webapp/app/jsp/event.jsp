@@ -4,25 +4,32 @@
 <head>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <title id="title">{{eventName}}</title>
+    <link rel="stylesheet" type="text/css" href="../styles/pagesStyle.css">
 </head>
-<link rel="stylesheet" type="text/css" href="pagesStyle.css">
+
+
 
 <body onload="loadEvent()">
-<div id="menu">
+<%--<header id="header"><h1>{{eventName}}</h1></header>--%>
+<header id="title"><h1>{{eventName}}</h1></header>
+<div id="menu"; style="margin: 0px 0px 20px 15px">
     <button type="button" onclick="main()">Back To Main</button>
     <button type="button" onclick="myEvents()">My Events</button>
     <button type="button" onclick="addEvent()">Add Event</button>
 </div>
 <div id="event-field" class="w3-hide">
-    <h1>{{eventName}}</h1>
+    <%--<h1>{{eventName}}</h1>--%>
     <div>
+        <p><b>Event name:</b></p>
         <h4>{{eventDate}} &nbsp</h4>
+        <p><b>Event start time:</b></p>
         <h4>{{eventTime}}</h4>
     </div>
-    <p>{{eventDescription}}</p>
-    <p>{{eventAgenda}}</p>
-</div>
+        <p><b>Description:</b></p>
+        <p>{{eventDescription}}</p>
+        <p><b>Agenda:</b></p>
+        <p>{{eventAgenda}}</p>
+    </div>
 
 <script>
     function loadEvent() {
