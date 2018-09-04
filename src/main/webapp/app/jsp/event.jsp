@@ -32,11 +32,11 @@
         <p><b>Answers:</b></p>
         {{#answers}}
         <div>
-            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label
-                for="{{thisAnswerID}}">{{text}}</label>
-            <div id="votes{{../id}}" class="w3-hide"><label
-                    for="{{thisAnswerID}}">Votes: {{answerCounter}}</label></div>
-
+            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}">
+            <label for="{{thisAnswerID}}">{{text}}</label>
+            <div class="votes">
+                <label for="{{thisAnswerID}}" name="votes{{../id}}"></label>
+            </div>
         </div>
         {{/answers}}
         <button id="voteButton{{id}}" onclick="vote({{id}}),showStatistics({{id}})">VOTE!</button>
@@ -148,7 +148,7 @@
         });
     }
 
-    function showStatistics(x){
+    function showStatistics(x) {
         fetch("<c:url value='/api/event/getVotes/'/>" + x, {
             "method": "GET",
             headers: {
@@ -158,16 +158,20 @@
         }).then(function (response) {
             return response.json();
         }).then(function (answers) {
-            console.log(answers);
-            document.getElementById("votes"+x).value=answers.answerCounter;
+            var input = document.getElementsByName("quest" + x)
+            var element = document.getElementsByName("votes" + x)
+
+            for (i = 0; i < document.getElementsByName("votes" + x).length; i++) {
+                input[i].disabled = true;
+                element[i].innerHTML = "Votes:" + answers[i].answerCounter;
+            }
         });
 
     }
 
 
     function hideVotes(id) {
-        document.getElementById("votes"+id).classList.remove("w3-hide");
-        document.getElementById("voteButton"+id).classList.add("w3-hide");
+        document.getElementById("voteButton" + id).classList.add("w3-hide");
         console.log("DONE");
     }
 
