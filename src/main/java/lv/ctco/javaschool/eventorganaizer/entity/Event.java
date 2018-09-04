@@ -19,26 +19,22 @@ public class Event {
     private User author;
 
     private String date;
-
     private String time;
-
     private String description;
-
     private String agenda;
-
     private EventStatus status;
 
     public Event() {
     }
 
-    public Event(String name, User author, String description, String agenda, String date, String time, EventStatus status) {
+    public Event(String name, User author, String description, String agenda, String date, String time) {
         this.name = name;
         this.author = author;
         this.description = description;
         this.agenda = agenda;
         this.date = date;
         this.time = time;
-        this.status = status;
+        this.status = EventStatus.OPEN;
     }
 
     public EventStatus getStatus() {

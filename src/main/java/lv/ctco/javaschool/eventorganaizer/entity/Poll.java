@@ -1,6 +1,5 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,13 +16,12 @@ public class Poll {
     private Long id;
 
     private Long eventID;
-
     private String question;
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Answer> answers = new ArrayList<>();
-    private boolean isFeedback;
 
+    private boolean isFeedback;
 
     public Long getEventID() {
         return eventID;

@@ -10,7 +10,6 @@ public class EventDto {
     private EventStatus eventStatus;
 
     public EventDto() {
-
     }
 
     public EventDto(String name, String description, String date, String time, Long id, String agenda, EventStatus status) {

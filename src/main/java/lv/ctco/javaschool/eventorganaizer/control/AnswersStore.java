@@ -18,7 +18,6 @@ public class AnswersStore {
     @Inject
     private AnswersStore answersStore;
 
-
     public List<Answer> getAnswersByPollID(Poll poll) {
         return em.createQuery("select a from Answer a" +
                 " where a.poll = :poll", Answer.class)
@@ -33,5 +32,4 @@ public class AnswersStore {
                 .getResultStream()
                 .findFirst();
     }
-
 }

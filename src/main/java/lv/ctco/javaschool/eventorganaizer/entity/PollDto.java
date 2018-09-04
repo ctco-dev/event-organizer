@@ -3,7 +3,6 @@ package lv.ctco.javaschool.eventorganaizer.entity;
 import java.util.List;
 
 public class PollDto {
-
     private String question;
     private List<AnswerDto> answers;
     private boolean isFeedback;

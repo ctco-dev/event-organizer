@@ -1,6 +1,5 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
-
 public class TopicDto {
     private String topicName;
     private String topicAuthor;

@@ -1,14 +1,11 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
-
 public class AnswerDto {
-
     private Long thisAnswerID;
     private int answerCounter;
     private String text;
 
     public AnswerDto() {
-
     }
 
     public AnswerDto(Long answerID, int counter) {

@@ -17,6 +17,7 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "poll_id")
     private Poll poll;
+
     private int counter;
 
     public String getText() {

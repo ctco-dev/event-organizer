@@ -27,8 +27,11 @@
     <p><b>Time</b></p>
     <p><input type="text" id="timepicker"></p>
     <p id="setStatus"><b>Set status</b></p>
-    <p id="statuses"><b><input type="checkbox" id="open">Open </b><b><input type="checkbox" id="closed">Closed</b>
-        <b><input type="checkbox" id="finished">Finished</b></p>
+    <p id="statuses">
+        <b><input type="checkbox" id="open">Open</b>
+        <b><input type="checkbox" id="closed">Closed</b>
+        <b><input type="checkbox" id="finished">Finished</b>
+    </p>
 </form>
 
 <div id="buttons">
@@ -43,10 +46,10 @@
     var id = getEventIdByUrl("id");
 
     function goToTheMainPage() {
-        location.href = "<c:url value='/app/jsp/start.jsp'/>";
+        location.href = '/app/jsp/start.jsp';
     }
 
-    function getDataFromField() {
+    function getDataFromTextarea() {
         var name = document.getElementById("name");
         data["name"] = (name.value).trim();
         var description = document.getElementById("description");
@@ -118,7 +121,7 @@
     }
 
     function saveData() {
-        var data = getDataFromField();
+        var data = getDataFromTextarea();
         if (checkNonEmptyInput(data) === false) {
             return;
         }
@@ -134,7 +137,7 @@
     }
 
     function updateData() {
-        var data = getDataFromField();
+        var data = getDataFromTextarea();
         if (checkNonEmptyInput(data) === false) {
             return;
         }
