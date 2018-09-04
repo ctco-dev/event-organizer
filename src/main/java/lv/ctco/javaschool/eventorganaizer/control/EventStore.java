@@ -50,4 +50,12 @@ public class EventStore {
                 .setParameter("id", id)
                 .executeUpdate();
     }
+
+    public void persistEvent(Event event) {
+        em.persist(event);
+    }
+
+    public void mergeEvent(Event event) {
+        em.merge(event);
+    }
 }

@@ -76,17 +76,17 @@
             if (event.eventStatus === "OPEN") {
                 document.getElementById("voting").classList.remove("w3-hide");
                 document.getElementById("feedback").classList.add("w3-hide");
-                getVotingFromDB();
+                getVotingPoll();
             }
             if (event.eventStatus === "CLOSED") {
                 document.getElementById("voting").classList.add("w3-hide");
                 document.getElementById("feedback").classList.remove("w3-hide");
-                getFeedbackFromDB()
+                getFeedbackPoll()
             }
         })
     }
 
-    function getFeedbackFromDB() {
+    function getFeedbackPoll() {
         fetch('/api/event/' + id + '/getFeedbackPoll/', {
             "method": "GET",
             headers: {
@@ -108,7 +108,7 @@
         })
     }
 
-    function getVotingFromDB() {
+    function getVotingPoll() {
         fetch('/api/event/' + id + '/getVotingPoll/', {
             "method": "GET",
             headers: {

@@ -12,7 +12,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.js"></script>
 </head>
-<body onload="checkFunction()">
+<body onload="switchPageStatus()">
 <header id="add" class="w3-hide"><h1>Add New Event</h1></header>
 <header id="edit" class="w3-hide"><h1>Edit Event</h1></header>
 <form name="eventform" method="post" style="padding: 15px">
@@ -41,7 +41,7 @@
 
 <script>
     var data = {};
-    var id = getQueryVariable("id");
+    var id = getEventIdByUrl("id");
 
     function goToTheMainPage() {
         location.href = "<c:url value='/app/jsp/start.jsp'/>";
@@ -92,9 +92,9 @@
         }
     }
 
-    function checkFunction() {
+    function switchPageStatus() {
         if (id) {
-            getEventDataFromDB();
+            getEventData();
             document.getElementById("edit").classList.remove("w3-hide");
             document.getElementById("update").classList.remove("w3-hide");
             document.getElementById("save").classList.add("w3-hide");
@@ -103,8 +103,6 @@
             document.getElementById("statuses").classList.remove("w3-hide");
             document.getElementById("save").classList.add("w3-hide");
             document.getElementById("add").classList.add("w3-hide");
-
-
         }
         else {
             document.getElementById("add").classList.remove("w3-hide");
@@ -168,8 +166,8 @@
         });
     }
 
-    function getEventDataFromDB() {
-        var id = getQueryVariable("id");
+    function getEventData() {
+        var id = getEventIdByUrl("id");
         fetch('/api/event/' + id, {
             "method": "GET",
             headers: {
@@ -187,12 +185,12 @@
         })
     }
 
-    function getQueryVariable(variable) {
+    function getEventIdByUrl(id) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");
         for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
-            if (pair[0] === variable) {
+            if (pair[0] === id) {
                 return pair[1];
             }
         }

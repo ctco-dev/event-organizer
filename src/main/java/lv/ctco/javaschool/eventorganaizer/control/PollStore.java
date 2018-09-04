@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Stateless
 public class PollStore {
@@ -44,4 +45,11 @@ public class PollStore {
                 .getResultList();
     }
 
+    public Optional<Poll> getPollById (Long id) {
+        return em.createQuery("select p from Poll p" +
+                " where p.id = :id", Poll.class)
+                .setParameter("id", id)
+                .getResultStream()
+                .findFirst();
+    }
 }

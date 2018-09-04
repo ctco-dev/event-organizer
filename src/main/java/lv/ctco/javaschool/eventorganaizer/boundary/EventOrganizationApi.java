@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 public class EventOrganizationApi {
     @PersistenceContext
     private EntityManager em;
-
+//
     @Inject
     private UserStore userStore;
 
@@ -47,6 +47,8 @@ public class EventOrganizationApi {
     @Inject
     private AnswersStore answersStore;
 
+    @Inject
+    private Mapper mapper;
 
     @GET
     @RolesAllowed({"USER", "ADMIN"})
@@ -64,7 +66,7 @@ public class EventOrganizationApi {
     public void saveEvent(Event event) {
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(userStore.getCurrentUser());
-        em.persist(event);
+        eventStore.persistEvent(event);
     }
 
     @POST
@@ -72,7 +74,7 @@ public class EventOrganizationApi {
     @RolesAllowed({"USER", "ADMIN"})
     public void updateEvent(Event event) {
         event.setAuthor(userStore.getCurrentUser());
-        em.merge(event);
+        eventStore.mergeEvent(event);
     }
 
     @GET
@@ -93,7 +95,6 @@ public class EventOrganizationApi {
     @Path("/getEvents")
     public List<EventDto> getAllAuthorEvents() {
         List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
-
         return event.stream()
                 .map(e -> new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getTime(), e.getId(), e.getAgenda(), e.getStatus()))
                 .collect(Collectors.toList());
@@ -101,10 +102,9 @@ public class EventOrganizationApi {
 
     @POST
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/{id}/savePoll")
+    @Path("/{id}/savePoll/")
     public void savePoll(PollDto pollDto, @PathParam("id") Long id) {
         List<AnswerDto> answersString = pollDto.getAnswers();
-        //String[] answerList = answersString.split("\n");
 
         Poll poll = new Poll();
         poll.setQuestion(pollDto.getQuestion());
@@ -127,13 +127,7 @@ public class EventOrganizationApi {
     @Path("/{id}/getPoll")
     public List<PollDto> getPollForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getPollForEvent(id);
-        return poll.stream()
-                .map(p -> new PollDto(p.getQuestion(),
-                        toAnswersDtoList(p.getAnswers()),
-                        p.isFeedback(),
-                        p.getEventID(),
-                        p.getId()))
-                .collect(Collectors.toList());
+        return mapper.mapPollToDto(poll);
     }
 
     @POST
@@ -150,16 +144,17 @@ public class EventOrganizationApi {
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/{id}/getVotes")
     public List<AnswerDto> getVotes(@PathParam("id") Long id) {
-        Poll poll = new Poll();
-        poll.setId(id);
-        List<Answer> answerList = answersStore.getAnswersByPollID(poll);
+        Optional<Poll> poll = pollStore.getPollById(id);
         List<AnswerDto> answerDtos = new ArrayList<>();
+        poll.ifPresent(p -> {
+            List<Answer> answerList = answersStore.getAnswersByPollID(p);
 
-        answerList.forEach(al -> {
-            AnswerDto a = new AnswerDto();
-            a.setAnswerCounter(al.getCounter());
-            a.setThisAnswerID(al.getId());
-            answerDtos.add(a);
+            answerList.forEach(al -> {
+                AnswerDto a = new AnswerDto();
+                a.setAnswerCounter(al.getCounter());
+                a.setThisAnswerID(al.getId());
+                answerDtos.add(a);
+            });
         });
         return answerDtos;
     }
@@ -169,13 +164,7 @@ public class EventOrganizationApi {
     @Path("/{id}/getFeedbackPoll")
     public List<PollDto> getFeedbackForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getFeedbackPoll(id);
-        return poll.stream()
-                .map(p -> new PollDto(p.getQuestion(),
-                        toAnswersDtoList(p.getAnswers()),
-                        p.isFeedback(),
-                        p.getEventID(),
-                        p.getId()))
-                .collect(Collectors.toList());
+        return mapper.mapPollToDto(poll);
     }
 
     @GET
@@ -183,26 +172,7 @@ public class EventOrganizationApi {
     @Path("/{id}/getVotingPoll")
     public List<PollDto> getVotingForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getVotingPoll(id);
-        return poll.stream()
-                .map(p -> new PollDto(p.getQuestion(),
-                        toAnswersDtoList(p.getAnswers()),
-                        p.isFeedback(),
-                        p.getEventID(),
-                        p.getId()))
-                .collect(Collectors.toList());
-    }
-
-    private List<AnswerDto> toAnswersDtoList(List<Answer> list) {
-        return list.stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
-    }
-
-    private AnswerDto toDto(Answer answer) {
-        AnswerDto r = new AnswerDto();
-        r.setText(answer.getText());
-        r.setThisAnswerID(answer.getId());
-        return r;
+        return mapper.mapPollToDto(poll);
     }
 
     @POST
@@ -218,5 +188,4 @@ public class EventOrganizationApi {
     public void deletePoll(@PathParam("id") Long id) throws IllegalArgumentException {
         pollStore.deletePollById(id);
     }
-
 }

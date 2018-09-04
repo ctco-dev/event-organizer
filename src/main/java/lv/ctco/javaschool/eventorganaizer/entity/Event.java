@@ -28,6 +28,9 @@ public class Event {
 
     private EventStatus status;
 
+    public Event() {
+    }
+
     public Event(String name, User author, String description, String agenda, String date, String time, EventStatus status) {
         this.name = name;
         this.author = author;
@@ -44,9 +47,6 @@ public class Event {
 
     public void setStatus(EventStatus status) {
         this.status = status;
-    }
-
-    public Event() {
     }
 
     public void setId(Long id) {

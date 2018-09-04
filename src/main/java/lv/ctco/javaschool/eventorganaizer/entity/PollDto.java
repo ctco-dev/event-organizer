@@ -10,6 +10,10 @@ public class PollDto {
     private Long eventID;
     private Long id;
 
+    public PollDto() {
+
+    }
+
     public PollDto(String question, List<AnswerDto> answers, boolean isFeedback, Long eventID, Long id) {
         this.question = question;
         this.answers = answers;
