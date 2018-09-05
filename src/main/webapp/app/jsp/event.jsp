@@ -42,7 +42,7 @@
             </div>
         </div>
         {{/answers}}
-        <button id="voteButton{{id}}" onclick="vote({{id}}),showStatistics({{id}})">VOTE!</button>
+        <button id="voteButton{{id}}" onclick="vote({{id}})">VOTE!</button>
         <hr/>
     </div>
     {{/pollArray}}
