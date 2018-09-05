@@ -100,14 +100,13 @@ function showStatistics(x) {
         return response.json();
     }).then(function (answers) {
         console.log(answers);
-        var input = document.getElementsByName("quest" + x)
-        var element = document.getElementsByName("votes" + x)
+        var input = document.getElementsByName("quest" + x);
+        var element = document.getElementsByName("votes" + x);
         for (i = 0; i < document.getElementsByName("votes" + x).length; i++) {
             input[i].disabled = true;
             element[i].innerHTML = "Votes:" + answers[i].answerCounter;
         }
     });
-
 }
 
 function hideVotes() {
