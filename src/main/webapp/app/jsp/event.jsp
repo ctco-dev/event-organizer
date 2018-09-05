@@ -77,18 +77,18 @@
             if (event.eventStatus === "OPEN") {
                 document.getElementById("voting").classList.remove("w3-hide");
                 document.getElementById("feedback").classList.add("w3-hide");
-                getVotingPoll();
+                getVotingFromDB();
             }
-            if (event.eventStatus === "CLOSED") {
+            if (event.eventStatus == "CLOSED") {
                 document.getElementById("voting").classList.add("w3-hide");
-                document.getElementById("feedback").classList.remove("w3-hide");
-                getFeedbackPoll()
+                document.getElementById("feedback").classList.remove("w3-hide")
+                getFeedbackFromDB()
             }
         })
     }
 
-    function getFeedbackPoll() {
-        fetch('/api/event/' + id + '/getFeedbackPoll/', {
+    function getFeedbackFromDB() {
+        fetch('/api/event/'+id+'/getFeedbackPoll/', {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -104,13 +104,14 @@
                 var context = {pollArray: poll};
                 var source = document.getElementById("pollList").innerHTML;
                 var template = Handlebars.compile(source);
-                document.getElementById("feedback").innerHTML = template(context);
+                var html = template(context);
+                document.getElementById("feedback").innerHTML = html;
             }
         })
     }
 
-    function getVotingPoll() {
-        fetch('/api/event/' + id + '/getVotingPoll/', {
+    function getVotingFromDB() {
+        fetch('/api/event/'+id+'/getVotingPoll/', {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -126,7 +127,8 @@
                 var context = {pollArray: poll};
                 var source = document.getElementById("pollList").innerHTML;
                 var template = Handlebars.compile(source);
-                document.getElementById("voting").innerHTML = template(context);
+                var html = template(context);
+                document.getElementById("voting").innerHTML = html;
 
             }
         })
@@ -136,21 +138,33 @@
     function vote(qid) {
         var checked = document.querySelector('input[name=quest' + qid + ']:checked');
         var checkedAddr = checked.id;
-        console.log("checked:" + checkedAddr);
-        fetch('/api/event/' + checkedAddr + '/vote/', {
+        console.log("checked:" + checkedAddr)
+        fetch('/api/event/'+checkedAddr+'/vote/', {
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
         }).then(function (response) {
             showStatistics(qid);
             hideVotes(qid);
+            changeStatus(qid)
         });
     }
+//    function changeStatus(qid) {
+//        fetch('/api/event/'+qid+'/saveVote', {
+//            "method": "POST",
+//            headers: {
+//                'Accept': 'application/json',
+//                'Content-Type': 'application/json'
+//            }
+//        }).then(function (response) {
+//
+//        }
+//    }
 
-    function showStatistics(x) {
-        fetch('/api/event/' + x + '/getVotes/', {
+    function showStatistics(x){
+        fetch('/api/event/'+x+'/getVotes/', {
             "method": "GET",
             headers: {
                 'Accept': 'application/json',
@@ -158,15 +172,12 @@
             }
         }).then(function (response) {
             return response.json();
-        }).then(function (answers) {
-            console.log(answers);
-            document.getElementById("votes").value = answers.answerCounter;
+        }).then(function (answer) {
             var input = document.getElementsByName("quest" + x)
             var element = document.getElementsByName("votes" + x)
-
             for (i = 0; i < document.getElementsByName("votes" + x).length; i++) {
                 input[i].disabled = true;
-                element[i].innerHTML = "Votes:" + answers[i].answerCounter;
+                element[i].innerHTML = "Votes:" + answer[i].answerCounter;
             }
         });
 
@@ -195,12 +206,12 @@
         var vars = query.split("&");
         for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
-            if (pair[0] === variable) {
+            if (pair[0] == variable) {
                 return pair[1];
             }
         }
         return (false);
-    }
+        }
 </script>
 </body>
 </html>
