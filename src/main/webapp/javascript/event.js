@@ -15,13 +15,11 @@ function loadEvent() {
             document.getElementById("event-field").classList.remove("w3-hide");
             w3.displayObject("title", event);
             w3.displayObject("event-field", event);
-        }
-        if (event.eventStatus === "OPEN") {
+        } else if (event.eventStatus === "OPEN") {
             document.getElementById("voting").classList.remove("w3-hide");
             document.getElementById("feedback").classList.add("w3-hide");
             getVotingPoll();
-        }
-        if (event.eventStatus === "CLOSED") {
+        } else if (event.eventStatus === "CLOSED") {
             document.getElementById("voting").classList.add("w3-hide");
             document.getElementById("feedback").classList.remove("w3-hide");
             getFeedbackPoll()
@@ -73,8 +71,8 @@ function getVotingPoll() {
     })
 }
 
-function vote(qid) {
-    var checked = document.querySelector('input[name=quest' + qid + ']:checked');
+function vote(id) {
+    var checked = document.querySelector('input[name=quest' + id + ']:checked');
     var checkedAddr = checked.id;
     console.log("checked:" + checkedAddr);
     fetch('/api/event/' + checkedAddr + '/vote/', {
@@ -84,8 +82,8 @@ function vote(qid) {
             'Content-Type': 'application/json'
         }
     }).then(function (response) {
-        showStatistics(qid);
-        hideVotes(qid);
+        showStatistics(id);
+        hideVotes(id);
     });
 }
 
@@ -137,4 +135,3 @@ function getQueryVariable(variable) {
     }
     return (false);
 }
-
