@@ -3,12 +3,15 @@ package lv.ctco.javaschool.eventorganaizer.boundary;
 import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.eventorganaizer.control.AnswersStore;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
+import lv.ctco.javaschool.eventorganaizer.control.FeedbackStore;
 import lv.ctco.javaschool.eventorganaizer.control.PollStore;
 import lv.ctco.javaschool.eventorganaizer.entity.Answer;
 import lv.ctco.javaschool.eventorganaizer.entity.AnswerDto;
 import lv.ctco.javaschool.eventorganaizer.entity.Event;
 import lv.ctco.javaschool.eventorganaizer.entity.EventDto;
 import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
+import lv.ctco.javaschool.eventorganaizer.entity.Feedback;
+import lv.ctco.javaschool.eventorganaizer.entity.FeedbackDto;
 import lv.ctco.javaschool.eventorganaizer.entity.Poll;
 import lv.ctco.javaschool.eventorganaizer.entity.PollDto;
 import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
@@ -46,6 +49,9 @@ public class EventOrganizationApi {
 
     @Inject
     private AnswersStore answersStore;
+
+    @Inject
+    private FeedbackStore feedbackStore;
 
     @Inject
     private Mapper mapper;
@@ -171,5 +177,26 @@ public class EventOrganizationApi {
     @RolesAllowed({"USER", "ADMIN"})
     public void deletePoll(@PathParam("id") Long id) throws IllegalArgumentException {
         pollStore.deletePollById(id);
+    }
+
+
+    @POST
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/{id}/saveFeedback/")
+    public void saveFeedback(FeedbackDto feedbackDto, @PathParam("id") Long id) {
+        Feedback feedback = new Feedback();
+
+        feedback.setEventID(id);
+        feedback.setFeedbackAuthor(userStore.getCurrentUser().getUsername());
+        feedback.setFeedback(feedbackDto.getFeedback());
+        feedbackStore.persistFeedback(feedback);
+    }
+
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/{id}/getFeedback")
+    public List<FeedbackDto> getFeedbackEventID(@PathParam("id") Long id) {
+        List<Feedback> feedbacks = feedbackStore.getFeedbackForEvent(id);
+        return mapper.mapFeedbackToFeedbackDto(feedbacks);
     }
 }
