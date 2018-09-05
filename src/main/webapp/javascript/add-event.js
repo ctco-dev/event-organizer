@@ -7,15 +7,15 @@ function goToTheMainPage() {
 
 function getDataFromTextarea() {
     var name = document.getElementById("name");
-    data["name"] = (name.value).trim();
+    data.eventName = (name.value).trim();
     var description = document.getElementById("description");
-    data["description"] = (description.value).trim();
+    data.description = (description.value).trim();
     var agenda = document.getElementById("agenda");
-    data["agenda"] = (agenda.value).trim();
+    data.agenda = (agenda.value).trim();
     var eventdate = document.getElementById("datepicker");
-    data["date"] = eventdate.value;
+    data.eventDate = eventdate.value;
     var eventtime = document.getElementById("timepicker");
-    data["time"] = (eventtime.value).trim();
+    data.eventTime = (eventtime.value).trim();
 
     var statusClosed = document.getElementById("closed");
     var statusFinished = document.getElementById("finished");
@@ -33,16 +33,16 @@ function getDataFromTextarea() {
     if (id) {
         data["id"] = id;
     }
+    console.log(data);
     return data;
 }
 
 function checkNonEmptyInput(data) {
-    return validateField(data.name, "Name")
+    return validateField(data.eventName, "Name")
         && validateField(data.description, "Description")
         && validateField(data.agenda, "Agenda")
-        && validateField(data.date, "Date")
-        && validateField(data.time, "Time");
-
+        && validateField(data.eventDate, "Date")
+        && validateField(data.eventTime, "Time");
 }
 
 function validateField(field, message) {
@@ -119,11 +119,13 @@ function getEventData() {
     }).then(function (response) {
         return response.json();
     }).then(function (event) {
+        console.log(event);
         document.getElementById("name").value = event.eventName;
-        document.getElementById("description").value = event.eventDescription;
+        document.getElementById("description").value = event.description;
         document.getElementById("datepicker").value = event.eventDate;
         document.getElementById("timepicker").value = event.eventTime;
-        document.getElementById("agenda").value = event.eventAgenda;
+        document.getElementById("agenda").value = event.agenda;
+        console.log(getDataFromTextarea());
     })
 }
 

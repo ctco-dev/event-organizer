@@ -129,23 +129,23 @@ class EventOrganizationApiTest {
     private Event initEvent() {
         Event event = new Event();
         event.setId((long) 1);
-        event.setName("qwe");
+        event.setEventName("qwe");
         event.setDescription("asdf");
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(testUser);
         event.setAgenda("test");
-        event.setDate("12.09.2018");
+        event.setEventDate("12.09.2018");
         return event;
     }
 
     private EventDto initEventDto(Event event) {
         EventDto eventDto = new EventDto();
-        eventDto.setEventName(event.getName());
-        eventDto.setEventDate(event.getDate());
-        eventDto.setEventDescription(event.getDescription());
+        eventDto.setEventName(event.getEventName());
+        eventDto.setEventDate(event.getEventDate());
+        eventDto.setDescription(event.getDescription());
         eventDto.setEventID(event.getId());
-        eventDto.setEventAgenda(event.getAgenda());
-        eventDto.setEventDate(event.getDate());
+        eventDto.setAgenda(event.getAgenda());
+        eventDto.setEventDate(event.getEventDate());
         return eventDto;
     }
 }

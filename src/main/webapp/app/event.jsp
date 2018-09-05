@@ -21,8 +21,8 @@
         <h4>{{eventDate}} &nbsp</h4>
         <h4>{{eventTime}}</h4>
     </div>
-    <p>{{eventDescription}}</p>
-    <p>{{eventAgenda}}</p>
+    <p>{{description}}</p>
+    <p>{{agenda}}</p>
 </div>
 <script id="pollList" type="text/x-handlebars-template">
     {{#pollArray}}
@@ -32,11 +32,11 @@
         <p><b>Answers:</b></p>
         {{#answers}}
         <div>
-            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label
-                for="{{thisAnswerID}}">{{text}}</label>
-            <div id="votes" class="w3-hide"><label
-                    for="{{thisAnswerID}}">Votes: {{answerCounter}}</label></div>
-
+            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}">
+            <label for="{{thisAnswerID}}">{{text}}</label>
+            <div class="votes">
+                <label for="{{thisAnswerID}}" name="votes{{../id}}"></label>
+            </div>
         </div>
         {{/answers}}
         <button id="voteButton{{../id}}" onclick="vote({{id}}),showStatistics({{id}})">VOTE!</button>

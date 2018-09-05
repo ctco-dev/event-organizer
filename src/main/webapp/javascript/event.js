@@ -69,7 +69,6 @@ function getVotingPoll() {
             var source = document.getElementById("pollList").innerHTML;
             var template = Handlebars.compile(source);
             document.getElementById("voting").innerHTML = template(context);
-
         }
     })
 }
@@ -86,7 +85,7 @@ function vote(qid) {
         }
     }).then(function (response) {
         showStatistics(qid);
-        hideVotes();
+        hideVotes(qid);
     });
 }
 
@@ -101,13 +100,17 @@ function showStatistics(x) {
         return response.json();
     }).then(function (answers) {
         console.log(answers);
-        document.getElementById("votes").value = answers.answerCounter;
+        var input = document.getElementsByName("quest" + x)
+        var element = document.getElementsByName("votes" + x)
+        for (i = 0; i < document.getElementsByName("votes" + x).length; i++) {
+            input[i].disabled = true;
+            element[i].innerHTML = "Votes:" + answers[i].answerCounter;
+        }
     });
 
 }
 
 function hideVotes() {
-    document.getElementById("votes").classList.remove("w3-hide");
     document.getElementById("voteButton").classList.add("w3-hide");
     console.log("DONE");
 }
@@ -135,3 +138,4 @@ function getQueryVariable(variable) {
     }
     return (false);
 }
+
