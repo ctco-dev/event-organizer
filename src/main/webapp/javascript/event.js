@@ -74,8 +74,8 @@ function getVotingPoll() {
     })
 }
 
-function vote(qid) {
-    var checked = document.querySelector('input[name=quest' + qid + ']:checked');
+function vote(id) {
+    var checked = document.querySelector('input[name=quest' + id + ']:checked');
     var checkedAddr = checked.id;
     console.log("checked:" + checkedAddr);
     fetch('/api/event/' + checkedAddr + '/vote/', {
@@ -85,7 +85,7 @@ function vote(qid) {
             'Content-Type': 'application/json'
         }
     }).then(function (response) {
-        showStatistics(qid);
+        showStatistics(id);
         hideVotes();
     });
 }

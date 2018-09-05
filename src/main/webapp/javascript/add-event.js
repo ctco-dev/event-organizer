@@ -21,15 +21,12 @@ function getDataFromTextarea() {
     var statusFinished = document.getElementById("finished");
     var statusOpen = document.getElementById("open");
     if (statusClosed.checked) {
-        data["status"] = "CLOSED"
+        data["status"] = "CLOSED";
+    } else if (statusFinished.checked) {
+        data["status"] = "FINISHED";
+    } else if (statusOpen.checked) {
+        data["status"] = "OPEN";
     }
-    if (statusFinished.checked) {
-        data["status"] = "FINISHED"
-    }
-    if (statusOpen.checked) {
-        data["status"] = "OPEN"
-    }
-
     if (id) {
         data["id"] = id;
     }
@@ -46,7 +43,7 @@ function checkNonEmptyInput(data) {
 }
 
 function validateField(field, message) {
-    if(field === "") {
+    if (field === "" || field.trim() === "") {
         alert("Please input Event " + message);
         return false;
     }
@@ -64,8 +61,7 @@ function switchPageStatus() {
         document.getElementById("statuses").classList.remove("w3-hide");
         document.getElementById("save").classList.add("w3-hide");
         document.getElementById("add").classList.add("w3-hide");
-    }
-    else {
+    } else {
         document.getElementById("add").classList.remove("w3-hide");
         document.getElementById("edit").classList.add("w3-hide");
         document.getElementById("update").classList.add("w3-hide");
