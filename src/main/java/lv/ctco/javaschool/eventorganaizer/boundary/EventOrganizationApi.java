@@ -6,6 +6,7 @@ import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.control.PollStore;
 import lv.ctco.javaschool.eventorganaizer.entity.Answer;
 import lv.ctco.javaschool.eventorganaizer.entity.AnswerDto;
+import lv.ctco.javaschool.eventorganaizer.entity.AnswerStatus;
 import lv.ctco.javaschool.eventorganaizer.entity.Event;
 import lv.ctco.javaschool.eventorganaizer.entity.EventDto;
 import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
@@ -67,6 +68,14 @@ public class EventOrganizationApi {
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(userStore.getCurrentUser());
         eventStore.persistEvent(event);
+    }
+
+    @POST
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/{id}/saveVote/")
+    public void saveVote(@PathParam("id") Long id){
+        Optional<Poll> poll = pollStore.getPollById(id);
+        poll.get().setAnswerStatus(AnswerStatus.COMPLETE);
     }
 
     @POST
@@ -138,7 +147,9 @@ public class EventOrganizationApi {
         List<AnswerDto> answerDtos = new ArrayList<>();
         poll.ifPresent(p -> {
             List<Answer> answerList = answersStore.getAnswersByPollID(p);
-            mapper.mapAnswerToAnswerDto(answerList);
+            mapper.mapAnswerToAnswerDto(answerList).forEach(a -> {
+                answerDtos.add(a);
+            });
         });
         return answerDtos;
     }
