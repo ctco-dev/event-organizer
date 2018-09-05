@@ -1,5 +1,7 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
+import java.util.List;
+
 public class EventDto {
     private String eventName;
     private String eventDescription;
@@ -8,11 +10,12 @@ public class EventDto {
     private Long eventID;
     private String eventAgenda;
     private EventStatus eventStatus;
+    private List<Feedback> eventFeedback;
 
     public EventDto() {
     }
 
-    public EventDto(String name, String description, String date, String time, Long id, String agenda, EventStatus status) {
+    public EventDto(String name, String description, String date, String time, Long id, String agenda, EventStatus status, List<Feedback> feedbacks) {
         this.eventName = name;
         this.eventDescription = description;
         this.eventDate = date;
@@ -20,6 +23,7 @@ public class EventDto {
         this.eventID = id;
         this.eventAgenda = agenda;
         this.eventStatus = status;
+        this.eventFeedback = feedbacks;
     }
 
     public long getEventID() {
@@ -76,5 +80,13 @@ public class EventDto {
 
     public void setEventStatus(EventStatus eventStatus) {
         this.eventStatus = eventStatus;
+    }
+
+    public List<Feedback> getEventFeedback() {
+        return eventFeedback;
+    }
+
+    public void setEventFeedback(List<Feedback> eventFeedback) {
+        this.eventFeedback = eventFeedback;
     }
 }

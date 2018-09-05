@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Event {
@@ -23,6 +26,9 @@ public class Event {
     private String description;
     private String agenda;
     private EventStatus status;
+
+    @OneToMany
+    private List<Feedback> feedbacks = new ArrayList<>();
 
     public Event() {
     }
@@ -99,5 +105,13 @@ public class Event {
 
     public void setAgenda(String agenda) {
         this.agenda = agenda;
+    }
+
+    public List<Feedback> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(List<Feedback> feedbacks) {
+        this.feedbacks = feedbacks;
     }
 }
