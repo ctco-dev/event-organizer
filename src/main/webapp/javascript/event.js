@@ -15,13 +15,11 @@ function loadEvent() {
             document.getElementById("event-field").classList.remove("w3-hide");
             w3.displayObject("title", event);
             w3.displayObject("event-field", event);
-        }
-        if (event.eventStatus === "OPEN") {
+        } else if (event.eventStatus === "OPEN") {
             document.getElementById("voting").classList.remove("w3-hide");
             document.getElementById("feedback").classList.add("w3-hide");
             getVotingPoll();
-        }
-        if (event.eventStatus === "CLOSED") {
+        } else if (event.eventStatus === "CLOSED") {
             document.getElementById("voting").classList.add("w3-hide");
             document.getElementById("feedback").classList.remove("w3-hide");
             getFeedbackPoll()
