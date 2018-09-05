@@ -2,12 +2,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <title id="title">Poll Event</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" href="../../style.css">
     <script src="../javascript/poll.js"></script>
-    <title id="title">Poll Event</title>
 </head>
 <body onload="init()">
 <header id="header"><h1>Event Poll</h1></header>
