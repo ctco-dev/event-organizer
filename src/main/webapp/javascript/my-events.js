@@ -42,8 +42,6 @@ function deleteEvent(x) {
     })
 }
 
-class EventList {
-    constructor(events) {
-        this.eventList = events;
-    }
+function EventList(events) {
+    this.eventList = events;
 }
