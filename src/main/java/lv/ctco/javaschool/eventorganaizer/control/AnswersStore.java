@@ -1,7 +1,9 @@
 package lv.ctco.javaschool.eventorganaizer.control;
 
+import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.entity.Answer;
 import lv.ctco.javaschool.eventorganaizer.entity.Poll;
+import lv.ctco.javaschool.eventorganaizer.entity.UserPoll;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -31,5 +33,13 @@ public class AnswersStore {
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst();
+    }
+
+    public void persistAnswer(Answer answer) {
+        em.persist(answer);
+    }
+
+    public void mergeAnswer(Answer answer) {
+        em.merge(answer);
     }
 }

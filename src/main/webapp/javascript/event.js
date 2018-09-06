@@ -76,7 +76,7 @@ function vote(id) {
     var checked = document.querySelector('input[name=quest' + id + ']:checked');
     var checkedAddr = checked.id;
     console.log("checked:" + checkedAddr);
-    fetch('/api/event/' + checkedAddr + '/vote/', {
+    fetch('/api/event/vote/' + checkedAddr, {
         "method": "POST",
         headers: {
             'Accept': 'application/json',

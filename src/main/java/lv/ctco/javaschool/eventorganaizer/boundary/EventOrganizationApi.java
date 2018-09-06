@@ -1,6 +1,7 @@
 package lv.ctco.javaschool.eventorganaizer.boundary;
 
 import lv.ctco.javaschool.auth.control.UserStore;
+import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.AnswersStore;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.control.PollStore;
@@ -14,13 +15,12 @@ import lv.ctco.javaschool.eventorganaizer.entity.Poll;
 import lv.ctco.javaschool.eventorganaizer.entity.PollDto;
 import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
 import lv.ctco.javaschool.eventorganaizer.entity.TopicListDto;
+import lv.ctco.javaschool.eventorganaizer.entity.UserPoll;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -33,9 +33,6 @@ import java.util.stream.Collectors;
 @Path("/event")
 @Stateless
 public class EventOrganizationApi {
-    @PersistenceContext
-    private EntityManager em;
-//
     @Inject
     private UserStore userStore;
 
@@ -131,11 +128,19 @@ public class EventOrganizationApi {
 
     @POST
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/{id}/vote")
+    @Path("/vote/{id}")
     public void updateVoteCounter(@PathParam("id") Long id) {
-        Optional<Answer> answer = answersStore.getAnswerByID(id);
-        if (answer.isPresent()) {
-            answer.get().setCounter(answer.get().getCounter() + 1);
+        User currentUser = userStore.getCurrentUser();
+        Answer answer = answersStore.getAnswerByID(id).get();
+        Poll poll = answer.getPoll();
+        Optional<UserPoll> userPoll = pollStore.getUserPollByUserAndPoll(currentUser, poll);
+        if (!userPoll.isPresent()) {
+            UserPoll newUserPoll = new UserPoll();
+            newUserPoll.setUser(currentUser);
+            pollStore.persistUserPoll(newUserPoll);
+            answer.setCounter(answer.getCounter() + 1);
+        } else {
+            throw new EntityNotFoundException();
         }
     }
 

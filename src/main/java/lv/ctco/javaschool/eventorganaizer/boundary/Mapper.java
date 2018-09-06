@@ -5,7 +5,6 @@ import lv.ctco.javaschool.eventorganaizer.entity.AnswerDto;
 import lv.ctco.javaschool.eventorganaizer.entity.Poll;
 import lv.ctco.javaschool.eventorganaizer.entity.PollDto;
 
-import javax.ws.rs.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
