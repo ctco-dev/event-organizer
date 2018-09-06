@@ -7,6 +7,7 @@ import lv.ctco.javaschool.eventorganaizer.control.FeedbackStore;
 import lv.ctco.javaschool.eventorganaizer.control.PollStore;
 import lv.ctco.javaschool.eventorganaizer.entity.Answer;
 import lv.ctco.javaschool.eventorganaizer.entity.AnswerDto;
+import lv.ctco.javaschool.eventorganaizer.entity.AnswerStatus;
 import lv.ctco.javaschool.eventorganaizer.entity.Event;
 import lv.ctco.javaschool.eventorganaizer.entity.EventDto;
 import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
@@ -76,6 +77,14 @@ public class EventOrganizationApi {
     }
 
     @POST
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/{id}/saveVote/")
+    public void saveVote(@PathParam("id") Long id){
+        Optional<Poll> poll = pollStore.getPollById(id);
+        poll.get().setAnswerStatus(AnswerStatus.COMPLETE);
+    }
+
+    @POST
     @Path("/update")
     @RolesAllowed({"USER", "ADMIN"})
     public void updateEvent(Event event) {
@@ -90,6 +99,7 @@ public class EventOrganizationApi {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
+            return new EventDto(e.getEventName(), e.getDescription(), e.getEventDate(), e.getEventTime(), e.getId(), e.getAgenda(), e.getStatus());
             return new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getTime(), e.getId(), e.getAgenda(), e.getStatus(), e.getFeedbacks());
         } else {
             throw new EntityNotFoundException();
@@ -102,6 +112,7 @@ public class EventOrganizationApi {
     public List<EventDto> getAllAuthorEvents() {
         List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
         return event.stream()
+                .map(e -> new EventDto(e.getEventName(), e.getDescription(), e.getEventDate(), e.getEventTime(), e.getId(), e.getAgenda(), e.getStatus()))
                 .map(e -> new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getTime(), e.getId(), e.getAgenda(), e.getStatus(), e.getFeedbacks()))
                 .collect(Collectors.toList());
     }

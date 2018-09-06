@@ -4,11 +4,11 @@ import java.util.List;
 
 public class EventDto {
     private String eventName;
-    private String eventDescription;
+    private String description;
     private String eventDate;
     private String eventTime;
     private Long eventID;
-    private String eventAgenda;
+    private String agenda;
     private EventStatus eventStatus;
     private List<Feedback> eventFeedback;
 
@@ -17,11 +17,11 @@ public class EventDto {
 
     public EventDto(String name, String description, String date, String time, Long id, String agenda, EventStatus status, List<Feedback> feedbacks) {
         this.eventName = name;
-        this.eventDescription = description;
+        this.description = description;
         this.eventDate = date;
         this.eventTime = time;
         this.eventID = id;
-        this.eventAgenda = agenda;
+        this.agenda = agenda;
         this.eventStatus = status;
         this.eventFeedback = feedbacks;
     }
@@ -42,12 +42,12 @@ public class EventDto {
         this.eventName = eventName;
     }
 
-    public String getEventDescription() {
-        return eventDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEventDescription(String eventDescription) {
-        this.eventDescription = eventDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getEventDate() {
@@ -58,12 +58,12 @@ public class EventDto {
         this.eventDate = eventDate;
     }
 
-    public String getEventAgenda() {
-        return eventAgenda;
+    public String getAgenda() {
+        return agenda;
     }
 
-    public void setEventAgenda(String eventAgenda) {
-        this.eventAgenda = eventAgenda;
+    public void setAgenda(String agenda) {
+        this.agenda = agenda;
     }
 
     public String getEventTime() {
