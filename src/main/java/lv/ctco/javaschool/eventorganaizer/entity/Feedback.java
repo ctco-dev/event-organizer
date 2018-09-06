@@ -1,7 +1,5 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
-import lv.ctco.javaschool.auth.entity.domain.User;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,15 +17,15 @@ public class Feedback {
     private Event event;
 
     private String feedbackAuthor;
-    private String feedback;
+    private String feedbackText;
 
     public Feedback() {
     }
 
-    public Feedback (Event event, String feedbackAuthor, String feedback){
+    public Feedback (Event event, String feedbackAuthor, String feedbackText){
         this.event = event;
         this.feedbackAuthor = feedbackAuthor;
-        this.feedback = feedback;
+        this.feedbackText = feedbackText;
     }
 
     public Long getFeedbackId() {
@@ -38,14 +36,6 @@ public class Feedback {
         this.feedbackId = feedbackId;
     }
 
-//    public Long getEventID() {
-//        return eventID;
-//    }
-//
-//    public void setEventID(Long eventID) {
-//        this.eventID = eventID;
-//    }
-
     public String getFeedbackAuthor() {
         return feedbackAuthor;
     }
@@ -54,12 +44,12 @@ public class Feedback {
         this.feedbackAuthor = feedbackAuthor;
     }
 
-    public String getFeedback() {
-        return feedback;
+    public String getFeedbackText() {
+        return feedbackText;
     }
 
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
+    public void setFeedbackText(String feedbackText) {
+        this.feedbackText = feedbackText;
     }
 
     public Event getEvent() {

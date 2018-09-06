@@ -5,16 +5,16 @@ public class FeedbackDto {
     private Long feedbackId;
     private Long eventID;
     private String feedbackAuthor;
-    private String feedback;
+    private String feedbackText;
 
     public FeedbackDto() {
     }
 
-    public FeedbackDto(Long feedbackId, Long eventID, String feedbackAuthor, String feedback) {
+    public FeedbackDto(Long feedbackId, Long eventID, String feedbackAuthor, String feedbackText) {
         this.feedbackId = feedbackId;
         this.eventID = eventID;
         this.feedbackAuthor = feedbackAuthor;
-        this.feedback = feedback;
+        this.feedbackText = feedbackText;
     }
 
     public Long getFeedbackId() {
@@ -41,11 +41,11 @@ public class FeedbackDto {
         this.feedbackAuthor = feedbackAuthor;
     }
 
-    public String getFeedback() {
-        return feedback;
+    public String getFeedbackText() {
+        return feedbackText;
     }
 
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
+    public void setFeedbackText(String feedbackText) {
+        this.feedbackText = feedbackText;
     }
 }

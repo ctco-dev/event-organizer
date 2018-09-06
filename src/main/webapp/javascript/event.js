@@ -20,12 +20,28 @@ function loadEvent() {
             document.getElementById("voting").classList.remove("w3-hide");
             document.getElementById("feedback").classList.add("w3-hide");
             getVotingPoll();
-        } else if (event.eventStatus === "CLOSED") {
+        } else if (event.eventStatus === "FINISHED") {
             document.getElementById("voting").classList.add("w3-hide");
-            document.getElementById("feedback").classList.remove("w3-hide");
+           // document.getElementById("feedback").classList.remove("w3-hide");
+            document.getElementById("feedbackText").classList.remove("w3-hide");
             getFeedbackPoll();
+            //getTextFeedback();
         }
     })
+}
+function saveTextFeedback() {
+    var feedbackText=document.getElementById("comment").value;
+    fetch('/api/event/' + id + '/saveFeedback/', {
+        "method": "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(feedbackText)
+    }).then(function (response) {
+        console.log(feedbackText);
+        document.getElementById("comment").value="";
+    });
 }
 
 function getFeedbackPoll() {
@@ -68,6 +84,28 @@ function getVotingPoll() {
             var source = document.getElementById("pollList").innerHTML;
             var template = Handlebars.compile(source);
             document.getElementById("voting").innerHTML = template(context);
+        }
+    })
+}
+
+function getTextFeedback() {
+    fetch('/api/event/' + id + '/getFeedback/', {
+        "method": "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(function (response) {
+        return response.json();
+    }).then(function (feedbacks) {
+        if (feedbacks.length === 0) {
+            document.getElementById("savedFeedback").classList.add("w3-hide");
+        } else {
+            document.getElementById("savedFeedback").classList.remove("w3-hide");
+            var context = {feedbackArray: feedbacks}
+            var source = document.getElementById("feedbackList").innerHTML;
+            var template = Handlebars.compile(source);
+            document.getElementById("feedback").innerHTML = template(context);
         }
     })
 }

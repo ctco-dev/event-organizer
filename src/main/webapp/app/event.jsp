@@ -47,13 +47,27 @@
 <div id="feedback" class="w3-hide">
     FEEDBACK
 </div>
-<div id="feedbackText" class="">
-    <label for="comment">Comment:</label><br/>
-    <textarea class="form-control" rows="5" id="comment"></textarea><br/>
-    <button type="submit" id="save" onclick="saveFeedback()">Save</button>
-</div>
 <div id="voting" class="w3-hide">
     VOTING
+</div>
+<div id="feedbackText" class="w3-hide">
+    <label >Feedback:</label><br/>
+    <textarea class="form-control" rows="5" id="comment"></textarea><br/>
+    <button type="submit" id="save" onclick="saveTextFeedback()">Save</button>
+</div>
+<script id="feedbackList" type="text/x-handlebars-template">
+    {{#feedbackArray}}
+    <div>
+        {{#feedback}}
+        <div name="quest{{../id}}" value="{{thisFeedbackID}}" id="{{thisFeedbackID}}">
+            <label for="{{thisFeedbackID}}" name="feedbackText{{../id}}">{{feedbackText}}</label>
+        </div>
+         {{/feedback}}
+    </div>
+    {{/feedbackArray}}
+</script>
+<div id="savedFeedback" class="w3-hide">
+    SAVEDFEEDBACK
 </div>
 </body>
 </html>
