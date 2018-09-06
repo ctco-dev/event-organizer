@@ -28,9 +28,9 @@
     <p><input type="text" id="timepicker"></p>
     <p id="setStatus"><b>Set status</b></p>
     <p id="statuses">
-        <b><input type="checkbox" id="open">Open</b>
-        <b><input type="checkbox" id="closed">Closed</b>
-        <b><input type="checkbox" id="finished">Finished</b>
+        <input type="radio" id="open" name="event_status" value="open" title="open"/>Open<br/>
+        <input type="radio" id="closed" name="event_status" value="closed" title="closed"/>Closed<br/>
+        <input type="radio" id="finished" name="event_status" value="finished" title="finished"/>Finished
     </p>
 </form>
 <div id="buttons">

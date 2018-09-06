@@ -38,8 +38,8 @@
         <p><b>Answers:</b></p>
         {{#answers}}
         <div>
-            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label
-                for="{{thisAnswerID}}">{{text}}</label>
+            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}">
+            <label for="{{thisAnswerID}}">{{text}}</label>
         </div>
         {{/answers}}
         <p><b>Feedback poll:</b></p>

@@ -16,7 +16,7 @@ public class Poll {
     private Long id;
 
     private Long eventID;
-    private String question ;
+    private String question;
     private AnswerStatus answerStatus;
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
