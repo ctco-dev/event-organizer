@@ -22,8 +22,7 @@ function loadEvent() {
             getVotingPoll();
         } else if (event.eventStatus === "FINISHED") {
             document.getElementById("voting").classList.add("w3-hide");
-           // document.getElementById("feedback").classList.remove("w3-hide");
-            document.getElementById("feedbackText").classList.remove("w3-hide");
+            document.getElementById("feedbackInput").classList.remove("w3-hide");
             getFeedbackPoll();
             getTextFeedback();
         }
@@ -90,7 +89,7 @@ function getVotingPoll() {
 }
 
 function getTextFeedback() {
-    fetch('/api/event/' + id + '/getFeedback/', {
+    fetch('/api/event/' + id + '/getFeedbackText/', {
         "method": "GET",
         headers: {
             'Accept': 'application/json',
@@ -99,18 +98,19 @@ function getTextFeedback() {
     }).then(function (response) {
         return response.json();
     }).then(function (feedback) {
-        console.log(feedback[0].feedbackText);
-        if (feedbacks.length === 0) {
-            document.getElementById("savedFeedback").classList.add("w3-hide");
+        console.log(JSON.stringify(feedback));
+        if (feedback.length === 0) {
+            document.getElementById("feedbackText").classList.add("w3-hide");
         } else {
-            document.getElementById("savedFeedback").classList.remove("w3-hide");
-            var context = {feedbackArray: feedbacks}
+            document.getElementById("feedbackText").classList.remove("w3-hide");
+            var context = {feedbackArray: feedback};
             var source = document.getElementById("feedbackList").innerHTML;
             var template = Handlebars.compile(source);
-            document.getElementById("feedback").innerHTML = template(context);
+            document.getElementById("feedbackText").innerHTML = template(context);
         }
     })
 }
+
 
 function vote(id) {
     var checked = document.querySelector('input[name=quest' + id + ']:checked');

@@ -5,9 +5,12 @@
     <title id="title">{{eventName}}</title>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script src="http://www.w3schools.com/lib/w3data.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="../javascript/event.js"></script>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body onload="loadEvent()">
 <div id="menu">
@@ -50,24 +53,22 @@
 <div id="voting" class="w3-hide">
     VOTING
 </div>
-<div id="feedbackText" class="w3-hide">
-    <label >Feedback:</label><br/>
-    <textarea class="form-control" rows="5" id="comment"></textarea><br/>
+<div id="feedbackInput" class="w3-hide">
+    <label>Feedback:</label><br/>
+    <textarea class="form-control" rows="5" id="comment"></textarea><brt"
     <button type="submit" id="save" onclick="saveTextFeedback()">Save</button>
 </div>
+
 <script id="feedbackList" type="text/x-handlebars-template">
     {{#feedbackArray}}
     <div>
-        {{#feedback}}
-        <div name="quest{{../id}}" value="{{thisFeedbackID}}" id="{{thisFeedbackID}}">
-            <label for="{{thisFeedbackID}}" name="feedbackText{{../id}}">{{feedbackText}}</label>
-        </div>
-         {{/feedback}}
+        <p>{{feedbackAuthor}}: {{feedbackText}}</p>
+        <hr/>
     </div>
     {{/feedbackArray}}
 </script>
-<div id="savedFeedback" class="w3-hide">
-    SAVEDFEEDBACK
+<div id="feedbackText" class="w3-hide">
+    FEEDBACKTEXT
 </div>
 </body>
 </html>
