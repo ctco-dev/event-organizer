@@ -137,11 +137,38 @@ public class EventOrganizationApi {
         if (!userPoll.isPresent()) {
             UserPoll newUserPoll = new UserPoll();
             newUserPoll.setUser(currentUser);
+            newUserPoll.setPoll(poll);
             pollStore.persistUserPoll(newUserPoll);
             answer.setCounter(answer.getCounter() + 1);
         } else {
             throw new EntityNotFoundException();
         }
+    }
+
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/{id}/getAnswers")
+    public List<PollDto> getPollsByEventId(@PathParam("id") Long id) {
+        User currentUser = userStore.getCurrentUser();
+        Optional<Event> event = eventStore.getEventById(id);
+        List<PollDto> pollDtos = new ArrayList<>();
+        if (event.isPresent()) {
+            List<Poll> pollList = pollStore.getPollForEvent(event.get().getId());
+            pollList.forEach(pl -> {
+                Optional<UserPoll> userPoll = pollStore.getUserPollByUserAndPoll(currentUser, pl);
+                if (userPoll.isPresent()) {
+                    List<Answer> answerList = answersStore.getAnswersByPollID(userPoll.get().getPoll());
+                    answerList.forEach(answer -> {
+                        if (answer.getCounter() > 0) {
+                            PollDto pollDto = new PollDto();
+                            pollDto.setId(answer.getPoll().getId());
+                            pollDtos.add(pollDto);
+                        }
+                    });
+                }
+            });
+        }
+        return pollDtos;
     }
 
     @GET
@@ -172,7 +199,8 @@ public class EventOrganizationApi {
     @Path("/{id}/getVotingPoll")
     public List<PollDto> getVotingForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getVotingPoll(id);
-        return mapper.mapPollToDto(poll);
+        List<PollDto> pollDtos = mapper.mapPollToDto(poll);
+        return pollDtos;
     }
 
     @POST

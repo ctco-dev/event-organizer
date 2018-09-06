@@ -25,6 +25,7 @@ function loadEvent() {
             document.getElementById("feedback").classList.remove("w3-hide");
             getFeedbackPoll();
         }
+        hidePoll(id);
     })
 }
 
@@ -38,6 +39,7 @@ function getFeedbackPoll() {
     }).then(function (response) {
         return response.json();
     }).then(function (poll) {
+        console.log(JSON.stringify(poll));
         if (poll.length === 0) {
             document.getElementById("feedback").classList.add("w3-hide");
         } else {
@@ -51,6 +53,7 @@ function getFeedbackPoll() {
 }
 
 function getVotingPoll() {
+    console.log("id: " + id);
     fetch('/api/event/' + id + '/getVotingPoll/', {
         "method": "GET",
         headers: {
@@ -60,6 +63,7 @@ function getVotingPoll() {
     }).then(function (response) {
         return response.json();
     }).then(function (poll) {
+        console.log(JSON.stringify(poll));
         if (poll.length === 0) {
             document.getElementById("voting").classList.add("w3-hide");
         } else {
@@ -75,7 +79,7 @@ function getVotingPoll() {
 function vote(id) {
     var checked = document.querySelector('input[name=quest' + id + ']:checked');
     var checkedAddr = checked.id;
-    console.log("checked:" + checkedAddr);
+    console.log("answerId:" + checkedAddr);
     fetch('/api/event/vote/' + checkedAddr, {
         "method": "POST",
         headers: {
@@ -108,9 +112,22 @@ function showStatistics(x) {
     });
 }
 
-function hideVotes() {
-    document.getElementById("voteButton").classList.add("w3-hide");
-    console.log("DONE");
+function hideVotes(x) {
+    document.getElementById("voteButton" + x).classList.add("w3-hide");
+}
+
+function hidePoll(id) {
+    fetch('/api/event/' + id + '/getAnswers/', {
+        "method": "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(function (response) {
+        return response.json();
+    }).then(function (answers) {
+        console.log(answers);
+    });
 }
 
 function addEvent() {
