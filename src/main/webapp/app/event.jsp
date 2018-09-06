@@ -47,6 +47,11 @@
 <div id="feedback" class="w3-hide">
     FEEDBACK
 </div>
+<div id="feedbackText" class="">
+    <label for="comment">Comment:</label><br/>
+    <textarea class="form-control" rows="5" id="comment"></textarea><br/>
+    <button type="submit" id="save" onclick="saveFeedback()">Save</button>
+</div>
 <div id="voting" class="w3-hide">
     VOTING
 </div>

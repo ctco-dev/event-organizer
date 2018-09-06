@@ -64,7 +64,7 @@ public class Mapper {
             feedbacks.forEach(a -> {
             FeedbackDto feedbackDto = new FeedbackDto();
             feedbackDto.setFeedbackId(a.getFeedbackId());
-            feedbackDto.setEventID(a.getEventID());
+            feedbackDto.setEventID(a.getEvent().getId());
             feedbackDto.setFeedbackAuthor(a.getFeedbackAuthor());
             feedbackDto.setFeedback(a.getFeedback());
             feedbackDtos.add(feedbackDto);
