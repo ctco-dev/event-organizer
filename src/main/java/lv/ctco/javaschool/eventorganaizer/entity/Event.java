@@ -27,8 +27,8 @@ public class Event {
     private String agenda;
     private EventStatus status;
 
-    @OneToMany
-    private List<Feedback> feedbacks = new ArrayList<>();
+//    @OneToMany
+//    private List<Feedback> feedbacks = new ArrayList<>();
 
     public Event() {
     }
@@ -107,11 +107,11 @@ public class Event {
         this.agenda = agenda;
     }
 
-    public List<Feedback> getFeedbacks() {
-        return feedbacks;
-    }
-
-    public void setFeedbacks(List<Feedback> feedbacks) {
-        this.feedbacks = feedbacks;
-    }
+//    public List<Feedback> getFeedbacks() {
+//        return feedbacks;
+//    }
+//
+//    public void setFeedbacks(List<Feedback> feedbacks) {
+//        this.feedbacks = feedbacks;
+//    }
 }

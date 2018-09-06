@@ -10,12 +10,14 @@ public class EventDto {
     private Long eventID;
     private String eventAgenda;
     private EventStatus eventStatus;
-    private List<Feedback> eventFeedback;
+//    private List<Feedback> eventFeedback;
 
     public EventDto() {
     }
 
-    public EventDto(String name, String description, String date, String time, Long id, String agenda, EventStatus status, List<Feedback> feedbacks) {
+    public EventDto(String name, String description, String date, String time, Long id, String agenda, EventStatus status
+//            , List<Feedback> feedbacks
+    ) {
         this.eventName = name;
         this.eventDescription = description;
         this.eventDate = date;
@@ -23,7 +25,7 @@ public class EventDto {
         this.eventID = id;
         this.eventAgenda = agenda;
         this.eventStatus = status;
-        this.eventFeedback = feedbacks;
+//        this.eventFeedback = feedbacks;
     }
 
     public long getEventID() {
@@ -82,11 +84,11 @@ public class EventDto {
         this.eventStatus = eventStatus;
     }
 
-    public List<Feedback> getEventFeedback() {
-        return eventFeedback;
-    }
-
-    public void setEventFeedback(List<Feedback> eventFeedback) {
-        this.eventFeedback = eventFeedback;
-    }
+//    public List<Feedback> getEventFeedback() {
+//        return eventFeedback;
+//    }
+//
+//    public void setEventFeedback(List<Feedback> eventFeedback) {
+//        this.eventFeedback = eventFeedback;
+//    }
 }
