@@ -10,9 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "events")
@@ -34,9 +31,6 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private EventStatus status;
 
-    @OneToMany
-    private List<Feedback> feedbacks = new ArrayList<>();
-
     public Event() {
     }
 
@@ -48,6 +42,14 @@ public class Event {
         this.eventDate = eventDate;
         this.eventTime = eventTime;
         this.status = EventStatus.OPEN;
+    }
+
+    public String getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(String eventTime) {
+        this.eventTime = eventTime;
     }
 
     public EventStatus getStatus() {
@@ -94,14 +96,6 @@ public class Event {
         return description;
     }
 
-    public String getEventTime() {
-        return eventTime;
-    }
-
-    public void setEventTime(String time) {
-        this.eventTime = time;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -112,13 +106,5 @@ public class Event {
 
     public void setAgenda(String agenda) {
         this.agenda = agenda;
-    }
-
-    public List<Feedback> getFeedbacks() {
-        return feedbacks;
-    }
-
-    public void setFeedbacks(List<Feedback> feedbacks) {
-        this.feedbacks = feedbacks;
     }
 }

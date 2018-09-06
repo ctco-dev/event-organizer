@@ -99,7 +99,7 @@ public class EventOrganizationApi {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
-            return new EventDto(e.getEventName(), e.getDescription(), e.getEventDate(), e.getEventTime(), e.getId(), e.getAgenda(), e.getStatus(),e.getFeedbacks());
+            return new EventDto(e.getEventName(), e.getDescription(), e.getEventDate(), e.getEventTime(), e.getId(), e.getAgenda(), e.getStatus());
         } else {
             throw new EntityNotFoundException();
         }
@@ -111,7 +111,7 @@ public class EventOrganizationApi {
     public List<EventDto> getAllAuthorEvents() {
         List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
         return event.stream()
-                .map(e -> new EventDto(e.getEventName(), e.getDescription(), e.getEventDate(), e.getEventTime(), e.getId(), e.getAgenda(), e.getStatus(), e.getFeedbacks()))
+                .map(e -> new EventDto(e.getEventName(), e.getDescription(), e.getEventDate(), e.getEventTime(), e.getId(), e.getAgenda(), e.getStatus()))
                 .collect(Collectors.toList());
     }
 
@@ -197,7 +197,7 @@ public class EventOrganizationApi {
     public void saveFeedback(FeedbackDto feedbackDto, @PathParam("id") Long id) {
         Feedback feedback = new Feedback();
 
-        feedback.setEventID(id);
+        feedback.setEvent(eventStore.getEventById(id).get());
         feedback.setFeedbackAuthor(userStore.getCurrentUser().getUsername());
         feedback.setFeedback(feedbackDto.getFeedback());
         feedbackStore.persistFeedback(feedback);
@@ -207,7 +207,7 @@ public class EventOrganizationApi {
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/{id}/getFeedback")
     public List<FeedbackDto> getFeedbackEventID(@PathParam("id") Long id) {
-        List<Feedback> feedbacks = feedbackStore.getFeedbackForEvent(id);
+        List<Feedback> feedbacks = feedbackStore.getFeedbackForEvent(eventStore.getEventById(id).get());
         return mapper.mapFeedbackToFeedbackDto(feedbacks);
     }
 }
