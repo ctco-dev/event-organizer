@@ -16,9 +16,9 @@ public class TopicDto {
     }
 
     public TopicDto(Event event) {
-        this.topicName = event.getName();
+        this.topicName = event.getEventName();
         this.topicAuthor = event.getAuthor().getUsername();
-        this.date = event.getDate();
+        this.date = event.getEventDate();
         this.id = event.getId();
         this.status = event.getStatus();
     }

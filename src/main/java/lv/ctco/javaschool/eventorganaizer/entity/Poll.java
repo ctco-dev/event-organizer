@@ -17,6 +17,7 @@ public class Poll {
 
     private Long eventID;
     private String question;
+    private AnswerStatus answerStatus;
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Answer> answers = new ArrayList<>();
@@ -61,5 +62,13 @@ public class Poll {
 
     public void setIsFeedback(boolean feedback) {
         isFeedback = feedback;
+    }
+
+    public AnswerStatus getAnswerStatus() {
+        return answerStatus;
+    }
+
+    public void setAnswerStatus(AnswerStatus answerStatus) {
+        this.answerStatus = answerStatus;
     }
 }

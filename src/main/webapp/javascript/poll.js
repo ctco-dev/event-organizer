@@ -23,7 +23,6 @@ function buildData() {
 
 function savePollToDB() {
     var data = buildData();
-    console.log(data);
     fetch('/api/event/' + id + '/savePoll/', {
         "method": "POST",
         headers: {
@@ -55,8 +54,7 @@ function getPollFromDB() {
             console.log(context);
             var source = document.getElementById("pollList").innerHTML;
             var template = Handlebars.compile(source);
-            var html = template(context);
-            document.getElementById("displayPoll").innerHTML = html;
+            document.getElementById("displayPoll").innerHTML = template(context);
         }
     })
 }
@@ -97,7 +95,7 @@ function getQueryVariable(variable) {
     var vars = query.split("&");
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split("=");
-        if (pair[0] == variable) {
+        if (pair[0] === variable) {
             return pair[1];
         }
     }
@@ -105,7 +103,7 @@ function getQueryVariable(variable) {
 }
 
 function goToTheMainPage() {
-    location.href = '/app/jsp/start.jsp';
+    location.href = '/app/start.jsp';
 }
 
 function init() {
