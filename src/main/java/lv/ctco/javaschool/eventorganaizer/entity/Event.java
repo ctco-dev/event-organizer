@@ -44,6 +44,14 @@ public class Event {
         this.status = EventStatus.OPEN;
     }
 
+    public String getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(String eventTime) {
+        this.eventTime = eventTime;
+    }
+
     public EventStatus getStatus() {
         return status;
     }
@@ -86,14 +94,6 @@ public class Event {
 
     public String getDescription() {
         return description;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public void setDescription(String description) {
