@@ -144,7 +144,9 @@ public class EventOrganizationApi {
         List<AnswerDto> answerDtos = new ArrayList<>();
         poll.ifPresent(p -> {
             List<Answer> answerList = answersStore.getAnswersByPollID(p);
-            mapper.mapAnswerToAnswerDto(answerList);
+            mapper.mapAnswerToAnswerDto(answerList).forEach(a -> {
+                answerDtos.add(a);
+            });
         });
         return answerDtos;
     }
