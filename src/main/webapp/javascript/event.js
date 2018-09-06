@@ -25,7 +25,7 @@ function loadEvent() {
            // document.getElementById("feedback").classList.remove("w3-hide");
             document.getElementById("feedbackText").classList.remove("w3-hide");
             getFeedbackPoll();
-            //getTextFeedback();
+            getTextFeedback();
         }
     })
 }
@@ -41,6 +41,7 @@ function saveTextFeedback() {
     }).then(function (response) {
         console.log(feedbackText);
         document.getElementById("comment").value="";
+        getTextFeedback();
     });
 }
 
@@ -97,7 +98,8 @@ function getTextFeedback() {
         }
     }).then(function (response) {
         return response.json();
-    }).then(function (feedbacks) {
+    }).then(function (feedback) {
+        console.log(feedback[0].feedbackText);
         if (feedbacks.length === 0) {
             document.getElementById("savedFeedback").classList.add("w3-hide");
         } else {

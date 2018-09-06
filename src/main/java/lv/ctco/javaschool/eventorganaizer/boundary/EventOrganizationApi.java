@@ -186,11 +186,11 @@ public class EventOrganizationApi {
     @POST
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/{id}/saveFeedback")
-    public void saveFeedback(FeedbackDto feedbackDto, @PathParam("id") Long id) {
+    public void saveFeedback(String feedbackText, @PathParam("id") Long id) {
         Feedback feedback = new Feedback();
         feedback.setEvent(eventStore.getEventById(id).get());
         feedback.setFeedbackAuthor(userStore.getCurrentUser().getUsername());
-        feedback.setFeedbackText(feedbackDto.getFeedbackText());
+        feedback.setFeedbackText(feedbackText);
         feedbackStore.persistFeedback(feedback);
     }
 
