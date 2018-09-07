@@ -122,20 +122,14 @@ public class EventOrganizationApi {
     @Path("/vote/{id}")
     public void updateVoteCounter(@PathParam("id") Long id) {
         User currentUser = userStore.getCurrentUser();
-        Optional<Answer> answerOptional = answersStore.getAnswerByID(id);
-        if (answerOptional.isPresent()) {
-            Answer answer = answerOptional.get();
-            Poll poll = answer.getPoll();
-            Optional<UserPoll> userPoll = pollStore.getUserPollByUserAndPoll(currentUser, poll);
-            if (!userPoll.isPresent()) {
-                UserPoll newUserPoll = new UserPoll();
-                newUserPoll.setUser(currentUser);
-                newUserPoll.setPoll(poll);
-                pollStore.persistUserPoll(newUserPoll);
-                answer.setCounter(answer.getCounter() + 1);
-            } else {
+        Optional<Answer> userAnswer = answersStore.getAnswerByID(id);
+        if (userAnswer.isPresent()) {
+            Answer answer = userAnswer.get();
+            Optional<UserPoll> userVote = pollStore.getUserPollByUserAndPoll(currentUser, answer.getPoll());
+            if (userVote.isPresent()) {
                 throw new EntityNotFoundException();
             }
+            registerNewUserPoll(currentUser, answer);
         }
     }
 
@@ -198,5 +192,13 @@ public class EventOrganizationApi {
     @RolesAllowed({"USER", "ADMIN"})
     public void deletePoll(@PathParam("id") Long id) throws IllegalArgumentException {
         pollStore.deletePollById(id);
+    }
+
+    private void registerNewUserPoll(User currentUser, Answer answer) {
+        UserPoll newUserPoll = new UserPoll();
+        newUserPoll.setUser(currentUser);
+        newUserPoll.setPoll(answer.getPoll());
+        pollStore.persistUserPoll(newUserPoll);
+        answer.setCounter(answer.getCounter() + 1);
     }
 }
