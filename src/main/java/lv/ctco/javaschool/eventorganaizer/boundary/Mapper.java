@@ -2,6 +2,8 @@ package lv.ctco.javaschool.eventorganaizer.boundary;
 
 import lv.ctco.javaschool.eventorganaizer.entity.Answer;
 import lv.ctco.javaschool.eventorganaizer.entity.AnswerDto;
+import lv.ctco.javaschool.eventorganaizer.entity.Feedback;
+import lv.ctco.javaschool.eventorganaizer.entity.FeedbackDto;
 import lv.ctco.javaschool.eventorganaizer.entity.Poll;
 import lv.ctco.javaschool.eventorganaizer.entity.PollDto;
 
@@ -54,5 +56,18 @@ public class Mapper {
             answerDtos.add(a);
         });
         return answerDtos;
+    }
+
+    public List<FeedbackDto> mapFeedbackToFeedbackDto(List<Feedback> feedbacks) {
+        List<FeedbackDto> feedbackDtos = new ArrayList<>();
+            feedbacks.forEach(a -> {
+            FeedbackDto feedbackDto = new FeedbackDto();
+            feedbackDto.setFeedbackId(a.getFeedbackId());
+            feedbackDto.setEventID(a.getEvent().getId());
+            feedbackDto.setFeedbackAuthor(a.getFeedbackAuthor());
+            feedbackDto.setFeedbackText(a.getFeedbackText());
+            feedbackDtos.add(feedbackDto);
+        });
+        return feedbackDtos;
     }
 }
