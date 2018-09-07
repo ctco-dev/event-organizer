@@ -148,26 +148,15 @@ public class EventOrganizationApi {
     @GET
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/{id}/getAnswers")
-    public List<PollDto> getPollsByEventId(@PathParam("id") Long id) {
+    public List<PollDto> getPollsByEventId() {
         User currentUser = userStore.getCurrentUser();
-        Optional<Event> event = eventStore.getEventById(id);
+        List<UserPoll> userPollList = pollStore.getUserPollByUser(currentUser);
         List<PollDto> pollDtos = new ArrayList<>();
-        if (event.isPresent()) {
-            List<Poll> pollList = pollStore.getPollForEvent(event.get().getId());
-            pollList.forEach(pl -> {
-                Optional<UserPoll> userPoll = pollStore.getUserPollByUserAndPoll(currentUser, pl);
-                if (userPoll.isPresent()) {
-                    List<Answer> answerList = answersStore.getAnswersByPollID(userPoll.get().getPoll());
-                    answerList.forEach(answer -> {
-                        if (answer.getCounter() > 0) {
-                            PollDto pollDto = new PollDto();
-                            pollDto.setId(answer.getPoll().getId());
-                            pollDtos.add(pollDto);
-                        }
-                    });
-                }
-            });
-        }
+        userPollList.forEach(up -> {
+            PollDto pollDto = new PollDto();
+            pollDto.setId(up.getPoll().getId());
+            pollDtos.add(pollDto);
+        });
         return pollDtos;
     }
 

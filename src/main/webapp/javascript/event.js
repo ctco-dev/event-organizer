@@ -126,7 +126,13 @@ function hidePoll(id) {
     }).then(function (response) {
         return response.json();
     }).then(function (answers) {
-        console.log(answers);
+        console.log(JSON.stringify(answers));
+        if (Object.keys(answers).length > 0) {
+            for (i = 0; i < Object.keys(answers).length; i++) {
+                showStatistics(answers[Object.keys(answers)[i]].id);
+                hideVotes(answers[Object.keys(answers)[i]].id);
+            }
+        }
     });
 }
 

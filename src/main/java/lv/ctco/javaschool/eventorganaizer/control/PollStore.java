@@ -70,6 +70,13 @@ public class PollStore {
                 .findFirst();
     }
 
+    public List<UserPoll> getUserPollByUser(User user) {
+        return em.createQuery("select ua from UserPoll ua" +
+                " where ua.user = :user", UserPoll.class)
+                .setParameter("user", user)
+                .getResultList();
+    }
+
     public void persistUserPoll(UserPoll userPoll) {
         em.persist(userPoll);
     }
