@@ -34,9 +34,9 @@
     </p>
 </form>
 <div id="buttons">
-    <button type="submit" id="save" onclick="saveData()">Save</button>
-    <button type="submit" id="update" onclick="updateData()">Update</button>
-    <button onclick="goToTheMainPage()">Cancel</button>
+    <button class="w3-button w3-section w3-teal w3-ripple" type="submit" id="save" onclick="saveData()">Save</button>
+    <button class="w3-button w3-section w3-teal w3-ripple" type="submit" id="update" onclick="updateData()">Update</button>
+    <button class="w3-button w3-section w3-teal w3-ripple" onclick="goToTheMainPage()">Cancel</button>
 </div>
 </body>
 </html>

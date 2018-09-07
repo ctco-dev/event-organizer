@@ -107,7 +107,9 @@ function showStatistics(x) {
 }
 
 function hideVotes(x) {
-    document.getElementById("voteButton" + x).classList.add("w3-hide");
+    if (document.getElementById("voteButton" + x) !== null) {
+        document.getElementById("voteButton" + x).classList.add("w3-hide");
+    }
 }
 
 function hidePoll() {

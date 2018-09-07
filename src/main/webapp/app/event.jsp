@@ -9,27 +9,25 @@
     <link rel="stylesheet" type="text/css" href="../style.css">
     <script src="../javascript/event.js"></script>
 </head>
-<body onload="loadEvent()">
+<body class="event-page" onload="loadEvent()">
 <div id="menu">
-    <button type="button" onclick="main()">Back To Main</button>
-    <button type="button" onclick="myEvents()">My Events</button>
-    <button type="button" onclick="addEvent()">Add Event</button>
+    <button class="w3-button w3-section w3-teal w3-ripple" type="button" onclick="main()">Back To Main</button>
+    <button class="w3-button w3-section w3-teal w3-ripple" type="button" onclick="myEvents()">My Events</button>
+    <button class="w3-button w3-section w3-teal w3-ripple" type="button" onclick="addEvent()">Add Event</button>
 </div>
 <div id="event-field" class="w3-hide">
     <h1>{{name}}</h1>
     <div>
-        <h4>{{date}} &nbsp</h4>
-        <h4>{{time}}</h4>
+        <h3>{{date}}</h3>
+        <h3>{{time}}</h3>
+        <h3>{{description}}</h3>
+        <h3>{{agenda}}</h3>
     </div>
-    <p>{{description}}</p>
-    <p>{{agenda}}</p>
 </div>
 <script id="pollList" type="text/x-handlebars-template">
     {{#pollArray}}
     <div>
-        <p><b>Question</b></p>
-        <h2>{{question}}</h2>
-        <p><b>Answers:</b></p>
+        <h3>{{question}}</h3>
         {{#answers}}
         <div>
             <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}">
@@ -39,7 +37,7 @@
             </div>
         </div>
         {{/answers}}
-        <button id="voteButton{{id}}" class="" onclick="vote({{id}})">VOTE!</button>
+        <button id="voteButton{{id}}" class="w3-button w3-teal w3-ripple" onclick="vote({{id}})">VOTE!</button>
         <hr/>
     </div>
     {{/pollArray}}
