@@ -53,14 +53,6 @@ public class PollStore {
                 .findFirst();
     }
 
-    public Optional<Poll> getPollByAnswer (Answer answer) {
-        return em.createQuery("select p from Poll p" +
-                " where p.answers = :answer", Poll.class)
-                .setParameter("answer", answer)
-                .getResultStream()
-                .findFirst();
-    }
-
     public Optional<UserPoll> getUserPollByUserAndPoll(User user, Poll poll) {
         return em.createQuery("select ua from UserPoll ua" +
                 " where ua.user = :user and ua.poll = :poll", UserPoll.class)
@@ -83,9 +75,5 @@ public class PollStore {
 
     public void persistPoll(Poll poll) {
         em.persist(poll);
-    }
-
-    public void mergePoll(Poll poll) {
-        em.merge(poll);
     }
 }

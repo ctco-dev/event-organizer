@@ -20,12 +20,12 @@ function loadEvent() {
             document.getElementById("voting").classList.remove("w3-hide");
             document.getElementById("feedback").classList.add("w3-hide");
             getVotingPoll();
+            hidePoll(id);
         } else if (event.eventStatus === "CLOSED") {
             document.getElementById("voting").classList.add("w3-hide");
             document.getElementById("feedback").classList.remove("w3-hide");
             getFeedbackPoll();
         }
-        hidePoll(id);
     })
 }
 
@@ -116,7 +116,7 @@ function hideVotes(x) {
     document.getElementById("voteButton" + x).classList.add("w3-hide");
 }
 
-function hidePoll(id) {
+function hidePoll() {
     fetch('/api/event/' + id + '/getAnswers/', {
         "method": "GET",
         headers: {

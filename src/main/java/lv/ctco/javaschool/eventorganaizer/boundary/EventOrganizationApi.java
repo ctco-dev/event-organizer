@@ -131,17 +131,20 @@ public class EventOrganizationApi {
     @Path("/vote/{id}")
     public void updateVoteCounter(@PathParam("id") Long id) {
         User currentUser = userStore.getCurrentUser();
-        Answer answer = answersStore.getAnswerByID(id).get();
-        Poll poll = answer.getPoll();
-        Optional<UserPoll> userPoll = pollStore.getUserPollByUserAndPoll(currentUser, poll);
-        if (!userPoll.isPresent()) {
-            UserPoll newUserPoll = new UserPoll();
-            newUserPoll.setUser(currentUser);
-            newUserPoll.setPoll(poll);
-            pollStore.persistUserPoll(newUserPoll);
-            answer.setCounter(answer.getCounter() + 1);
-        } else {
-            throw new EntityNotFoundException();
+        Optional<Answer> answerOptional = answersStore.getAnswerByID(id);
+        if (answerOptional.isPresent()) {
+            Answer answer = answerOptional.get();
+            Poll poll = answer.getPoll();
+            Optional<UserPoll> userPoll = pollStore.getUserPollByUserAndPoll(currentUser, poll);
+            if (!userPoll.isPresent()) {
+                UserPoll newUserPoll = new UserPoll();
+                newUserPoll.setUser(currentUser);
+                newUserPoll.setPoll(poll);
+                pollStore.persistUserPoll(newUserPoll);
+                answer.setCounter(answer.getCounter() + 1);
+            } else {
+                throw new EntityNotFoundException();
+            }
         }
     }
 

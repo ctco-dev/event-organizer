@@ -31,12 +31,4 @@ public class AnswersStore {
                 .getResultStream()
                 .findFirst();
     }
-
-    public void persistAnswer(Answer answer) {
-        em.persist(answer);
-    }
-
-    public void mergeAnswer(Answer answer) {
-        em.merge(answer);
-    }
 }
