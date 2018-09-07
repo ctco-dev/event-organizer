@@ -28,8 +28,18 @@ function loadEvent() {
         }
     })
 }
+function checkIfConatainsText() {
+    var str1 = document.getElementById("comment").value;
+    if (document.getElementById("comment").value.replace(/\s/g, '').length) {
+        saveTextFeedback()
+    }
+    else {
+        window.alert("Please enter text!");
+    }
+}
 function saveTextFeedback() {
-    var feedbackText=document.getElementById("comment").value;
+    var feedbackText = document.getElementById("comment").value;
+    feedbackText = feedbackText.replace(/(?:\r\n|\r|\n)/g, ' ');
     fetch('/api/event/' + id + '/saveFeedback/', {
         "method": "POST",
         headers: {
@@ -39,7 +49,7 @@ function saveTextFeedback() {
         body: JSON.stringify(feedbackText)
     }).then(function (response) {
         console.log(feedbackText);
-        document.getElementById("comment").value="";
+        document.getElementById("comment").value = "";
         getTextFeedback();
     });
 }

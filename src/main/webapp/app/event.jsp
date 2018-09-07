@@ -55,14 +55,14 @@
 </div>
 <div id="feedbackInput" class="w3-hide">
     <label>Feedback:</label><br/>
-    <textarea class="form-control" rows="5" id="comment"></textarea><brt"
-    <button type="submit" id="save" onclick="saveTextFeedback()">Save</button>
+    <textarea class="form-control" rows="5" id="comment"></textarea></br>
+    <button type="submit" id="save" onclick="checkIfConatainsText()">Save</button>
 </div>
 
 <script id="feedbackList" type="text/x-handlebars-template">
     {{#feedbackArray}}
     <div>
-        <p>{{feedbackAuthor}}: {{feedbackText}}</p>
+        <p id="textField{{feedbackId}}">{{feedbackAuthor}}: {{feedbackText}}</p>
         <hr/>
     </div>
     {{/feedbackArray}}

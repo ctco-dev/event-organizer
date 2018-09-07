@@ -190,6 +190,7 @@ public class EventOrganizationApi {
         Feedback feedback = new Feedback();
         feedback.setEvent(eventStore.getEventById(id).get());
         feedback.setFeedbackAuthor(userStore.getCurrentUser().getUsername());
+        feedbackText=feedbackText.replace('"',' ');
         feedback.setFeedbackText(feedbackText);
         feedbackStore.persistFeedback(feedback);
     }
