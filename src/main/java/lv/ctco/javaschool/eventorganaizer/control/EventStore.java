@@ -25,7 +25,7 @@ public class EventStore {
         return em.createQuery("select e from Event e" +
                 " where e.status = :status1 or e.status=:status2", Event.class)
                 .setParameter("status1", EventStatus.OPEN)
-                .setParameter("status2", EventStatus.CLOSED)
+                .setParameter("status2", EventStatus.FINISHED)
                 .getResultList();
     }
 

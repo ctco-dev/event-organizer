@@ -20,12 +20,34 @@ function loadEvent() {
             document.getElementById("feedback").classList.add("w3-hide");
             getVotingPoll();
             hidePoll(id);
-        } else if (event.status === "CLOSED") {
+        } else if (event.eventStatus === "FINISHED") {
             document.getElementById("voting").classList.add("w3-hide");
             document.getElementById("feedback").classList.remove("w3-hide");
             getFeedbackPoll();
         }
     })
+}
+function checkIfConatainsText() {
+    var str1 = document.getElementById("comment").value;
+    if (document.getElementById("comment").value.replace(/\s/g, '').length) {
+        saveTextFeedback()
+    } else {window.alert("Please enter text!");}
+}
+function saveTextFeedback() {
+    var feedbackText = document.getElementById("comment").value;
+    feedbackText = feedbackText.replace(/(?:\r\n|\r|\n)/g, ' ');
+    fetch('/api/event/' + id + '/saveFeedback/', {
+        "method": "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(feedbackText)
+    }).then(function (response) {
+        console.log(feedbackText);
+        document.getElementById("comment").value = "";
+        getTextFeedback();
+    });
 }
 
 function getFeedbackPoll() {
@@ -71,6 +93,30 @@ function getVotingPoll() {
         }
     })
 }
+
+function getTextFeedback() {
+    fetch('/api/event/' + id + '/getFeedbackText/', {
+        "method": "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(function (response) {
+        return response.json();
+    }).then(function (feedback) {
+        console.log(JSON.stringify(feedback));
+        if (feedback.length === 0) {
+            document.getElementById("feedbackText").classList.add("w3-hide");
+        } else {
+            document.getElementById("feedbackText").classList.remove("w3-hide");
+            var context = {feedbackArray: feedback};
+            var source = document.getElementById("feedbackList").innerHTML;
+            var template = Handlebars.compile(source);
+            document.getElementById("feedbackText").innerHTML = template(context);
+        }
+    })
+}
+
 
 function vote(id) {
     var checked = document.querySelector('input[name=quest' + id + ']:checked');

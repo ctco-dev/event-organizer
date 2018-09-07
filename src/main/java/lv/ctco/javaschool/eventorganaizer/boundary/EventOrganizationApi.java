@@ -4,12 +4,15 @@ import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.AnswersStore;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
+import lv.ctco.javaschool.eventorganaizer.control.FeedbackStore;
 import lv.ctco.javaschool.eventorganaizer.control.PollStore;
 import lv.ctco.javaschool.eventorganaizer.entity.Answer;
 import lv.ctco.javaschool.eventorganaizer.entity.AnswerDto;
 import lv.ctco.javaschool.eventorganaizer.entity.Event;
 import lv.ctco.javaschool.eventorganaizer.entity.EventDto;
 import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
+import lv.ctco.javaschool.eventorganaizer.entity.Feedback;
+import lv.ctco.javaschool.eventorganaizer.entity.FeedbackDto;
 import lv.ctco.javaschool.eventorganaizer.entity.Poll;
 import lv.ctco.javaschool.eventorganaizer.entity.PollDto;
 import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
@@ -45,6 +48,9 @@ public class EventOrganizationApi {
     private AnswersStore answersStore;
 
     @Inject
+    private FeedbackStore feedbackStore;
+
+    @Inject
     private Mapper mapper;
 
     @GET
@@ -65,6 +71,7 @@ public class EventOrganizationApi {
         event.setAuthor(userStore.getCurrentUser());
         eventStore.persistEvent(event);
     }
+
 
     @POST
     @Path("/update")
@@ -200,5 +207,26 @@ public class EventOrganizationApi {
         newUserPoll.setPoll(answer.getPoll());
         pollStore.persistUserPoll(newUserPoll);
         answer.setCounter(answer.getCounter() + 1);
+    }
+
+
+    @POST
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/{id}/saveFeedback")
+    public void saveFeedback(String feedbackText, @PathParam("id") Long id) {
+        Feedback feedback = new Feedback();
+        feedback.setEvent(eventStore.getEventById(id).get());
+        feedback.setFeedbackAuthor(userStore.getCurrentUser().getUsername());
+        feedbackText=feedbackText.replace('"',' ');
+        feedback.setFeedbackText(feedbackText);
+        feedbackStore.persistFeedback(feedback);
+    }
+
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/{id}/getFeedbackText")
+    public List<FeedbackDto> getTextFeedback(@PathParam("id") Long id) {
+        List<Feedback> feedbacks = feedbackStore.getFeedbackForEvent(eventStore.getEventById(id).get());
+        return mapper.mapFeedbackToFeedbackDto(feedbacks);
     }
 }

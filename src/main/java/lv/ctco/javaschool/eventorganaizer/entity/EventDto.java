@@ -1,5 +1,7 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
+import java.util.List;
+
 public class EventDto {
     private String name;
     private String description;
