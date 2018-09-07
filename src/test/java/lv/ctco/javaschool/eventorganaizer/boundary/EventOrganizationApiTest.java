@@ -85,7 +85,7 @@ class EventOrganizationApiTest {
     void testFindById() {
         when(eventStore.getEventById((long) 1))
                 .thenReturn(java.util.Optional.ofNullable(event));
-        assertEquals(eventDto.getEventID(), eventOrganizationApi.getEventById((long) 1).getEventID());
+        assertEquals(eventDto.getId(), eventOrganizationApi.getEventById((long) 1).getId());
     }
 
     @Test
@@ -111,8 +111,8 @@ class EventOrganizationApiTest {
         assertEquals(1, result.size());
 
         EventDto eventDto = result.get(0);
-        assertEquals("qwe", eventDto.getEventName());
-        assertEquals(1, eventDto.getEventID());
+        assertEquals("qwe", eventDto.getName());
+        assertEquals(1, eventDto.getId());
     }
 
     @Test
@@ -140,12 +140,12 @@ class EventOrganizationApiTest {
 
     private EventDto initEventDto(Event event) {
         EventDto eventDto = new EventDto();
-        eventDto.setEventName(event.getName());
-        eventDto.setEventDate(event.getDate());
-        eventDto.setEventDescription(event.getDescription());
-        eventDto.setEventID(event.getId());
-        eventDto.setEventAgenda(event.getAgenda());
-        eventDto.setEventDate(event.getDate());
+        eventDto.setName(event.getName());
+        eventDto.setDate(event.getDate());
+        eventDto.setDescription(event.getDescription());
+        eventDto.setId(event.getId());
+        eventDto.setAgenda(event.getAgenda());
+        eventDto.setDate(event.getDate());
         return eventDto;
     }
 }

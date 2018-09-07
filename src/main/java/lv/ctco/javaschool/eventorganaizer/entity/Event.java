@@ -3,25 +3,32 @@ package lv.ctco.javaschool.eventorganaizer.entity;
 import lv.ctco.javaschool.auth.entity.domain.User;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "events")
 public class Event {
     @Id
     @GeneratedValue
     private Long id;
 
-    private String name;
-
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User author;
 
+    private String name;
     private String date;
     private String time;
     private String description;
     private String agenda;
+
+    @Enumerated(EnumType.STRING)
     private EventStatus status;
 
     public Event() {

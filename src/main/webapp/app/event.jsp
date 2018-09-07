@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title id="title">{{eventName}}</title>
+    <title id="title">{{name}}</title>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -16,13 +16,13 @@
     <button type="button" onclick="addEvent()">Add Event</button>
 </div>
 <div id="event-field" class="w3-hide">
-    <h1>{{eventName}}</h1>
+    <h1>{{name}}</h1>
     <div>
-        <h4>{{eventDate}} &nbsp</h4>
-        <h4>{{eventTime}}</h4>
+        <h4>{{date}} &nbsp</h4>
+        <h4>{{time}}</h4>
     </div>
-    <p>{{eventDescription}}</p>
-    <p>{{eventAgenda}}</p>
+    <p>{{description}}</p>
+    <p>{{agenda}}</p>
 </div>
 <script id="pollList" type="text/x-handlebars-template">
     {{#pollArray}}
@@ -32,14 +32,14 @@
         <p><b>Answers:</b></p>
         {{#answers}}
         <div>
-            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label
-                for="{{thisAnswerID}}">{{text}}</label>
-            <div id="votes" class="w3-hide"><label
-                    for="{{thisAnswerID}}">Votes: {{answerCounter}}</label></div>
-
+            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}">
+            <label for="{{thisAnswerID}}">{{text}}</label>
+            <div class="votes">
+                <label for="{{thisAnswerID}}" name="votes{{../id}}"></label>
+            </div>
         </div>
         {{/answers}}
-        <button id="voteButton{{../id}}" onclick="vote({{id}}),showStatistics({{id}})">VOTE!</button>
+        <button id="voteButton{{id}}" class="" onclick="vote({{id}})">VOTE!</button>
         <hr/>
     </div>
     {{/pollArray}}

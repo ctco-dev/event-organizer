@@ -1,7 +1,9 @@
 package lv.ctco.javaschool.eventorganaizer.control;
 
+import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.entity.Answer;
 import lv.ctco.javaschool.eventorganaizer.entity.Poll;
+import lv.ctco.javaschool.eventorganaizer.entity.UserPoll;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -14,9 +16,6 @@ import java.util.Optional;
 public class AnswersStore {
     @PersistenceContext
     private EntityManager em;
-
-    @Inject
-    private AnswersStore answersStore;
 
     public List<Answer> getAnswersByPollID(Poll poll) {
         return em.createQuery("select a from Answer a" +

@@ -15,9 +15,9 @@
     <button onclick="goToTheMainPage()">Go to the main page</button>
 </p>
 <div id="event-field" class="w3-hide">
-    <h2>Event name: {{eventName}}</h2>
-    <h4>Event data: {{eventDate}}</h4>
-    <h5>Event ID: {{eventID}}</h5>
+    <h2>Event name: {{name}}</h2>
+    <h4>Event data: {{date}}</h4>
+    <h5>Event ID: {{id}}</h5>
 </div>
 <form name="pollform" method="post" style="padding: 15px">
     <p><b>Question</b></p>
@@ -38,8 +38,8 @@
         <p><b>Answers:</b></p>
         {{#answers}}
         <div>
-            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}"><label
-                for="{{thisAnswerID}}">{{text}}</label>
+            <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}">
+            <label for="{{thisAnswerID}}">{{text}}</label>
         </div>
         {{/answers}}
         <p><b>Feedback poll:</b></p>
