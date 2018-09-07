@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title id="title">{{eventName}}</title>
+    <title id="title">{{name}}</title>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
@@ -19,10 +19,10 @@
     <button type="button" onclick="addEvent()">Add Event</button>
 </div>
 <div id="event-field" class="w3-hide">
-    <h1>{{eventName}}</h1>
+    <h1>{{name}}</h1>
     <div>
-        <h4>{{eventDate}} &nbsp</h4>
-        <h4>{{eventTime}}</h4>
+        <h4>{{date}} &nbsp</h4>
+        <h4>{{time}}</h4>
     </div>
     <p>{{description}}</p>
     <p>{{agenda}}</p>
@@ -42,7 +42,7 @@
             </div>
         </div>
         {{/answers}}
-        <button id="voteButton{{../id}}" onclick="vote({{id}})">VOTE!</button>
+        <button id="voteButton{{id}}" class="" onclick="vote({{id}})">VOTE!</button>
         <hr/>
     </div>
     {{/pollArray}}

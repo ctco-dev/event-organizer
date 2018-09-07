@@ -51,7 +51,7 @@ public class Mapper {
         List<AnswerDto> answerDtos = new ArrayList<>();
         answerList.forEach(al -> {
             AnswerDto a = new AnswerDto();
-            a.setAnswerCounter(al.getCounter());
+            a.setCounter(al.getCounter());
             a.setThisAnswerID(al.getId());
             answerDtos.add(a);
         });

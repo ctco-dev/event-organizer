@@ -1,6 +1,7 @@
 package lv.ctco.javaschool.eventorganaizer.boundary;
 
 import lv.ctco.javaschool.auth.control.UserStore;
+import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.AnswersStore;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
 import lv.ctco.javaschool.eventorganaizer.control.FeedbackStore;
@@ -16,13 +17,12 @@ import lv.ctco.javaschool.eventorganaizer.entity.Poll;
 import lv.ctco.javaschool.eventorganaizer.entity.PollDto;
 import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
 import lv.ctco.javaschool.eventorganaizer.entity.TopicListDto;
+import lv.ctco.javaschool.eventorganaizer.entity.UserPoll;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -35,9 +35,6 @@ import java.util.stream.Collectors;
 @Path("/event")
 @Stateless
 public class EventOrganizationApi {
-    @PersistenceContext
-    private EntityManager em;
-//
     @Inject
     private UserStore userStore;
 
@@ -91,7 +88,7 @@ public class EventOrganizationApi {
         Optional<Event> event = eventStore.getEventById(id);
         if (event.isPresent()) {
             Event e = event.get();
-            return new EventDto(e.getEventName(), e.getDescription(), e.getEventDate(), e.getEventTime(), e.getId(), e.getAgenda(), e.getStatus());
+            return new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getTime(), e.getId(), e.getAgenda(), e.getStatus());
         } else {
             throw new EntityNotFoundException();
         }
@@ -103,7 +100,7 @@ public class EventOrganizationApi {
     public List<EventDto> getAllAuthorEvents() {
         List<Event> event = eventStore.getAuthorEvents(userStore.getCurrentUser());
         return event.stream()
-                .map(e -> new EventDto(e.getEventName(), e.getDescription(), e.getEventDate(), e.getEventTime(), e.getId(), e.getAgenda(), e.getStatus()))
+                .map(e -> new EventDto(e.getName(), e.getDescription(), e.getDate(), e.getTime(), e.getId(), e.getAgenda(), e.getStatus()))
                 .collect(Collectors.toList());
     }
 
@@ -129,12 +126,33 @@ public class EventOrganizationApi {
 
     @POST
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/{id}/vote")
+    @Path("/vote/{id}")
     public void updateVoteCounter(@PathParam("id") Long id) {
-        Optional<Answer> answer = answersStore.getAnswerByID(id);
-        if (answer.isPresent()) {
-            answer.get().setCounter(answer.get().getCounter() + 1);
+        User currentUser = userStore.getCurrentUser();
+        Optional<Answer> userAnswer = answersStore.getAnswerByID(id);
+        if (userAnswer.isPresent()) {
+            Answer answer = userAnswer.get();
+            Optional<UserPoll> userVote = pollStore.getUserPollByUserAndPoll(currentUser, answer.getPoll());
+            if (userVote.isPresent()) {
+                throw new EntityNotFoundException();
+            }
+            registerNewUserPoll(currentUser, answer);
         }
+    }
+
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/{id}/getAnswers")
+    public List<PollDto> getPollsByEventId() {
+        User currentUser = userStore.getCurrentUser();
+        List<UserPoll> userPollList = pollStore.getUserPollByUser(currentUser);
+        List<PollDto> pollDtos = new ArrayList<>();
+        userPollList.forEach(up -> {
+            PollDto pollDto = new PollDto();
+            pollDto.setId(up.getPoll().getId());
+            pollDtos.add(pollDto);
+        });
+        return pollDtos;
     }
 
     @GET
@@ -165,7 +183,8 @@ public class EventOrganizationApi {
     @Path("/{id}/getVotingPoll")
     public List<PollDto> getVotingForEvent(@PathParam("id") Long id) {
         List<Poll> poll = pollStore.getVotingPoll(id);
-        return mapper.mapPollToDto(poll);
+        List<PollDto> pollDtos = mapper.mapPollToDto(poll);
+        return pollDtos;
     }
 
     @POST
@@ -180,6 +199,14 @@ public class EventOrganizationApi {
     @RolesAllowed({"USER", "ADMIN"})
     public void deletePoll(@PathParam("id") Long id) throws IllegalArgumentException {
         pollStore.deletePollById(id);
+    }
+
+    private void registerNewUserPoll(User currentUser, Answer answer) {
+        UserPoll newUserPoll = new UserPoll();
+        newUserPoll.setUser(currentUser);
+        newUserPoll.setPoll(answer.getPoll());
+        pollStore.persistUserPoll(newUserPoll);
+        answer.setCounter(answer.getCounter() + 1);
     }
 
 

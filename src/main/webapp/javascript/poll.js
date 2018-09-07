@@ -17,7 +17,6 @@ function buildData() {
     data["answers"] = splitAnswers();
     var isFeedback = document.getElementById("isFeedback");
     data["isFeedback"] = isFeedback.checked;
-    console.log(data);
     return data;
 }
 
@@ -51,7 +50,6 @@ function getPollFromDB() {
         } else {
             document.getElementById("displayPoll").classList.remove("w3-hide");
             var context = {pollArray: poll};
-            console.log(context);
             var source = document.getElementById("pollList").innerHTML;
             var template = Handlebars.compile(source);
             document.getElementById("displayPoll").innerHTML = template(context);
@@ -82,7 +80,6 @@ function loadEvent() {
     }).then(function (response) {
         return response.json();
     }).then(function (event) {
-        console.log(JSON.stringify(event));
         if (event !== undefined) {
             document.getElementById("event-field").classList.remove("w3-hide");
             w3.displayObject("event-field", event);

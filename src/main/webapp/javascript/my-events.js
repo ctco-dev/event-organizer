@@ -16,7 +16,6 @@ function getEventsFromDB() {
     }).then(function (response) {
         return response.json();
     }).then(function (events) {
-        console.log(events);
         if (events.length > 0) {
             document.getElementById("eventElement").classList.remove("w3-hide");
             w3DisplayData("myevent-list", new EventList(events));
