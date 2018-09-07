@@ -11,23 +11,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-    @Stateless
-    public class FeedbackStore {
+@Stateless
+public class FeedbackStore {
+    @PersistenceContext
+    private EntityManager em;
 
-        @PersistenceContext
-        private EntityManager em;
-
-        @Inject
-        private FeedbackStore feedbackStore;
-
-        public List<Feedback> getFeedbackForEvent(Event event) {
-            return em.createQuery("select p from Feedback p" +
-                    " where p.event=:event", Feedback.class)
-                    .setParameter("event", event)
-                    .getResultList();
-        }
-
-        public void persistFeedback(Feedback feedback) {
-            em.persist(feedback);
-        }
+    public List<Feedback> getFeedbackForEvent(Event event) {
+        return em.createQuery("select p from Feedback p" +
+                " where p.event=:event", Feedback.class)
+                .setParameter("event", event)
+                .getResultList();
     }
+
+    public void persistFeedback(Feedback feedback) {
+        em.persist(feedback);
+    }
+}

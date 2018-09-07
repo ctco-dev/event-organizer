@@ -55,7 +55,7 @@
 </div>
 <div id="feedbackInput" class="w3-hide">
     <label>Feedback:</label><br/>
-    <textarea class="form-control" rows="5" id="comment"></textarea></br>
+    <textarea class="form-control" rows="5" id="comment"></textarea><br/>
     <button type="submit" id="save" onclick="checkIfConatainsText()">Save</button>
 </div>
 

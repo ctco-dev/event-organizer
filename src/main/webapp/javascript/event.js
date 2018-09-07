@@ -20,7 +20,6 @@ function loadEvent() {
             document.getElementById("feedback").classList.add("w3-hide");
             getVotingPoll();
             hidePoll(id);
-        } else if (event.status === "CLOSED") {
         } else if (event.eventStatus === "FINISHED") {
             document.getElementById("voting").classList.add("w3-hide");
             document.getElementById("feedback").classList.remove("w3-hide");
@@ -32,10 +31,7 @@ function checkIfConatainsText() {
     var str1 = document.getElementById("comment").value;
     if (document.getElementById("comment").value.replace(/\s/g, '').length) {
         saveTextFeedback()
-    }
-    else {
-        window.alert("Please enter text!");
-    }
+    } else {window.alert("Please enter text!");}
 }
 function saveTextFeedback() {
     var feedbackText = document.getElementById("comment").value;
