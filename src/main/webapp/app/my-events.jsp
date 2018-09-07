@@ -11,16 +11,16 @@
 </head>
 <body onload="getEventsFromDB()">
 <header id="header"><h1>My Events</h1></header>
-<p>
-    <button onclick="goToTheMainPage()">Go to the main page</button>
+<p class="ml-15">
+    <button class="w3-button w3-section w3-teal w3-ripple" onclick="goToTheMainPage()">Main page</button>
 </p>
 <ul class="w3-ul" id="myevent-list">
     <li w3-repeat="eventList" type="text" id="eventElement" class="w3-hide">
-        <a href="<c:url value='/app/event.jsp'/>?id={{id}}">{{name}}</a>
-        <p>
-            <button onclick="goToEditPage('{{id}}')" id="goToEdit">Edit</button>
-            <button onclick="deleteEvent('{{id}}'),window.location.reload()" id="delete">Delete</button>
-            <button onclick="goToCreatePollPage('{{id}}')" id="createPoolButton">Create Pool</button>
+        <a class="topic-list-a" href="<c:url value='/app/event.jsp'/>?id={{id}}">{{name}}</a>
+        <p class="event-list-p">
+            <button class="w3-button w3-section w3-teal w3-ripple" onclick="goToEditPage('{{id}}')" id="goToEdit">Edit</button>
+            <button class="w3-button w3-section w3-teal w3-ripple" onclick="deleteEvent('{{id}}'),window.location.reload()" id="delete">Delete</button>
+            <button class="w3-button w3-section w3-teal w3-ripple" onclick="goToCreatePollPage('{{id}}')" id="createPoolButton">Create Pool</button>
         </p>
     </li>
 </ul>

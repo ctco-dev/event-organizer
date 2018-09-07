@@ -11,10 +11,10 @@
 </head>
 <body onload="init()">
 <header id="header"><h1>Event Poll</h1></header>
-<p>
-    <button onclick="goToTheMainPage()">Go to the main page</button>
+<p class="ml-15">
+    <button class="w3-button w3-section w3-teal w3-ripple" onclick="goToTheMainPage()">Main page</button>
 </p>
-<div id="event-field" class="w3-hide">
+<div id="event-field" class="ml-15 w3-hide">
     <h2>Event name: {{name}}</h2>
     <h4>Event data: {{date}}</h4>
     <h5>Event ID: {{id}}</h5>
@@ -28,7 +28,7 @@
     <p><input type="checkbox" id="isFeedback"></p>
 </form>
 <p>
-    <button onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
+    <button class="w3-button w3-section w3-teal w3-ripple" onclick="savePollToDB()" style="margin: 0px 0px 5px 15px">Create new Poll</button>
 </p>
 <script id="pollList" type="text/x-handlebars-template">
     {{#pollArray}}
