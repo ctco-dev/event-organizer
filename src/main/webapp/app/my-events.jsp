@@ -16,11 +16,11 @@
 </p>
 <ul class="w3-ul" id="myevent-list">
     <li w3-repeat="eventList" type="text" id="eventElement" class="w3-hide">
-        <a href="<c:url value='/app/event.jsp'/>?id={{eventID}}">{{eventName}}</a>
+        <a href="<c:url value='/app/event.jsp'/>?id={{id}}">{{name}}</a>
         <p>
-            <button onclick="goToEditPage('{{eventID}}')" id="goToEdit">Edit</button>
-            <button onclick="deleteEvent('{{eventID}}'),window.location.reload()" id="delete">Delete</button>
-            <button onclick="goToCreatePollPage('{{eventID}}')" id="createPoolButton">Create Pool</button>
+            <button onclick="goToEditPage('{{id}}')" id="goToEdit">Edit</button>
+            <button onclick="deleteEvent('{{id}}'),window.location.reload()" id="delete">Delete</button>
+            <button onclick="goToCreatePollPage('{{id}}')" id="createPoolButton">Create Pool</button>
         </p>
     </li>
 </ul>

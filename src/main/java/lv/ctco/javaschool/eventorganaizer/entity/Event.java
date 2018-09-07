@@ -22,9 +22,9 @@ public class Event {
     @JoinColumn(name = "user_id")
     private User author;
 
-    private String eventName;
-    private String eventDate;
-    private String eventTime;
+    private String name;
+    private String date;
+    private String time;
     private String description;
     private String agenda;
 
@@ -34,13 +34,13 @@ public class Event {
     public Event() {
     }
 
-    public Event(String eventName, User author, String description, String agenda, String eventDate, String eventTime) {
-        this.eventName = eventName;
+    public Event(String name, User author, String description, String agenda, String date, String time) {
+        this.name = name;
         this.author = author;
         this.description = description;
         this.agenda = agenda;
-        this.eventDate = eventDate;
-        this.eventTime = eventTime;
+        this.date = date;
+        this.time = time;
         this.status = EventStatus.OPEN;
     }
 
@@ -60,12 +60,12 @@ public class Event {
         return id;
     }
 
-    public String getEventName() {
-        return eventName;
+    public String getName() {
+        return name;
     }
 
-    public void setEventName(String name) {
-        this.eventName = name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public User getAuthor() {
@@ -76,24 +76,24 @@ public class Event {
         this.author = author;
     }
 
-    public String getEventDate() {
-        return eventDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setEventDate(String date) {
-        this.eventDate = date;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getEventTime() {
-        return eventTime;
+    public String getTime() {
+        return time;
     }
 
-    public void setEventTime(String time) {
-        this.eventTime = time;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public void setDescription(String description) {

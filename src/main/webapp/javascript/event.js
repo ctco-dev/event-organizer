@@ -10,18 +10,17 @@ function loadEvent() {
     }).then(function (response) {
         return response.json();
     }).then(function (event) {
-        console.log(JSON.stringify(event));
         if (event !== undefined) {
             document.getElementById("event-field").classList.remove("w3-hide");
             w3.displayObject("title", event);
             w3.displayObject("event-field", event);
         }
-        if (event.eventStatus === "OPEN") {
+        if (event.status === "OPEN") {
             document.getElementById("voting").classList.remove("w3-hide");
             document.getElementById("feedback").classList.add("w3-hide");
             getVotingPoll();
             hidePoll(id);
-        } else if (event.eventStatus === "CLOSED") {
+        } else if (event.status === "CLOSED") {
             document.getElementById("voting").classList.add("w3-hide");
             document.getElementById("feedback").classList.remove("w3-hide");
             getFeedbackPoll();
@@ -39,7 +38,6 @@ function getFeedbackPoll() {
     }).then(function (response) {
         return response.json();
     }).then(function (poll) {
-        console.log(JSON.stringify(poll));
         if (poll.length === 0) {
             document.getElementById("feedback").classList.add("w3-hide");
         } else {
@@ -53,7 +51,6 @@ function getFeedbackPoll() {
 }
 
 function getVotingPoll() {
-    console.log("id: " + id);
     fetch('/api/event/' + id + '/getVotingPoll/', {
         "method": "GET",
         headers: {
@@ -63,7 +60,6 @@ function getVotingPoll() {
     }).then(function (response) {
         return response.json();
     }).then(function (poll) {
-        console.log(JSON.stringify(poll));
         if (poll.length === 0) {
             document.getElementById("voting").classList.add("w3-hide");
         } else {
@@ -79,7 +75,6 @@ function getVotingPoll() {
 function vote(id) {
     var checked = document.querySelector('input[name=quest' + id + ']:checked');
     var checkedAddr = checked.id;
-    console.log("answerId:" + checkedAddr);
     fetch('/api/event/vote/' + checkedAddr, {
         "method": "POST",
         headers: {
@@ -102,12 +97,11 @@ function showStatistics(x) {
     }).then(function (response) {
         return response.json();
     }).then(function (answers) {
-        console.log(answers);
         var input = document.getElementsByName("quest" + x);
-        var element = document.getElementsByName("votes" + x);
-        for (i = 0; i < document.getElementsByName("votes" + x).length; i++) {
+        var votes = document.getElementsByName("votes" + x);
+        for (i = 0; i < votes.length; i++) {
             input[i].disabled = true;
-            element[i].innerHTML = "Votes:" + answers[i].answerCounter;
+            votes[i].innerHTML = "Votes:" + answers[i].counter;
         }
     });
 }
@@ -126,7 +120,6 @@ function hidePoll() {
     }).then(function (response) {
         return response.json();
     }).then(function (answers) {
-        console.log(JSON.stringify(answers));
         if (Object.keys(answers).length > 0) {
             for (i = 0; i < Object.keys(answers).length; i++) {
                 showStatistics(answers[Object.keys(answers)[i]].id);

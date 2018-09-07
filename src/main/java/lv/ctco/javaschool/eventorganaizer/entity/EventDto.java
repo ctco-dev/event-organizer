@@ -1,41 +1,41 @@
 package lv.ctco.javaschool.eventorganaizer.entity;
 
 public class EventDto {
-    private String eventName;
+    private String name;
     private String description;
-    private String eventDate;
-    private String eventTime;
-    private Long eventID;
+    private String date;
+    private String time;
+    private Long id;
     private String agenda;
-    private EventStatus eventStatus;
+    private EventStatus status;
 
     public EventDto() {
     }
 
     public EventDto(String name, String description, String date, String time, Long id, String agenda, EventStatus status) {
-        this.eventName = name;
+        this.name = name;
         this.description = description;
-        this.eventDate = date;
-        this.eventTime = time;
-        this.eventID = id;
+        this.date = date;
+        this.time = time;
+        this.id = id;
         this.agenda = agenda;
-        this.eventStatus = status;
+        this.status = status;
     }
 
-    public long getEventID() {
-        return eventID;
+    public long getId() {
+        return id;
     }
 
-    public void setEventID(long eventID) {
-        this.eventID = eventID;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getEventName() {
-        return eventName;
+    public String getName() {
+        return name;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -46,12 +46,12 @@ public class EventDto {
         this.description = description;
     }
 
-    public String getEventDate() {
-        return eventDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setEventDate(String eventDate) {
-        this.eventDate = eventDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getAgenda() {
@@ -62,19 +62,19 @@ public class EventDto {
         this.agenda = agenda;
     }
 
-    public String getEventTime() {
-        return eventTime;
+    public String getTime() {
+        return time;
     }
 
-    public void setEventTime(String eventTime) {
-        this.eventTime = eventTime;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public EventStatus getEventStatus() {
-        return eventStatus;
+    public EventStatus getStatus() {
+        return status;
     }
 
-    public void setEventStatus(EventStatus eventStatus) {
-        this.eventStatus = eventStatus;
+    public void setStatus(EventStatus status) {
+        this.status = status;
     }
 }

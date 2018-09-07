@@ -85,7 +85,7 @@ class EventOrganizationApiTest {
     void testFindById() {
         when(eventStore.getEventById((long) 1))
                 .thenReturn(java.util.Optional.ofNullable(event));
-        assertEquals(eventDto.getEventID(), eventOrganizationApi.getEventById((long) 1).getEventID());
+        assertEquals(eventDto.getId(), eventOrganizationApi.getEventById((long) 1).getId());
     }
 
     @Test
@@ -111,8 +111,8 @@ class EventOrganizationApiTest {
         assertEquals(1, result.size());
 
         EventDto eventDto = result.get(0);
-        assertEquals("qwe", eventDto.getEventName());
-        assertEquals(1, eventDto.getEventID());
+        assertEquals("qwe", eventDto.getName());
+        assertEquals(1, eventDto.getId());
     }
 
     @Test
@@ -129,23 +129,23 @@ class EventOrganizationApiTest {
     private Event initEvent() {
         Event event = new Event();
         event.setId((long) 1);
-        event.setEventName("qwe");
+        event.setName("qwe");
         event.setDescription("asdf");
         event.setStatus(EventStatus.OPEN);
         event.setAuthor(testUser);
         event.setAgenda("test");
-        event.setEventDate("12.09.2018");
+        event.setDate("12.09.2018");
         return event;
     }
 
     private EventDto initEventDto(Event event) {
         EventDto eventDto = new EventDto();
-        eventDto.setEventName(event.getEventName());
-        eventDto.setEventDate(event.getEventDate());
+        eventDto.setName(event.getName());
+        eventDto.setDate(event.getDate());
         eventDto.setDescription(event.getDescription());
-        eventDto.setEventID(event.getId());
+        eventDto.setId(event.getId());
         eventDto.setAgenda(event.getAgenda());
-        eventDto.setEventDate(event.getEventDate());
+        eventDto.setDate(event.getDate());
         return eventDto;
     }
 }

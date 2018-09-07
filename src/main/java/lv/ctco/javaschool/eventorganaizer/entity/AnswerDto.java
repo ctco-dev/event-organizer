@@ -2,7 +2,7 @@ package lv.ctco.javaschool.eventorganaizer.entity;
 
 public class AnswerDto {
     private Long thisAnswerID;
-    private int answerCounter;
+    private int counter;
     private String text;
 
     public AnswerDto() {
@@ -10,7 +10,7 @@ public class AnswerDto {
 
     public AnswerDto(Long answerID, int counter) {
         this.thisAnswerID = answerID;
-        this.answerCounter = counter;
+        this.counter = counter;
     }
 
     public Long getThisAnswerID() {
@@ -21,12 +21,12 @@ public class AnswerDto {
         this.thisAnswerID = thisAnswerID;
     }
 
-    public int getAnswerCounter() {
-        return answerCounter;
+    public int getCounter() {
+        return counter;
     }
 
-    public void setAnswerCounter(int answerCounter) {
-        this.answerCounter = answerCounter;
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 
     public String getText() {

@@ -18,7 +18,7 @@ public class Answer {
     @JoinColumn(name = "poll_id")
     private Poll poll;
 
-    private int counter = 0;
+    private int counter;
 
     public String getText() {
         return text;
