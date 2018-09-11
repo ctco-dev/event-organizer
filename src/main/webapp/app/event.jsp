@@ -51,6 +51,9 @@
 <div id="voting" class="w3-hide">
     VOTING
 </div>
+<div id="statistics" class="w3-hide">
+    STATISTICS
+</div>
 <div id="feedbackInput" class="w3-hide">
     <label>Feedback:</label><br/>
     <textarea class="form-control" rows="5" id="comment"></textarea><br/>
@@ -68,5 +71,22 @@
 <div id="feedbackText" class="w3-hide">
     FEEDBACKTEXT
 </div>
+
+<script id="statisticsList" type="text/x-handlebars-template">
+    {{#statisticsArray}}
+    <div>
+        <h3>{{question}}</h3>
+        {{#answers}}
+        <div id="statistics{{../id}}">
+            <label for="{{thisAnswerID}}">{{text}}</label>
+            <div class="votes">
+                <label for="{{thisAnswerID}}" name="votes{{../id}}"></label>
+            </div>
+        </div>
+        {{/answers}}
+        <hr/>
+    </div>
+    {{/statisticsArray}}
+</script>
 </body>
 </html>

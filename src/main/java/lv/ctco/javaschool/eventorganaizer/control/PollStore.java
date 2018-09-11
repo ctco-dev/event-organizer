@@ -52,6 +52,12 @@ public class PollStore {
                 .getResultStream()
                 .findFirst();
     }
+    public List<Poll> getAllPolls(Long id){
+        return em.createQuery("select p from Poll p" +
+                " where p.eventID = :id", Poll.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
 
     public Optional<UserPoll> getUserPollByUserAndPoll(User user, Poll poll) {
         return em.createQuery("select ua from UserPoll ua" +

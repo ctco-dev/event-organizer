@@ -29,7 +29,38 @@ function loadEvent() {
             getTextFeedback();
             getFeedbackPoll();
         }
+        else if (event.status==="CLOSED"){
+            getStatisticsVoting();
+            getTextFeedback();
+            document.getElementById("voting").classList.add("closed");
+        }
     })
+}
+
+function getStatisticsVoting() {
+        fetch('/api/event/' + id + '/getPolls/', {
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        }).then(function (poll) {
+            if (poll.length === 0) {
+                document.getElementById("statistics").classList.add("w3-hide");
+            } else {
+                document.getElementById("statistics").classList.remove("w3-hide");
+                var context = {statisticsArray: poll};
+                var source = document.getElementById("statisticsList").innerHTML;
+                var template = Handlebars.compile(source);
+                document.getElementById("statistics").innerHTML = template(context);
+                for(i=0;i<poll.length;i++)
+                {
+                   showVotes(poll[i].id);
+                }
+            }
+        })
 }
 function checkIfConatainsText() {
     var str1 = document.getElementById("comment").value;
@@ -73,6 +104,12 @@ function getFeedbackPoll() {
             document.getElementById("feedback").classList.remove("w3-hide");
             var context = {pollArray: poll};
             var source = document.getElementById("pollList").innerHTML;
+            for(i-0;i<poll.length;i++)
+            {
+                if(poll[i].isFeedback){
+
+                }
+            }
             var template = Handlebars.compile(source);
             document.getElementById("feedback").innerHTML = template(context);
         }
@@ -154,6 +191,23 @@ function showStatistics(x) {
         var votes = document.getElementsByName("votes" + x);
         for (i = 0; i < votes.length; i++) {
             input[i].disabled = true;
+            votes[i].innerHTML = "Votes:" + answers[i].counter;
+        }
+    });
+}
+
+function showVotes(x) {
+    fetch('/api/event/' + x + '/getVotes/', {
+        "method": "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(function (response) {
+        return response.json();
+    }).then(function (answers) {
+        var votes = document.getElementsByName("votes" + x);
+        for (i = 0; i < votes.length; i++) {
             votes[i].innerHTML = "Votes:" + answers[i].counter;
         }
     });

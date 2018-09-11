@@ -154,6 +154,13 @@ public class EventOrganizationApi {
         });
         return pollDtos;
     }
+    @GET
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/{id}/getPolls")
+    public List<PollDto> getAllPolls(@PathParam("id") Long id) {
+        List<Poll> poll = pollStore.getAllPolls(id);
+        return mapper.mapPollToDto(poll);
+    }
 
     @GET
     @RolesAllowed({"ADMIN", "USER"})
@@ -217,7 +224,7 @@ public class EventOrganizationApi {
         Feedback feedback = new Feedback();
         feedback.setEvent(eventStore.getEventById(id).get());
         feedback.setFeedbackAuthor(userStore.getCurrentUser().getUsername());
-        feedbackText=feedbackText.replace('"',' ');
+        feedbackText = feedbackText.replace('"', ' ');
         feedback.setFeedbackText(feedbackText);
         feedbackStore.persistFeedback(feedback);
     }
