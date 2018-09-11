@@ -10,6 +10,7 @@ function loadEvent() {
     }).then(function (response) {
         return response.json();
     }).then(function (event) {
+        console.log(event.status);
         if (event !== undefined) {
             document.getElementById("event-field").classList.remove("w3-hide");
             w3.displayObject("title", event);
@@ -20,9 +21,12 @@ function loadEvent() {
             document.getElementById("feedback").classList.add("w3-hide");
             getVotingPoll();
             hidePoll(id);
-        } else if (event.eventStatus === "FINISHED") {
+        } else if (event.status === "FINISHED") {
+            console.log('1');
             document.getElementById("voting").classList.add("w3-hide");
             document.getElementById("feedback").classList.remove("w3-hide");
+            document.getElementById("feedbackInput").classList.remove("w3-hide");
+            getTextFeedback();
             getFeedbackPoll();
         }
     })
@@ -31,8 +35,11 @@ function checkIfConatainsText() {
     var str1 = document.getElementById("comment").value;
     if (document.getElementById("comment").value.replace(/\s/g, '').length) {
         saveTextFeedback()
-    } else {window.alert("Please enter text!");}
+    } else {
+        window.alert("Please enter text!");
+    }
 }
+
 function saveTextFeedback() {
     var feedbackText = document.getElementById("comment").value;
     feedbackText = feedbackText.replace(/(?:\r\n|\r|\n)/g, ' ');
