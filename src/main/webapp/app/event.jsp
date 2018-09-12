@@ -10,21 +10,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="../javascript/event.js"></script>
     <link rel="stylesheet" type="text/css" href="../style.css">
+    <link rel="stylesheet" type="text/css" href="../event-style.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body class="event-page" onload="loadEvent()">
-<div id="menu">
+<div id="event-name"><header id="header"><h1>{{name}}</h1></header></div>
+<div id="menu" class="active-event">
     <button class="w3-button w3-section w3-teal w3-ripple" type="button" onclick="main()">Back To Main</button>
     <button class="w3-button w3-section w3-teal w3-ripple" type="button" onclick="myEvents()">My Events</button>
     <button class="w3-button w3-section w3-teal w3-ripple" type="button" onclick="addEvent()">Add Event</button>
 </div>
 <div id="event-field" class="w3-hide">
-    <h1>{{name}}</h1>
     <div>
-        <h3>{{date}}</h3>
-        <h3>{{time}}</h3>
-        <h3>{{description}}</h3>
-        <h3>{{agenda}}</h3>
+        <h3 id="date">{{date}}</h3>
+        <h3 id="time">{{time}}</h3>
+        <h3 id="description">{{description}}</h3>
+        <h3 id="agenda">{{agenda}}</h3>
     </div>
 </div>
 <script id="pollList" type="text/x-handlebars-template">
@@ -57,7 +58,7 @@
 <div id="feedbackInput" class="w3-hide">
     <label>Feedback:</label><br/>
     <textarea class="form-control" rows="5" id="comment"></textarea><br/>
-    <button type="submit" id="save" onclick="checkIfConatainsText()">Save</button>
+    <button type="submit" id="save" class="w3-button w3-section w3-teal w3-ripple" onclick="checkIfConatainsText()">Save</button>
 </div>
 
 <script id="feedbackList" type="text/x-handlebars-template">
@@ -84,6 +85,8 @@
             </div>
         </div>
         {{/answers}}
+        <hr>
+        <label id="totalVotes{{id}}">{{id}}</label>
         <hr/>
     </div>
     {{/statisticsArray}}

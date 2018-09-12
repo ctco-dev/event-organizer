@@ -10,11 +10,11 @@ function loadEvent() {
     }).then(function (response) {
         return response.json();
     }).then(function (event) {
-        console.log(event.status);
         if (event !== undefined) {
             document.getElementById("event-field").classList.remove("w3-hide");
             w3.displayObject("title", event);
             w3.displayObject("event-field", event);
+            w3.displayObject("event-name", event);
         }
         if (event.status === "OPEN") {
             document.getElementById("voting").classList.remove("w3-hide");
@@ -22,14 +22,13 @@ function loadEvent() {
             getVotingPoll();
             hidePoll(id);
         } else if (event.status === "FINISHED") {
-            console.log('1');
             document.getElementById("voting").classList.add("w3-hide");
             document.getElementById("feedback").classList.remove("w3-hide");
             document.getElementById("feedbackInput").classList.remove("w3-hide");
             getTextFeedback();
             getFeedbackPoll();
         }
-        else if (event.status==="CLOSED"){
+        else if (event.status === "CLOSED") {
             getStatisticsVoting();
             getTextFeedback();
             document.getElementById("voting").classList.add("closed");
@@ -38,30 +37,31 @@ function loadEvent() {
 }
 
 function getStatisticsVoting() {
-        fetch('/api/event/' + id + '/getPolls/', {
-            "method": "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+    document.getElementById("feedbackText").classList.add("closed");
+    fetch('/api/event/' + id + '/getPolls/', {
+        "method": "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(function (response) {
+        return response.json();
+    }).then(function (poll) {
+        if (poll.length === 0) {
+            document.getElementById("statistics").classList.add("w3-hide");
+        } else {
+            document.getElementById("statistics").classList.remove("w3-hide");
+            var context = {statisticsArray: poll};
+            var source = document.getElementById("statisticsList").innerHTML;
+            var template = Handlebars.compile(source);
+            document.getElementById("statistics").innerHTML = template(context);
+            for (i = 0; i < poll.length; i++) {
+                showVotes(poll[i].id);
             }
-        }).then(function (response) {
-            return response.json();
-        }).then(function (poll) {
-            if (poll.length === 0) {
-                document.getElementById("statistics").classList.add("w3-hide");
-            } else {
-                document.getElementById("statistics").classList.remove("w3-hide");
-                var context = {statisticsArray: poll};
-                var source = document.getElementById("statisticsList").innerHTML;
-                var template = Handlebars.compile(source);
-                document.getElementById("statistics").innerHTML = template(context);
-                for(i=0;i<poll.length;i++)
-                {
-                   showVotes(poll[i].id);
-                }
-            }
-        })
+        }
+    })
 }
+
 function checkIfConatainsText() {
     var str1 = document.getElementById("comment").value;
     if (document.getElementById("comment").value.replace(/\s/g, '').length) {
@@ -82,7 +82,6 @@ function saveTextFeedback() {
         },
         body: JSON.stringify(feedbackText)
     }).then(function (response) {
-        console.log(feedbackText);
         document.getElementById("comment").value = "";
         getTextFeedback();
     });
@@ -104,9 +103,8 @@ function getFeedbackPoll() {
             document.getElementById("feedback").classList.remove("w3-hide");
             var context = {pollArray: poll};
             var source = document.getElementById("pollList").innerHTML;
-            for(i-0;i<poll.length;i++)
-            {
-                if(poll[i].isFeedback){
+            for (i - 0; i < poll.length; i++) {
+                if (poll[i].isFeedback) {
 
                 }
             }
@@ -148,7 +146,6 @@ function getTextFeedback() {
     }).then(function (response) {
         return response.json();
     }).then(function (feedback) {
-        console.log(JSON.stringify(feedback));
         if (feedback.length === 0) {
             document.getElementById("feedbackText").classList.add("w3-hide");
         } else {
@@ -187,12 +184,15 @@ function showStatistics(x) {
     }).then(function (response) {
         return response.json();
     }).then(function (answers) {
+        var total = 0;
         var input = document.getElementsByName("quest" + x);
         var votes = document.getElementsByName("votes" + x);
         for (i = 0; i < votes.length; i++) {
             input[i].disabled = true;
             votes[i].innerHTML = "Votes:" + answers[i].counter;
+            total = total + answers[i].counter;
         }
+
     });
 }
 
@@ -207,9 +207,13 @@ function showVotes(x) {
         return response.json();
     }).then(function (answers) {
         var votes = document.getElementsByName("votes" + x);
+        var totalLabel = document.getElementById("totalVotes" + x);
+        var totalVoters =0;
         for (i = 0; i < votes.length; i++) {
             votes[i].innerHTML = "Votes:" + answers[i].counter;
+            totalVoters=totalVoters+answers[i].counter;
         }
+        totalLabel.innerHTML = "Total voters:"+totalVoters;
     });
 }
 

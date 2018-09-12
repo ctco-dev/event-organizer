@@ -1,3 +1,7 @@
+body{
+    padding-left: 5%;
+    padding-right: 5%;
+}
 .index-page-body, h1 {
     font-family: "Raleway", sans-serif;
 }
@@ -23,7 +27,9 @@ textarea {
     width: 100%;
     height: 60px;
 }
-
+#topic-id{
+    float:right;
+}
 #add, #edit, #header, #title {
     text: bold;
     text-align: center;
@@ -61,8 +67,7 @@ a {
 .event-page {
     margin: 30px;
 }
-
-.start-page {
+.active-event{
     margin-left: 30px;
 }
 

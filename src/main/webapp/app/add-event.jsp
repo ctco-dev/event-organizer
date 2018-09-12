@@ -29,8 +29,8 @@
     <p id="setStatus"><b>Set status</b></p>
     <p id="statuses">
         <input type="radio" id="open" name="event_status" value="open" title="open"/>Open<br/>
-        <input type="radio" id="closed" name="event_status" value="closed" title="closed"/>Closed<br/>
-        <input type="radio" id="finished" name="event_status" value="finished" title="finished"/>Finished
+        <input type="radio" id="finished" name="event_status" value="finished" title="finished"/>Finished</br>
+        <input type="radio" id="closed" name="event_status" value="closed" title="closed"/>Closed
     </p>
 </form>
 <div id="buttons">
