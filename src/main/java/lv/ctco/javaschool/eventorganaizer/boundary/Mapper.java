@@ -1,11 +1,6 @@
 package lv.ctco.javaschool.eventorganaizer.boundary;
 
-import lv.ctco.javaschool.eventorganaizer.entity.Answer;
-import lv.ctco.javaschool.eventorganaizer.entity.AnswerDto;
-import lv.ctco.javaschool.eventorganaizer.entity.Feedback;
-import lv.ctco.javaschool.eventorganaizer.entity.FeedbackDto;
-import lv.ctco.javaschool.eventorganaizer.entity.Poll;
-import lv.ctco.javaschool.eventorganaizer.entity.PollDto;
+import lv.ctco.javaschool.eventorganaizer.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;

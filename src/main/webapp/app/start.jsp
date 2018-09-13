@@ -19,7 +19,7 @@
     <li w3-repeat="topicList">
         <div style="float: left"><a class="topic-list-a" href="<c:url value='/app/event.jsp'/>?id={{id}}">{{topicName}}</a></div>
         <div id="topic-id">{{status}}</div>
-        <div style="float: right">{{topicAuthor}}</div>
+        <div style="float: right">{{topicAuthor}}-</div>
     </li>
 </ul>
 </body>

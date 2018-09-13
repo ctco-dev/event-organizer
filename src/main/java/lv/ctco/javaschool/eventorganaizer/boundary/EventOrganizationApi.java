@@ -63,6 +63,22 @@ public class EventOrganizationApi {
         return new TopicListDto(listOfTopicDto);
     }
 
+    @GET
+    @RolesAllowed({"USER", "ADMIN"})
+    @Path("/getNotEmptyEvents")
+    public TopicListDto getAllNotEmptyEvents() {
+        List<TopicListDto> listOfTopicDto =new ArrayList<>();
+        List<Event> allEvents =eventStore.getAllEvents();;
+        allEvents.forEach(a->{
+            List<Poll> poll =pollStore.getPollForEvent(a.getId());
+            if(poll.size()>0)
+            {
+
+            }
+        });
+        return (TopicListDto)listOfTopicDto;
+    }
+
     @POST
     @Path("/save")
     @RolesAllowed({"USER", "ADMIN"})
@@ -124,6 +140,7 @@ public class EventOrganizationApi {
         return mapper.mapPollToDto(poll);
     }
 
+
     @POST
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/vote/{id}")
@@ -154,6 +171,7 @@ public class EventOrganizationApi {
         });
         return pollDtos;
     }
+
     @GET
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/{id}/getPolls")
@@ -216,10 +234,18 @@ public class EventOrganizationApi {
         answer.setCounter(answer.getCounter() + 1);
     }
 
+    @POST
+    @RolesAllowed({"ADMIN", "USER"})
+    @Path("/{id}/deleteAnswer")
+    public void deleteAnswer(@PathParam("id") Long id)throws IllegalArgumentException {
+        answersStore.deleteAnswerById(id);
+    }
+
 
     @POST
     @RolesAllowed({"ADMIN", "USER"})
     @Path("/{id}/saveFeedback")
+
     public void saveFeedback(String feedbackText, @PathParam("id") Long id) {
         Feedback feedback = new Feedback();
         feedback.setEvent(eventStore.getEventById(id).get());

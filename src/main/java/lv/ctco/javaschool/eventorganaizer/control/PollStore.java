@@ -2,6 +2,7 @@ package lv.ctco.javaschool.eventorganaizer.control;
 
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.entity.Answer;
+import lv.ctco.javaschool.eventorganaizer.entity.Event;
 import lv.ctco.javaschool.eventorganaizer.entity.Poll;
 import lv.ctco.javaschool.eventorganaizer.entity.UserPoll;
 
@@ -23,14 +24,12 @@ public class PollStore {
                 .setParameter("id", id)
                 .getResultList();
     }
-
-    public int deletePollById(Long id) {
-        return em.createQuery("delete from Poll p where p.id=:id", Poll.class)
+    public int deletePollById(Long id)
+    {
+        return em.createQuery("delete from Event e where e.id=:id", Event.class)
                 .setParameter("id", id)
                 .executeUpdate();
-
     }
-
     public List<Poll> getVotingPoll(Long id) {
         return em.createQuery("select  p from Poll p" +
                 " where p.eventID = :id and p.isFeedback = false", Poll.class)

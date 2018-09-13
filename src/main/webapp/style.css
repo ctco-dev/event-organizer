@@ -63,14 +63,6 @@ a {
 #eventName-field {
     align-content: center;
 }
-
-.event-page {
-    margin: 30px;
-}
-.active-event{
-    margin-left: 30px;
-}
-
 #topic-list {
     padding-right: 20px;
     border-width: 0;

@@ -3,11 +3,7 @@ package lv.ctco.javaschool.eventorganaizer.boundary;
 import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
-import lv.ctco.javaschool.eventorganaizer.entity.Event;
-import lv.ctco.javaschool.eventorganaizer.entity.EventDto;
-import lv.ctco.javaschool.eventorganaizer.entity.EventStatus;
-import lv.ctco.javaschool.eventorganaizer.entity.TopicDto;
-import lv.ctco.javaschool.eventorganaizer.entity.TopicListDto;
+import lv.ctco.javaschool.eventorganaizer.entity.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -49,7 +45,7 @@ class EventOrganizationApiTest {
 
         userEvents = new ArrayList<>();
         testUser = new User();
-        testUser.setUsername("admin");
+        testUser.setUsername("user4");
         event = initEvent();
         eventDto = initEventDto(event);
         topicDtoList = new ArrayList<>();

@@ -14,12 +14,12 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body class="event-page" onload="loadEvent()">
-<div id="event-name"><header id="header"><h1>{{name}}</h1></header></div>
-<div id="menu" class="active-event">
+<div id="menu">
     <button class="w3-button w3-section w3-teal w3-ripple" type="button" onclick="main()">Back To Main</button>
     <button class="w3-button w3-section w3-teal w3-ripple" type="button" onclick="myEvents()">My Events</button>
     <button class="w3-button w3-section w3-teal w3-ripple" type="button" onclick="addEvent()">Add Event</button>
 </div>
+<div id="event-name"><header id="header"><h1>{{name}}</h1></header></div>
 <div id="event-field" class="w3-hide">
     <div>
         <h3 id="date">{{date}}</h3>

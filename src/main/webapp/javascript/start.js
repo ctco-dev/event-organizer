@@ -5,7 +5,7 @@ function myEvents() {
     location.href = "/app/my-events.jsp"
 }
 function checkTopics() {
-    fetch('/api/event', {
+    fetch('/api/event/getNotEmptyEvents', {
         "method": "GET",
         headers: {
             'Accept': 'application/json',

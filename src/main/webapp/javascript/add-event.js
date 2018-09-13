@@ -16,7 +16,6 @@ function getDataFromTextarea() {
     data.date = eventdate.value;
     var eventtime = document.getElementById("timepicker");
     data.time = (eventtime.value).trim();
-
     var statusClosed = document.getElementById("closed");
     var statusFinished = document.getElementById("finished");
     var statusOpen = document.getElementById("open");

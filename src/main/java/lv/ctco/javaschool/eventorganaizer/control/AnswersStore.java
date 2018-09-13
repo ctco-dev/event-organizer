@@ -31,4 +31,14 @@ public class AnswersStore {
                 .getResultStream()
                 .findFirst();
     }
+    public int deleteAnswerByPollId(Long id) {
+        return em.createQuery("delete from Answer a where a.poll_id=:id", Answer.class)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+    public int deleteAnswerById(Long id) {
+        return em.createQuery("delete from Answer a where a.id=:id", Answer.class)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 }
