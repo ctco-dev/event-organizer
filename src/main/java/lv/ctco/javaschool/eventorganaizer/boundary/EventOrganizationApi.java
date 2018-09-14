@@ -55,30 +55,19 @@ public class EventOrganizationApi {
 
     @GET
     @RolesAllowed({"USER", "ADMIN"})
-    public TopicListDto getAllOpenEvents() {
-        List<TopicDto> listOfTopicDto = eventStore.getAllEvents()
-                .stream()
-                .map(TopicDto::new)
-                .collect(Collectors.toList());
-        return new TopicListDto(listOfTopicDto);
-    }
-
-    @GET
-    @RolesAllowed({"USER", "ADMIN"})
     @Path("/getNotEmptyEvents")
-    public TopicListDto getAllNotEmptyEvents() {
-        List<TopicListDto> listOfTopicDto =new ArrayList<>();
+    public  TopicListDto getAllNotEmptyEvents() {
+        List<TopicDto> topicDtos =new ArrayList<>();
         List<Event> allEvents =eventStore.getAllEvents();;
         allEvents.forEach(a->{
-            List<Poll> poll =pollStore.getPollForEvent(a.getId());
+            List<Poll> poll = pollStore.getPollForEvent(a.getId());
             if(poll.size()>0)
             {
-
+                topicDtos.add(mapper.eventToTopicDto(a));
             }
         });
-        return (TopicListDto)listOfTopicDto;
+        return new TopicListDto(topicDtos);
     }
-
     @POST
     @Path("/save")
     @RolesAllowed({"USER", "ADMIN"})
@@ -223,6 +212,7 @@ public class EventOrganizationApi {
     @Path("/{id}/deletePoll")
     @RolesAllowed({"USER", "ADMIN"})
     public void deletePoll(@PathParam("id") Long id) throws IllegalArgumentException {
+       // answersStore.deleteAnswerByPollId(id);
         pollStore.deletePollById(id);
     }
 
@@ -236,16 +226,7 @@ public class EventOrganizationApi {
 
     @POST
     @RolesAllowed({"ADMIN", "USER"})
-    @Path("/{id}/deleteAnswer")
-    public void deleteAnswer(@PathParam("id") Long id)throws IllegalArgumentException {
-        answersStore.deleteAnswerById(id);
-    }
-
-
-    @POST
-    @RolesAllowed({"ADMIN", "USER"})
     @Path("/{id}/saveFeedback")
-
     public void saveFeedback(String feedbackText, @PathParam("id") Long id) {
         Feedback feedback = new Feedback();
         feedback.setEvent(eventStore.getEventById(id).get());

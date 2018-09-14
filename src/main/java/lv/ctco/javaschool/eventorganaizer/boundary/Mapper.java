@@ -19,7 +19,16 @@ public class Mapper {
         r.setThisAnswerID(answer.getId());
         return r;
     }
-
+    public TopicDto eventToTopicDto(Event event )
+    {
+        TopicDto topic=new TopicDto();
+        topic.setTopicName(event.getName());
+        topic.setTopicAuthor(event.getAuthor().getUsername());
+        topic.setDate(event.getDate());
+        topic.setId(event.getId());
+        topic.setStatus(event.getStatus());
+        return topic;
+    }
     public List<PollDto> mapPollToDto(List<Poll> poll) {
         return poll.stream()
                 .map(p -> new PollDto(p.getQuestion(),

@@ -40,7 +40,6 @@
         <div>
             <input type="radio" name="quest{{../id}}" value="{{thisAnswerID}}" id="{{thisAnswerID}}">
             <label for="{{thisAnswerID}}">{{text}}</label>
-            <%--<button id="delete{{thisAnswerID}}" onclick="deleteAnswer('{{thisAnswerID}}')">Delete</button>--%>
         </div>
         {{/answers}}
         <p><b>Feedback poll:</b></p>

@@ -9,19 +9,6 @@ function splitAnswers() {
     });
     return result;
 }
-
-function deleteAnswer(x) {
-    fetch('/api/event/' + x + '/deleteAnswer/', {
-        "method": "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    }).then(function (response) {
-        console.log("deleted")
-    });
-}
-
 function buildData() {
     var question = document.getElementById("question");
     var data = {};

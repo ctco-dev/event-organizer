@@ -3,6 +3,7 @@ package lv.ctco.javaschool.eventorganaizer.boundary;
 import lv.ctco.javaschool.auth.control.UserStore;
 import lv.ctco.javaschool.auth.entity.domain.User;
 import lv.ctco.javaschool.eventorganaizer.control.EventStore;
+import lv.ctco.javaschool.eventorganaizer.control.PollStore;
 import lv.ctco.javaschool.eventorganaizer.entity.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,11 +30,14 @@ class EventOrganizationApiTest {
     private Mapper mapper;
     @Mock
     private EventStore eventStore;
+    private PollStore pollStore;
     @InjectMocks
     private EventOrganizationApi eventOrganizationApi;
 
     private User testUser;
     private List<Event> userEvents;
+    private List<Poll> eventPolls;
+    private Poll poll;
     private Event event;
     private TopicDto expectedTopicDto;
     private List<TopicDto> topicDtoList;
@@ -43,6 +47,8 @@ class EventOrganizationApiTest {
     void init() {
         MockitoAnnotations.initMocks(this);
 
+
+        eventPolls = new ArrayList<>();
         userEvents = new ArrayList<>();
         testUser = new User();
         testUser.setUsername("user4");
@@ -53,12 +59,15 @@ class EventOrganizationApiTest {
     }
 
     @Test
-    void testReturnsCorrectDTO() {
+    void testReturnNotEmptyDto(){
         userEvents.add(event);
         when(eventStore.getAllEvents())
                 .thenReturn(userEvents);
+        eventPolls.add(poll);
+        when(pollStore.getPollForEvent((long) 1))
+                .thenReturn(eventPolls);
 
-        TopicListDto result = eventOrganizationApi.getAllOpenEvents();
+        TopicListDto result = eventOrganizationApi.getAllNotEmptyEvents();
         List<TopicDto> topicList = result.getTopicList();
         assertEquals(1, topicList.size());
 
@@ -73,7 +82,7 @@ class EventOrganizationApiTest {
     void testReturnEmptyDto() {
         when(eventStore.getAllEvents())
                 .thenReturn(userEvents);
-        TopicListDto td2 = new TopicListDto(eventOrganizationApi.getAllOpenEvents().getTopicList());
+        TopicListDto td2 = new TopicListDto(eventOrganizationApi.getAllNotEmptyEvents().getTopicList());
         assertEquals(topicDtoList.size(), td2.getTopicList().size());
     }
 

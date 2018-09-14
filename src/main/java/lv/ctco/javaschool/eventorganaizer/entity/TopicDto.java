@@ -7,6 +7,10 @@ public class TopicDto {
     private Long id;
     private EventStatus status;
 
+    public TopicDto(){
+
+    }
+
     public TopicDto(String topicName, String topicAuthor, String date, Long id, EventStatus status) {
         this.topicName = topicName;
         this.topicAuthor = topicAuthor;
@@ -47,11 +51,9 @@ public class TopicDto {
         this.date = date;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
